@@ -29,7 +29,7 @@ suppressMessages(library(zoo))
 
 options(dplyr.show_progress = FALSE)
 
-segmentCTS = function(observations, tracks, transects, seg.length = 2.5, seg.tol = 0.5, seg.min = seg.length * seg.tol,
+segmentCTS = function(observations, tracks, transects, seg.length = 4, seg.tol = 0.5, seg.min = seg.length * seg.tol,
                       centroids = FALSE, maxDist = NA, occurences = FALSE) {
   
   if(seg.length <= 0) stop("seg.length > 0 is FALSE")
@@ -40,7 +40,7 @@ segmentCTS = function(observations, tracks, transects, seg.length = 2.5, seg.tol
   seg = tracks %>% distinct(long, lat, piece, transect_id, .keep_all = TRUE) %>% group_by(transect_id, piece) %>%
     mutate(long_i = lag(long, default = first(long), order_by = order),
            lat_i = lag(lat, default = first(lat), order_by = order)) %>%
-    rowwise %>% mutate(dist = distVincentySphere(c(long_i, lat_i), c(long, lat)) / 1852) %>%
+    rowwise %>% mutate(dist = distVincentySphere(c(long_i, lat_i), c(long, lat)) / 1000) %>%
     select(-c(long_i, lat_i, order)) %>% ungroup %>% group_by(transect_id, piece) %>%
     # calculate cumulative distance traveled between waypoints
     mutate(dist_cuml = cumsum(dist), dist_total = max(dist_cuml)) %>% select(-dist) %>%
@@ -95,7 +95,7 @@ segmentCTS = function(observations, tracks, transects, seg.length = 2.5, seg.tol
     mutate(dist_shy = as.numeric(ifelse(is.na(heading), NA, seg_dist_cuml - dist_cuml))) %>%
     rowwise %>%
     # calculate coordinates of segment endpoints
-    mutate(coords_end = ifelse(is.na(heading), list(NA), list(destPoint(c(long, lat), heading, dist_shy * 1852, f = 0)))) %>%
+    mutate(coords_end = ifelse(is.na(heading), list(NA), list(destPoint(c(long, lat), heading, dist_shy * 1000, f = 0)))) %>%
     select(-c(heading, dist_shy)) %>% ungroup
   
   # create rows for segment endpoints
