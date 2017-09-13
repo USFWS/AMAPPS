@@ -9,14 +9,15 @@ obs$type = toupper(obs$type)
 
 # ------------------------# 
 # Fix flock count
+names(obs)[names(obs) == "__in_Flock"] <- "in_flock"
 obs$dataChange = ""
 obs$dataChange[is.na(obs$count)] = paste("Changed COUNT from ",obs$count[is.na(obs$count)])
 obs$dataChange[obs$count==0] = paste("Changed COUNT from 0")
-obs$count[is.na(obs$count)] = obs$"__in_Flock"[is.na(obs$count)]
-obs$count[obs$count==0] = obs$"__in_Flock"[obs$count==0]
+obs$count[is.na(obs$count)] = obs$in_flock[is.na(obs$count)]
+obs$count[obs$count==0] = obs$in_flock[obs$count==0]
 obs$count[obs$count=="500+"] = 500
-obs$count[obs$"__in_Flock"=="HERG"] = 10
-obs$type[obs$"__in_Flock"=="HERG"] = "HERG"
+obs$count[obs$in_flock %in% "HERG"] = 10
+obs$type[obs$in_flock %in% "HERG"] = "HERG"
 obs$count[obs$count=="?"] = NA
 # ------------------------# 
 
@@ -24,9 +25,9 @@ obs$count[obs$count=="?"] = NA
 # ------------------------# 
 # convert units to latlong
 #utm_zone = "19T"
-obs$Northing = as.numeric(obs$Northing)
+obs$Northing = as.numeric(as.character(obs$Northing))
 obs$Northing[obs$Northing==0]=NA
-obs$Easting = as.numeric(obs$Easting)
+obs$Easting = as.numeric(as.character(obs$Easting))
 obs$Easting[obs$Easting==0]=NA
 
 # prepare UTM coordinates matrix (rgdal)
@@ -67,6 +68,25 @@ obs$type[obs$type %in% c("UN-IDSHARK","UN-IDSHARK")] = "SHAR"
 obs$type[obs$type=="UNIDDOLPHIN"] = "UNDO"
 obs$type[obs$type=="LARGEWHALE"] = "UNLW"
 obs$type[obs$type %in% c("UNIDWHALE","WHALE")]="UNWH"
+obs$type[obs$type %in% c("POSSIBLEBAT")] = "UBAT"
+obs$type[obs$type %in% c("GULLSP","GULLUKNOWN","GULL","UGU")] = "UNGU"
+obs$type[obs$type %in% c("NORTHBFULMAR","FULMARNORTH","NOFULMAR","NORTHERNFULMAR","NNOFU")] = "NOFU"    
+obs$type[obs$type %in% c("MANXSHEAR")] = "MASH"
+obs$type[obs$type %in% c("SHEARWTERLIKE", "SHEARWATER","SHEARWATERLIKE", "SHEARWATERLIKEBIRD")] = "UNSH" 
+obs$type[obs$type %in% c("PETREL")] = "UNPE"
+obs$type[obs$type %in% c("UNIDPHALAROPE", "PHALAROPE")] = "UNPH"
+obs$type[obs$type %in% c("WHITEFACESTORMPETRELPOSSIBLE", "WFPETREL","WFSTROMPET","POSSIBLEWHITEFACESTORMPETREL")] = "WFSP"
+obs$type[obs$type %in% c("UNIDSANDPIPER", "UNIDSANDPIPERS")] = "USAN"
+obs$type[obs$type %in% c("UNIDSHOREBIRD")] = "SHOR"
+obs$type[obs$type %in% c("UNKNOWN")] = "UNKN"
+obs$type[obs$type %in% c("COMLOON")] = "COLO"
+obs$type[obs$type %in% c("GREATSHEAR","GREATSHEARWATER","GRSHEAR","GREATSHER","GRSHEARWATER","GRETSHEAR","GRSW")] = "GRSH"
+obs$type[obs$type %in% c("BONAGULL")] = "BOGU"
+obs$type[obs$type %in% c("BLSCOTER")] = "BLSC"
+obs$type[obs$type %in% c("DOVKIE")] = "DOVE"
+obs$type[obs$type %in% c("GBBY","GBG","GGBBG","GBBT")] = "GBBG"      
+obs$type[obs$type %in% c("HEGU")] = "HERG"      
+obs$type[obs$type %in% c("PUFF")] = "ATPU"      
 
 # guesses since contact listed with data no longer available
 obs$type[obs$type=="BLDU"] = "ABDU"
@@ -74,7 +94,8 @@ obs$type[obs$type=="CAGO"] = "CANG"
 obs$type[obs$type %in% c("DEADULGU","ULGU")] = "UNLG"
 obs$type[obs$type=="LSTP"] = "LEAS"
 obs$type[obs$type=="UNGE"] = "UNGR"
-obs$type[obs$type=="UNID"] = "UNKN"
+obs$type[obs$type %in% c("UNID","UNK")] = "UNKN"
+obs$type[obs$type %in% c("BLGE","GACO","G3SH","COM")] = "UNKN" # couldn't figure out these codes      
 # ------------------------# 
 
 # ------------------------# 

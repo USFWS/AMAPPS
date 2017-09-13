@@ -1,76 +1,44 @@
 # ------------------------------------------------------------------------- #
-# This program checks the observation files for condition change coding 
-# errors.
+# This program fixes COCH errors
 #
-# Program Name: ConditionCodeErrorChecks.R
-# Date Created: 11/04/2011
-# Author: JBL
-# modified: Nov. 2015, Kaycee Coleman
+# modified then rewritten from J. Lierness' old conditionCodeErrorChecks function
+# Feb. 2017, K. Coleman
 # ------------------------------------------------------------------------- #
 
-conditionCodeErrorChecks = function(data, survlab = "") {
+conditionCodeErrorChecks = function(data) {
   
-  outdata = deparse(substitute(data))
+  test.data = data %>% mutate(condition = replace(condition, condition==0, NA)) %>% 
+    filter(offline == 0, band<3)
   
-  data$flag = 1
-  data$flag[data$type == "COCH"] = 0
-  data$flag[data$type == "COCH" & data$condition == "0"] = 3
-  data = data[order(data$crew, data$seat, data$obs, data$year, data$month, data$day, data$sec, 
-                    data$index, data$flag), ]
-  data$flag = NULL
-  
-  # IF CONDITION CODE CHANGES, TYPE SHOULD EQUAL COCH #
-  # IF TYPE EQUALS COCH, CONDITION CODE SHOULD CHANGE #
-  data$key = paste(data$crew, data$transect, data$year, data$month, data$day, data$seat, sep = "-")
-  
-  allkeys = sort(unique(data$key))
-  data$data_error = ""
-  for (i in seq(along = allkeys)) {
-    tmp = data$key == allkeys[i] & data$keep == 1
-    if (sum(tmp) > 1) {
-      bsec = data$sec[tmp][data$type[tmp] %in% c("BEGSEG", "BEGCNT")]
-      esec = data$sec[tmp][data$type[tmp] %in% c("ENDSEG", "ENDCNT")]
-      for (j in seq(along = esec)) {
-        tmp.j = tmp & data$sec >= bsec[j] & data$sec <= esec[j]
-        for (k in 2:sum(tmp.j)) {
-          if (data$condition[tmp.j][k] != data$condition[tmp.j][k - 1] & 
-                data$type[tmp.j][k] != "COCH")
-            data$data_error[tmp.j][k] = paste(data$data_error[tmp.j][k], 
-                                              "; CONDITION change, but TYPE != COCH", sep = "")
-          if (data$type[tmp.j][k] == "COCH" & 
-                data$condition[tmp.j][k] == data$condition[tmp.j][k - 1])
-            data$data_error[tmp.j][k] = paste(data$data_error[tmp.j][k], 
-                                              "; TYPE == COCH, but no change in CONDITION", 
-                                              sep = "")
-          if (data$type[tmp.j][k] == "COCH" & 
-                data$count[tmp.j][k] != data$condition[tmp.j][k])
-            data$data_error[tmp.j][k] = paste(data$data_error[tmp.j][k], 
-                                              "; CONDITION != COUNT", sep = "")
-        }
-      }
+  # add COCH
+  more.than.one.condition = test.data %>% group_by(key) %>% 
+    summarise(n = length(unique(condition[!is.na(condition)]))) %>% filter(n>1)
+  to.add = test.data %>% filter(key %in% more.than.one.condition$key & !is.na(type)) %>% 
+    mutate(diff1 = c(0,abs(condition[1:length(condition)-1]-condition[2:length(condition)])),
+           diff2 = c(abs(condition[1:length(condition)-1]-condition[2:length(condition)]),0)) %>% 
+    filter(diff1==1 | diff2==1) %>% group_by(key) %>% mutate(coch.seq=seq(1:n())) %>% 
+    ungroup %>% filter(!type %in% "COCH") %>% 
+    mutate(type = "COCH", count=NA, dataChange = "added COCH", 
+           ID = ifelse(coch.seq %% 2 == 0, ID-0.01, ID+0.01))
+  if(dim(to.add)[1]>1) {
+    data = bind_rows(data, to.add) %>% arrange(ID)
+    cat("Added ",dim(to.add)[1]," COCH records where condition changed between points")
     }
-  }
-  tmp = grepl("COCH", data$data_error)
-  cat("Found", sum(tmp), "inconsistencies between CONDITION and TYPE = 'COCH'.\n\n")
   
-  data$dataChange = ifelse(substr(data$dataChange, 1, 1) == " ", 
-                            substr(data$dataChange, 2, nchar(data$dataChange)), 
-                            data$dataChange)
-  data$dataChange = ifelse(substr(data$dataChange, 1, 2) == "; ", 
-                            substr(data$dataChange, 3, nchar(data$dataChange)), 
-                            data$dataChange)
-  data$dataError = ifelse(substr(data$dataError, 1, 2) == "; ", 
-                           substr(data$dataError, 3, nchar(data$dataError)), data$dataError)
-  data$dataError = gsub(" ; ", "; ", data$dataError)
+  # remove false COCH (COCH with no difference in condition)
+  to.remove = test.data %>% filter(key %in% more.than.one.condition$key & !is.na(type)) %>% 
+    mutate(diff1 = c(0,abs(condition[1:length(condition)-1]-condition[2:length(condition)])),
+           diff2 = c(abs(condition[1:length(condition)-1]-condition[2:length(condition)]),0)) %>% 
+    filter(type == "COCH" & diff1!=1 & diff2!=1)
+  if(dim(to.remove)[1]>1) {
+    data = data[!data$ID %in% to.remove$ID,]
+    cat("Removed ",dim(to.remove)[1]," COCH records where condition did not change between points")
+  } 
   
-  tmp = data$dataError != "" & data$keep == 1
-  if (sum(tmp) > 0) {
-    error = data[tmp, ]
-    write.csv(error, file.path(dir.out, paste(survlab, "ConditionCodeErrors.csv", sep = "_")), 
-              row.names = FALSE)
-  } else if (file.exists(file.path(dir.out, paste(survlab, "ConditionCodeErrors.csv", sep = "_")))) 
-    unlink(file.path(path, paste(survlab, "ConditionCodeErrors.csv", sep = "_")))
-  
-  assign(outdata, data, envir = .GlobalEnv)
-  
+  # check that coch is not >5
+  if(max(data$condition, na.rm=TRUE)>5) {print("CONDITION code error, condition greater than 5")}
+
+  # return data with added COCH records and/or removed COCH errors
+  data = select(data, -diff1, -diff2, -coch.seq)
+  return(data)
 }

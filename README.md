@@ -21,7 +21,7 @@ For USFWS MB personel, all documentation is housed in M:/seabird_database folder
 - Seabird Database Quality Checking and Editing_Jan26 2012.doc
 - Data Proofing.doc
 - Editing\_Database\_File_Registry.doc
-- In addition it might help to look at the Data lifecycle development for Migratory Birds surveys [website][id2]. You will need premission to log onto this site. 
+- In addition it might help to look at the Data lifecycle development for Migratory Birds surveys [website][id2] and read the standard operating procedures. You will need premission to log onto this site. 
 
 [id9]: https://www.researchgate.net/publication/281667883_Statistical_guidelines_for_assessing_marine_avian_hotspots_and_coldspots_A_case_study_on_wind_energy_development_in_the_US_Atlantic_Ocean
 [id10]: https://www.researchgate.net/publication/259163159_Fitting_statistical_distributions_to_sea_duck_count_data_Implications_for_survey_design_and_abundance_estimation
@@ -158,7 +158,7 @@ c) Part2
 - Crew Summary
 
 
-4) Entering the data in AMAPPS SQL Server database (formerly the Access "Atlantic_Coast_Surveys" database)  
+4) Entering the data in AMAPPS atlantic seabirds SQL Server database (formerly the Access "Atlantic_Coast_Surveys" database)  
 --------------------------------------------------------
 **Process:**  
 - The AMAPPS database houses all of the AMAPPS data but excludes nonbirds (except for boats). Nonbird and offline data are saved seperately or in the Misc_observations table of the database. The database includes tables for  "Crew_Information", "Observations", "Survey_Information", "Tracks", and "Transect_Information". 
@@ -166,6 +166,8 @@ c) Part2
 **Scripts needed:**  
 -- formerly Add2Database2.R (formats the data to go into each table and adds the data to the access "Atlantic_Coast_Surveys" database), a new script is being written to enter the data into SQL Server     
 
+To access the atlantic seabirds SQL Server database [follow the directions listed here]
+(https://my.usgs.gov/confluence/display/mbmdl/Accessing+the+data).  You will need permission to access the database directly.    
 
 5) Reformating and entering the data in the NWASC Database 
 --------------------------------------------------------

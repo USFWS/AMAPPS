@@ -11,7 +11,6 @@ require(RODBC) # odbcConnect
 require(lubridate) #fix timestamps
 require(zoo) #na.locf
 require(dplyr) # %>% 
-library(dtplyr) #data.table
 library(stringr) #extract parts of a string
 require(rgeos)
 require(sp)
@@ -130,6 +129,16 @@ track = select(track, -count, -behavior, -plumage, -age, -original_species_tx, -
 track = rename(track, visibility_tx = visib, seastate = beaufort, index = fid, 
                point_type = type, track_tm = time, track_dt = date, track_lon = longitude, 
                track_lat = latitude)
+
+distances=matrix(ncol=1,nrow=dim(track)[1],data=NA)
+for(n in 2:length(distances)) {
+  distances[n] = distHaversine(c(track$track_lon[n-1],track$track_lat[n-1]), 
+                               c(track$track_lon[n],track$track_lat[n])) 
+}
+track$distances=as.vector(distances); rm(distances)
+track$distances[track$point_type %in% "BEGCNT"] = NA
+tdists = track %>% select(source_transect_id, distances) %>% group_by(source_transect_id) %>% 
+  summarise(distance = sum(distances, na.rm=TRUE))
 #---------------------#
 
 
@@ -150,19 +159,30 @@ obs = select(obs, -start_stop, -date_time)
 transect = track %>% 
   select(track_lat, track_lon, track_dt, source_transect_id, point_type, track_tm, 
          visibility_tx, seastate, datafile) %>% 
-  mutate(type = as.character(point_type)) %>% filter(point_type %in% c("BEGCNT","ENDCNT")) %>%  
-  mutate(source_transect_id = factor(source_transect_id)) %>% 
+  mutate(type = as.character(point_type)) %>% filter(point_type %in% c("BEGCNT","ENDCNT")) %>% 
   group_by(source_transect_id) %>%   arrange(point_type) %>%
   summarize(start_lon = first(track_lon), start_lat = first(track_lat), 
             end_lon = last(track_lon), end_lat = last(track_lat),
             start_tm = first(track_tm),end_tm = last(track_tm),
             end_dt = first(track_dt), visibility_tx = mean(visibility_tx, na.rm=TRUE),
-            seastate_beaufort_nb = mean(seastate, na.rm=TRUE), datafile = first(datafile)) %>% mutate(start_dt = end_dt) %>% 
+            seastate_beaufort_nb = mean(seastate, na.rm=TRUE), datafile = first(datafile)) %>% 
+  mutate(start_dt = end_dt) %>% 
   mutate(transect_time_min_nb = difftime(as.POSIXct(paste(end_dt, end_tm, sep = " "), format = "%Y-%m-%d %H:%M:%S"), 
                                          as.POSIXct(paste(start_dt, start_tm, sep = " "), format = "%Y-%m-%d %H:%M:%S"), 
-                                         units = "mins")) %>% rowwise %>% 
-  mutate(distance =  as.vector(distm(cbind(start_lat, start_lon), cbind(end_lat, end_lon), fun = distHaversine))) 
+                                         units = "mins"))   
 transect$transect_width_nb = 300
-transect$transversal_speed_nb = 10 
-transect$comments_tx = "Transect numbers are simply the order in which they occurred, not defined by supplier. Speed is assumed to be ~10 knots/hr"
+transect$comments_tx = "Transect numbers are the order in which they occurred since it was not
+provided by data supplier. Target speed was 10 knots/hr. Speed listed 
+was calculated using distance(m) and time(min) and converted to nm/hr"
+transect = left_join(transect, tdists, by="source_transect_id"); rm(tdists)
+transect = mutate(transect, traversal_speed_nb =  (distance/(as.numeric(transect_time_min_nb)*60))*1.94384449244)
+#---------------------#
+
+
+#---------------------#
+# export cleaned files
+#---------------------#
+write.csv(obs, file=paste(dir.out, "/", surveyFolder, "_observations.csv", sep=""), row.names = FALSE)
+write.csv(track, file=paste(dir.out, "/", surveyFolder, "_track.csv", sep=""), row.names = FALSE)
+write.csv(transect, file=paste(dir.out, "/", surveyFolder, "_transects.csv", sep=""), row.names = FALSE)
 #---------------------#
