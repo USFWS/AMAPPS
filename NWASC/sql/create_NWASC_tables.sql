@@ -119,7 +119,9 @@ INSERT INTO lu_people([user_id], name, affiliation, active_status,work_email_onl
 	(68,'Arliss Winship','NOAA','active','Arliss.Winship@noaa.gov'),
 	(69,'Fayvor Love','Point Blue','active','flove@pointblue.org'),
 	(70,'Jim Paruk','BRILOON','active','jim.paruk@briloon.org'),
-	(71,'Tony Diamond','University of New Brunswick','active',NULL);
+	(71,'Tony Diamond','University of New Brunswick','active',NULL),
+	(72,'Tom White','USFWS','active','thomas_white@fws.gov'),
+	(73,'Rob Serafini','Point Blue','active','rserafini@pointblue.org');
 --
 
 --create and populate share level table
@@ -903,13 +905,13 @@ GO
 
 INSERT INTO lu_survey_method(survey_method_cd,survey_method_ds)
 	VALUES
-	('byc','bycatch'),
-	('cbc','Christmas Bird count'),
-	('cts','continuous time strip'),
-	('dth','discrete time horizon'),
-	('dts','discrete time strip'),
-	('go','general observation'),
-	('tss','targeted species survey');
+	('byc','bycatch - the unwanted fish and other marine creatures caught during commercial fishing for a different species. These data estimate takes of protected species and discards of fishery resources'),
+	('cbc','Christmas Bird count - The Christmas Bird Count (CBC) is a census of birds in the Western Hemisphere, performed annually in the early Northern-hemisphere winter by volunteer birdwatchers and administered by the National Audubon Society.  it''s an extract from Audubon, and thus it''s a copy of data actively maintained elsewhere. If it has been edited since import, we wouldn''t know.'),
+	('cts','continuous time strip - ''continuous'' refers to time and the ''strip'' usually denotes a measure of distance from the observer (or platform) perpendicular to the projected path of the observation platform. This method is often along a transect and requires a start and end of the observation period. The observations are then recorded as they occur along the path with exact time and/or location of the observation.'),
+	('dth','discrete time horizon - This would be when observations are occurring over a defined time at one single location'),
+	('dts','discrete time strip - ''discrete'' refers to time and the ''strip'' usually denotes a measure of distance from the observer (or platform) perpendicular to the projected path of the observation platform. This method denotes all the observations in a defined time unit (e.g. one hour) along the path of observation, so the explicit time or location when that observation occurred along the path is not noted but binned to the center, start, or stop of that given time bin.'), 
+	('go','general observation - These would be when an observation is supplied but it was not the primary mission of the event or survey where the species was observed or there are no defining protocols to monitor effort.'),
+	('tss','targeted species survey - The defining aspect of this protocol is that only one or a limited few targeted species are observed and all other species that occur in the observation path are not recorded. The ''targeted species'' is a method modifier, where certain data are not recorded but it should still be a Discrete Time Strip or Continuous Time Strip.');
 --
 
 --create and populate beaufort table
@@ -1635,53 +1637,59 @@ CREATE TABLE links_and_literature (
 	dataset_id smallint not null,
 	data_url nvarchar(2083) null,
 	report nvarchar(2083) null,
-	citation nvarchar(2000) null,
+	data_citation nvarchar(2000) null,
 	publications nvarchar(2000) null,
+	publication_url nvarchar(2000) null,
+	publication_DOI nvarchar(2000) null,
 	PRIMARY KEY(id),
 	FOREIGN KEY(dataset_id) REFERENCES dataset(dataset_id)
 );
 
-INSERT INTO links_and_literature(id,dataset_id,data_url,report,citation)
+INSERT INTO links_and_literature(
+	id, dataset_id, data_url, report, data_citation, publications, publication_url, publication_DOI)
 	VALUES
-	(1,15,'http://seamap.env.duke.edu/datasets/detail/322',NULL,'Hyrenbach, D. 2011. Hatteras Eddy Cruise 2004. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/322) on yyyy-mm-dd.'),
-	(2,24,'http://seamap.env.duke.edu/datasets/detail/310',NULL,'Hyrenbach, D. and H. Whitehead. 2008. Sargasso 2004 - Seabirds . Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/310) on yyyy-mm-dd'),
-	(3,115,NULL,'http://www.briloon.org/uploads/BRI_Documents/Wildlife_and_Renewable_Energy/MABS%20Project%20Chapter%203%20-%20Connelly%20et%20al%202015.pdf',NULL),
-	(4,148,NULL,'http://www.briloon.org/uploads/BRI_Documents/Wildlife_and_Renewable_Energy/MABS%20Project%20Chapter%203%20-%20Connelly%20et%20al%202015.pdf',NULL),
-	(5,168,NULL,'http://www.briloon.org/uploads/BRI_Documents/Wildlife_and_Renewable_Energy/MABS%20Project%20Chapter%203%20-%20Connelly%20et%20al%202015.pdf',NULL),
-	(6,117,NULL,'http://www.nefsc.noaa.gov/psb/AMAPPS/docs/NMFS_AMAPPS_2011_annual_report_final_BOEM.pdf',NULL),
-	(7,143,NULL,'https://www.boem.gov/ESPIS/5/5272.pdf',NULL),
-	(8,144,NULL,'https://www.boem.gov/ESPIS/5/5272.pdf',NULL),
-	(9,169,NULL,'https://www.boem.gov/ESPIS/5/5272.pdf',NULL),
-	(10,91,NULL,'http://www.nj.gov/dep/dsr/ocean-wind/report.htm'' AND ''http://www.nj.gov/dep/dsr/ocean-wind/final-volume-1.pdf',NULL),
-	(11,113,NULL,'http://seaduckjv.org/pdf/studies/pr109.pdf',NULL),
-	(19,29,'http://seamap.env.duke.edu/dataset/3','Southeast Fisheries Science Center, Marine Fisheries Service, NOAA. 1992. OREGON II Cruise. Cruise report. 92-01 (198).','Garrison, L. 2013. SEFSC Atlantic surveys 1992. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/3) on yyyy-mm-dd.'),
-	(20,30,'http://seamap.env.duke.edu/dataset/1','Southeast Fisheries Science Center, Marine Fisheries Service, NOAA. 1998. Cruise Results: Summer Atlantic Ocean Marine Mammal Survey: NOAA Ship Relentless Cruise. Cruise report. RS 98-01 (3)','Garrison, L. 2013. SEFSC Atlantic surveys, 1998 (3). Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/1) on yyyy-mm-dd.'),
-	(21,31,'http://seamap.env.duke.edu/dataset/5 ; https://gcmd.nasa.gov/KeywordSearch/Metadata.do?Portal=idn_ceos&KeywordPath=%5BKeyword%3D%27shore+birds%27%5D&OrigMetadataNode=GCMD&EntryId=seamap5&MetadataView=Full&MetadataType=0&lbnode=mdlb2','Southeast Fisheries Science Center, Marine Fisheries Service, NOAA. 1999. Cruise Results; Summer Atlantic Ocean Marine Mammal Survey; NOAA Ship Oregon II Cruise. Cruise report. OT 99-05 (236)','Garrison, L. 2013. SEFSC Atlantic surveys 1999. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/5) on yyyy-mm-dd.'),
-	(22,92,'http://seamap.env.duke.edu/datasets/detail/280',NULL,'Hyrenbach, D., F. Huettmann and J. Chardine. 2012. PIROP Northwest Atlantic 1965-1992. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/280) on yyyy-mm-dd.'),
-	(23,7,'http://seamap.env.duke.edu/datasets/detail/280','http://www.whoi.edu/science/PO/hatterasfronts/marinemammal.html','Hyrenbach, D., F. Huettmann and J. Chardine. 2012. PIROP Northwest Atlantic 1965-1992. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/280) on yyyy-mm-dd.'),
-	(25,80,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/MAY_ECOMON_DEL1004/CRUISE_REPORT_2010004DE.pdf',NULL),
-	(26,81,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/NOV_ECOMON_DEL1012/CRUISE_REPORT_2010012DE.pdf',NULL),
-	(27,42,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2009/AUG_ECOMON_DEL0909/CRUISE_REPORT_2009009DE.pdf',NULL),
-	(28,38,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2009/JAN_ECOMON_DEL0902/CRUISE_REPORT_2009002DEL.pdf',NULL),
-	(29,39,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2009/MAY_ECOMON_DEL0905/CRUISE_REPORT_2009005DE.pdf',NULL),
-	(30,76,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/NOV_ECOMON_DEL1012/CRUISE_REPORT_2010012DE.pdf',NULL),
-	(31,77,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2008/AUG_ECOMON_DEL0808/CRUISE_REPORT_2008008DE.pdf',NULL),
-	(32,171,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/FEB_ECOMON_PC1301/CRUISE_REPORT_2013001PC.pdf',NULL),
-	(33,131,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2012/FEB_ECOMON_DEL1202/CRUISE_REPORT_2012002DE.pdf',NULL),
-	(34,82,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/AUG_ECOMON_DEL1009/CRUISE_REPORT_2010009DE.pdf',NULL),
-	(35,79,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/JAN_ECOMON_DEL1001/CRUISE_REPORT_2010001DE.pdf',NULL),
-	(36,33,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2007/MAY_ECOMON_DEL0706/CRUISE_REPORT_2007006DE.pdf',NULL),
-	(37,74,NULL,'https://gcmd.gsfc.nasa.gov/search/Metadata.do?from=getdif&subset=GCMD&entry=%5BGCMD%5DGoMA-Platts_Bank_Aerial_Survey#metadata',NULL);
---	(41, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2016/AUG_ECOMON_PC1607/CRUISE_REPORT_2016007PC.pdf',NULL),
---	(37, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2016/MAY_ECOMON_GU1608/CRUISE_REPORT_2016008GU.pdf',NULL),
---	(38, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2015/MAY_ECOMON_HB1502/CRUISE_REPORT_2015002HB.pdf',NULL),
---	(39, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2015/OCT_ECOMON_GU1506/CRUISE_REPORT_2015006GU.pdf',NULL),
---	(40, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2014/MAR_ECOMON_GU1401/CRUISE_REPORT_2014001GU.pdf',NULL),
---	(42, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/JUN_ECOMON_GU1302/CRUISE_REPORT_2013002GU.pdf',NULL),
---	(43, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/NOV_ECOMON_GU1305/CRUISE_REPORT_2013005GU.pdf',NULL),
---	(44, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2011/FEB_ECOMON_DEL1102/CRUISE_REPORT_2011002DE.pdf',NULL),
---	(45, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2011/JUN_ECOMON_DEL1105/CRUISE_REPORT_2011005DE.pdf',NULL);
+	(1,15,'http://seamap.env.duke.edu/datasets/detail/322',NULL,'Hyrenbach, D. 2011. Hatteras Eddy Cruise 2004. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/322) on yyyy-mm-dd.',NULL,NULL,NULL),
+	(2,24,'http://seamap.env.duke.edu/datasets/detail/310',NULL,'Hyrenbach, D. and H. Whitehead. 2008. Sargasso 2004 - Seabirds . Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/310) on yyyy-mm-dd',NULL,NULL,NULL),
+	(3,115,NULL,'http://www.briloon.org/uploads/BRI_Documents/Wildlife_and_Renewable_Energy/MABS%20Project%20Chapter%203%20-%20Connelly%20et%20al%202015.pdf',NULL,NULL,NULL,NULL),
+	(4,148,NULL,'http://www.briloon.org/uploads/BRI_Documents/Wildlife_and_Renewable_Energy/MABS%20Project%20Chapter%203%20-%20Connelly%20et%20al%202015.pdf',NULL,NULL,NULL,NULL),
+	(5,168,NULL,'http://www.briloon.org/uploads/BRI_Documents/Wildlife_and_Renewable_Energy/MABS%20Project%20Chapter%203%20-%20Connelly%20et%20al%202015.pdf',NULL,NULL,NULL,NULL),
+	(6,117,NULL,'http://www.nefsc.noaa.gov/psb/AMAPPS/docs/NMFS_AMAPPS_2011_annual_report_final_BOEM.pdf',NULL,NULL,NULL,NULL),
+	(7,143,NULL,'https://www.boem.gov/ESPIS/5/5272.pdf',NULL,NULL,NULL,NULL),
+	(8,144,NULL,'https://www.boem.gov/ESPIS/5/5272.pdf',NULL,NULL,NULL,NULL),
+	(9,169,NULL,'https://www.boem.gov/ESPIS/5/5272.pdf',NULL,NULL,NULL,NULL),
+	(10,91,NULL,'http://www.nj.gov/dep/dsr/ocean-wind/report.htm'' AND ''http://www.nj.gov/dep/dsr/ocean-wind/final-volume-1.pdf',NULL,NULL,NULL,NULL),
+	(11,113,NULL,'http://seaduckjv.org/pdf/studies/pr109.pdf',NULL,NULL,NULL,NULL),
+	(12,29,'http://seamap.env.duke.edu/dataset/3','Southeast Fisheries Science Center, Marine Fisheries Service, NOAA. 1992. OREGON II Cruise. Cruise report. 92-01 (198).','Garrison, L. 2013. SEFSC Atlantic surveys 1992. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/3) on yyyy-mm-dd.',NULL,NULL,NULL),
+	(13,30,'http://seamap.env.duke.edu/dataset/1','Southeast Fisheries Science Center, Marine Fisheries Service, NOAA. 1998. Cruise Results: Summer Atlantic Ocean Marine Mammal Survey: NOAA Ship Relentless Cruise. Cruise report. RS 98-01 (3)','Garrison, L. 2013. SEFSC Atlantic surveys, 1998 (3). Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/1) on yyyy-mm-dd.',NULL,NULL,NULL),
+	(14,31,'http://seamap.env.duke.edu/dataset/5 ; https://gcmd.nasa.gov/KeywordSearch/Metadata.do?Portal=idn_ceos&KeywordPath=%5BKeyword%3D%27shore+birds%27%5D&OrigMetadataNode=GCMD&EntryId=seamap5&MetadataView=Full&MetadataType=0&lbnode=mdlb2','Southeast Fisheries Science Center, Marine Fisheries Service, NOAA. 1999. Cruise Results; Summer Atlantic Ocean Marine Mammal Survey; NOAA Ship Oregon II Cruise. Cruise report. OT 99-05 (236)','Garrison, L. 2013. SEFSC Atlantic surveys 1999. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/5) on yyyy-mm-dd.',NULL,NULL,NULL),
+	(15,92,'http://seamap.env.duke.edu/datasets/detail/280',NULL,'Hyrenbach, D., F. Huettmann and J. Chardine. 2012. PIROP Northwest Atlantic 1965-1992. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/280) on yyyy-mm-dd.',NULL,NULL,NULL),
+	(16,7,'http://seamap.env.duke.edu/datasets/detail/280','http://www.whoi.edu/science/PO/hatterasfronts/marinemammal.html','Hyrenbach, D., F. Huettmann and J. Chardine. 2012. PIROP Northwest Atlantic 1965-1992. Data downloaded from OBIS-SEAMAP (http://seamap.env.duke.edu/dataset/280) on yyyy-mm-dd.',NULL,NULL,NULL),
+	(17,80,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/MAY_ECOMON_DEL1004/CRUISE_REPORT_2010004DE.pdf',NULL,NULL,NULL,NULL),
+	(18,81,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/NOV_ECOMON_DEL1012/CRUISE_REPORT_2010012DE.pdf',NULL,NULL,NULL,NULL),
+	(19,42,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2009/AUG_ECOMON_DEL0909/CRUISE_REPORT_2009009DE.pdf',NULL,NULL,NULL,NULL),
+	(20,38,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2009/JAN_ECOMON_DEL0902/CRUISE_REPORT_2009002DEL.pdf',NULL,NULL,NULL,NULL),
+	(21,39,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2009/MAY_ECOMON_DEL0905/CRUISE_REPORT_2009005DE.pdf',NULL,NULL,NULL,NULL),
+	(22,76,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/NOV_ECOMON_DEL1012/CRUISE_REPORT_2010012DE.pdf',NULL,NULL,NULL,NULL),
+	(23,77,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2008/AUG_ECOMON_DEL0808/CRUISE_REPORT_2008008DE.pdf',NULL,NULL,NULL,NULL),
+	(24,171,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/FEB_ECOMON_PC1301/CRUISE_REPORT_2013001PC.pdf',NULL,NULL,NULL,NULL),
+	(25,131,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2012/FEB_ECOMON_DEL1202/CRUISE_REPORT_2012002DE.pdf',NULL,NULL,NULL,NULL),
+	(26,82,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/AUG_ECOMON_DEL1009/CRUISE_REPORT_2010009DE.pdf',NULL,NULL,NULL,NULL),
+	(27,79,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2010/JAN_ECOMON_DEL1001/CRUISE_REPORT_2010001DE.pdf',NULL,NULL,NULL,NULL),
+	(28,33,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2007/MAY_ECOMON_DEL0706/CRUISE_REPORT_2007006DE.pdf',NULL,NULL,NULL,NULL),
+	(29,74,NULL,'https://gcmd.gsfc.nasa.gov/search/Metadata.do?from=getdif&subset=GCMD&entry=%5BGCMD%5DGoMA-Platts_Bank_Aerial_Survey#metadata',NULL,NULL,NULL,NULL),
+	(30,89,NULL,NULL,NULL,'Kristopher J. Winiarski, M. Louise Burt, Eric Rexstad, David L. Miller, Carol L. Trocki, Peter W. C.Paton, and Scott R. McWilliams. 2014. Integrating aerial and ship surveys of marine birds into a combineddensity surface model: A case study of wintering Common Loons. The Condor. 116(2):149-161','https://www.researchgate.net/publication/260553628_Integrating_aerial_and_ship_surveys_of_marine_birds_into_a_combined_density_surface_model_A_case_study_of_wintering_Common_Loons','10.1650/CONDOR-13-085.1'),
+	(31,90,NULL,NULL,NULL,'Kristopher J. Winiarski, M. Louise Burt, Eric Rexstad, David L. Miller, Carol L. Trocki, Peter W. C.Paton, and Scott R. McWilliams. 2014. Integrating aerial and ship surveys of marine birds into a combineddensity surface model: A case study of wintering Common Loons. The Condor. 116(2):149-161','https://www.researchgate.net/publication/260553628_Integrating_aerial_and_ship_surveys_of_marine_birds_into_a_combined_density_surface_model_A_case_study_of_wintering_Common_Loons','10.1650/CONDOR-13-085.1');
 
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2016/AUG_ECOMON_PC1607/CRUISE_REPORT_2016007PC.pdf',NULL,NULL,NULL),
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2016/MAY_ECOMON_GU1608/CRUISE_REPORT_2016008GU.pdf',NULL,NULL,NULL),
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2015/MAY_ECOMON_HB1502/CRUISE_REPORT_2015002HB.pdf',NULL,NULL,NULL),
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2015/OCT_ECOMON_GU1506/CRUISE_REPORT_2015006GU.pdf',NULL,NULL,NULL),
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2014/MAR_ECOMON_GU1401/CRUISE_REPORT_2014001GU.pdf',NULL,NULL,NULL),
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/JUN_ECOMON_GU1302/CRUISE_REPORT_2013002GU.pdf',NULL,NULL,NULL),
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/NOV_ECOMON_GU1305/CRUISE_REPORT_2013005GU.pdf',NULL,NULL,NULL),
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2011/FEB_ECOMON_DEL1102/CRUISE_REPORT_2011002DE.pdf',NULL,NULL,NULL),
+--	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2011/JUN_ECOMON_DEL1105/CRUISE_REPORT_2011005DE.pdf',NULL,NULL,NULL);
+-- select * from links_and_literature
 
 --ECOMON Nov 2014 no birds in report? combined with Herring Acoustic https://www.nefsc.noaa.gov/HydroAtlas/2014/NOV_ECOMON_PC1405/CRUISE_REPORT_2014005PC.pdf
 --ECOMON Dec 2011 we might have this data listed as Nov? Tim White on boat. Not the same as Nov 2011, finish stations not hit in Nov https://www.nefsc.noaa.gov/HydroAtlas/2011/DEC_ECOMON_DEL1110/CRUISE_REPORT_2011010DE.pdf
@@ -1811,8 +1819,9 @@ CREATE TABLE boem_lease_blocks (
 --
 
 -- create data request table
-CREATE TABLE data_requests (
+CREATE TABLE requests (
 	request_id smallint not null,
+	request_type nvarchar(10) not null, 
 	requester smallint not null,
 	request_info nvarchar(1000) not null, 
 	date_requested date not null,
@@ -1824,24 +1833,31 @@ CREATE TABLE data_requests (
 );
 GO
 
-INSERT INTO data_requests(
-	request_id,requester,request_info,date_requested,
+INSERT INTO requests(
+	request_id,request_type,requester,request_info,date_requested,
 	request_status,date_filled,additional_notes)
 	VALUES
-	(1,68,'Segmentation product of all datasets used in Phase 1 of NOAA modeling and additional data for phase 2, see share google spreadsheet for details',
+	(1,'data',68,'Segmentation product of all datasets used in Phase 1 of NOAA modeling and additional data for phase 2, see share google spreadsheet for details',
 		CAST('2014-01-01' AS DATE),'filled',CAST('2017-04-04' AS DATE),
 		'NOAA will need additional datasets to quality control their model in late 2017'),
-	(2,67,'Double Crested Cormorants (DCCO) for all of the East Coast, but mostly interested in NC',
+	(2,'data',67,'Double Crested Cormorants (DCCO) for all of the East Coast, but mostly interested in NC',
 		CAST('2016-09-27' AS DATE),'partially filled',CAST('2017-01-25' AS DATE),
 		'should requery and resend once all the datasets are in sql server, we only sent old data'),
-	(3,69,'all shareable data to go into AKN',CAST('2016-05-12' AS DATE),'partially filled',CAST('2016-10-28' AS DATE),
+	(3,'data',69,'all shareable data to go into AKN',CAST('2016-05-12' AS DATE),'partially filled',CAST('2016-10-28' AS DATE),
 		'effort and observation information for the old data was sent. More discussion needs to happen with how these data go into AKN. They also need the transect table'),
-	(4,70,'Common Loon (COLO) between June 15-Aug 15, years 1910- present',CAST('2016-05-10' AS DATE),
+	(4,'data',70,'Common Loon (COLO) between June 15-Aug 15, years 1910- present',CAST('2016-05-10' AS DATE),
 		'not filled',NULL,NULL),
-	(5,71,'Razorbills (RAZO), looking for any counts from Maine to Florida at sea for winter 2012-13',
+	(5,'data',71,'Razorbills (RAZO), looking for any counts from Maine to Florida at sea for winter 2012-13',
 		CAST('2016-04-10' AS DATE),'not filled',NULL,NULL),
-	(6,3,'MassCEC',CAST('2017-06-29' AS DATE),'filled',CAST('2017-06-29' AS DATE),NULL),
-	(7,50,'All FWS AMAPPS and Seaduck data',CAST('2017-07-12' AS DATE),'filled',CAST('2017-07-17' AS DATE),'This is for an R5 GIS exercise'),
-	(8,62,'Segmented NOAA phase 2 product',CAST('2017-07-5' AS DATE),'filled',CAST('2017-07-5' AS DATE),NULL);
--- select*from data_requests
+	(6,'data',3,'MassCEC',CAST('2017-06-29' AS DATE),'filled',CAST('2017-06-29' AS DATE),NULL),
+	(7,'data',50,'All FWS AMAPPS and Seaduck data',CAST('2017-07-12' AS DATE),'filled',CAST('2017-07-17' AS DATE),'This is for an R5 GIS exercise'),
+	(8,'data',62,'Segmented NOAA phase 2 product',CAST('2017-07-5' AS DATE),'filled',CAST('2017-07-5' AS DATE),NULL),
+	(9,'data',3,'MassCEC',CAST('2017-06-29' AS DATE),'filled',CAST('2017-06-29' AS DATE),'requested an update for another project, version 2 of data'),
+	(10,'service',62,'service request to segment EcoMon data not yet submitted to us',CAST('2017-09-14' AS DATE),'filled',CAST('2017-07-5' AS DATE),NULL),
+	(11,'data',72, 'Ecological Services BCPE data', CAST('2017-8-15' AS DATE), 'filled', CAST('2017-8-25' AS DATE), NULL),
+	(12,'service',72, 'Ecological Services analysis for BCPE data', CAST('2017-8-15' AS DATE), 'filled', CAST('2017-9-15' AS DATE), NULL),
+	(13,'data',73, 'AKN request, data and information', CAST('2017-7-28' AS DATE), 'patially filled',NULL, 'back and forth with Rob on details and info'),
+	(14,'data',59,'official survey name for each dataset listed in the source_dataset_id column', CAST('2017-09-8' AS DATE), 'filled', CAST('2017-09-11' AS DATE), NULL);
+-- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
+-- select*from requests join lu_people on requester=user_id;
 -- update data_requests SET date_filled = CAST('2017-07-17' AS DATE), request_status = 'filled'  WHERE request_id = 7
