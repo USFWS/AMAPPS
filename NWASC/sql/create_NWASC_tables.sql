@@ -1062,7 +1062,47 @@ INSERT INTO lu_parent_project(
 	project_id, project_name, project_ds, project_url)
 	VALUES
 	(1, 'AMAPPS aerial',
-		'The geographic area of operations includes near-shore and offshore waters of the U.S. Atlantic Coast from the Canada/Maine border to approximately Jacksonville, FL. Transects are located at 5'' (~ 5 nautical miles [nm]) intervals at every 1'' and 6'' minutes of latitude. Transect length depends on the location along coast. Some transects extend to 16 meter depth or out a distance of 8 nm , whichever is longer. In some cases, transects located near to where the coastline runs east-west have been extended to ensure that the survey covers areas that are at least 8 nm from land. Some transects extend as far as 30 nm off-shore to include important seabird foraging areas. In the past these annual surveys were conducted during the winter between January and February. However, when the survey expanded to include all marine bird species the surveys were flown multiple times throughout the year to better determine seabird distributions at different times of year. As a result the surveys are currently conducted in the fall (early October) and winter (early February).  Timing can also depend on available funding , data management needs, personnel shortages and availability, weather, and aircraft availability. Surveys are flown during daylight hours with no limits on the time of day. A survey can be initiated when the wind speed is < 15 knots (kts), and should be discontinued if the winds exceed 20 kts. Before starting each transect both the pilot and observers will record observation conditions on a 5-point Likert scale with 1 = Worst observation conditions, 3 = Average conditions, and 5 = Best observation conditions. Often times the pilot and observer conditions will be different as glare can affect one side of the aircraft more than the other depending on the direction of flight. Each crew area consists of east-west oriented  strip-transects. Each transect has a unique ID that uses the latitude degrees concatenated with the latitude minutes and then with the segment number [00, 01, etc.]. Typically there will just be one line segment “00”, but when more than one segment occurs on the same latitude you might also have segment “01."( e.g. 444600 or 444601).The transects are flown at a height of 200 feet above ground level and at a speed of 110 knots. Altitude is maintained  with the help of a radar altimeter in most cases. Transects extend 30 nautical miles (nm) offshore and can be flown from east to west or west to east.  Each transect is 400 meters (m) in width with 200 m observation bands on each side of the aircraft. Each observer counts outward to a the predefined 200 m width on their side of the aircraft (left-front (lf) or right-front(rf)).  The pilot serves as the left-front observer (lf) while the observer traditionally sits in the right-front (rf) or co-pilot seat of the aircraft. However, there have been times when a third backseat observer is present (e.g. a new observer being trained). The transect boundary is marked either on the strut with black tape  or the windshield (with dry erase marker) of the plane for reference using a clinometer. The survey targets the fifteen species of sea ducks and all species of marine birds wintering along the Atlantic coast.  Identification of birds to the lowest taxonomic level is ideal (e.g.species), however several generalized  groups have been created for the survey understanding that species identification can be difficult during aerial survey conditions. Such groupings are provided for other species as well including gulls, shearwaters, alcids, and scoters. Observers are also asked to  record all marine mammals, sharks and rays, and sea turtles within the transect. Finally, observers will also record any boats, including those outside of the transect , with an estimated distance in nautical miles. Balloons (both inflated and deflated) should be recording within the transect. [summary snippets copied from internal confluence site]',
+		'The geographic area of operations includes near-shore and offshore waters of the U.S. 
+		Atlantic Coast from the Canada/Maine border to approximately Jacksonville, FL. Transects 
+		are located at 5'' (~ 5 nautical miles [nm]) intervals at every 1'' and 6'' minutes of 
+		latitude. Transect length depends on the location along coast. Some transects extend to 
+		16 meter depth or out a distance of 8 nm , whichever is longer. In some cases, transects 
+		located near to where the coastline runs east-west have been extended to ensure that the 
+		survey covers areas that are at least 8 nm from land. Some transects extend as far as 30 
+		nm off-shore to include important seabird foraging areas. In the past these annual surveys 
+		were conducted during the winter between January and February. However, when the survey 
+		expanded to include all marine bird species the surveys were flown multiple times throughout 
+		the year to better determine seabird distributions at different times of year. As a result the 
+		surveys are currently conducted in the fall (early October) and winter (early February).  
+		Timing can also depend on available funding , data management needs, personnel shortages and 
+		availability, weather, and aircraft availability. Surveys are flown during daylight hours 
+		with no limits on the time of day. A survey can be initiated when the wind speed is < 15 
+		knots (kts), and should be discontinued if the winds exceed 20 kts. Before starting each 
+		transect both the pilot and observers will record observation conditions on a 5-point Likert 
+		scale with 1 = Worst observation conditions, 3 = Average conditions, and 5 = Best observation 
+		conditions. Often times the pilot and observer conditions will be different as glare can affect 
+		one side of the aircraft more than the other depending on the direction of flight. Each crew area 
+		consists of east-west oriented  strip-transects. Each transect has a unique ID that uses the latitude 
+		degrees concatenated with the latitude minutes and then with the segment number [00, 01, etc.]. 
+		Typically there will just be one line segment “00”, but when more than one segment occurs on the 
+		same latitude you might also have segment “01."( e.g. 444600 or 444601).The transects are flown at 
+		a height of 200 feet above ground level and at a speed of 110 knots. Altitude is maintained  
+		with the help of a radar altimeter in most cases. Transects extend 30 nautical miles (nm) offshore 
+		and can be flown from east to west or west to east.  Each transect is 400 meters (m) in width with 
+		200 m observation bands on each side of the aircraft. Each observer counts outward to a the predefined 
+		200 m width on their side of the aircraft (left-front (lf) or right-front(rf)).  The pilot serves as 
+		the left-front observer (lf) while the observer traditionally sits in the right-front (rf) or co-pilot 
+		seat of the aircraft. However, there have been times when a third backseat observer is present (e.g. a 
+		new observer being trained). The transect boundary is marked either on the strut with black tape  or the 
+		windshield (with dry erase marker) of the plane for reference using a clinometer. The survey targets the 
+		fifteen species of sea ducks and all species of marine birds wintering along the Atlantic coast.  Identification 
+		of birds to the lowest taxonomic level is ideal (e.g.species), however several generalized  groups have been 
+		created for the survey understanding that species identification can be difficult during aerial survey conditions. 
+		Such groupings are provided for other species as well including gulls, shearwaters, alcids, and scoters. 
+		Observers are also asked to  record all marine mammals, sharks and rays, and sea turtles within the transect. 
+		Finally, observers will also record any boats, including those outside of the transect , with an estimated 
+		distance in nautical miles. Balloons (both inflated and deflated) should be recording within the transect. 
+		[summary snippets copied from internal confluence site]',
 		'http://www.nefsc.noaa.gov/psb/AMAPPS/'),
 	(2, 'AMAPPS boat',
 		NULL,
@@ -1075,7 +1115,13 @@ INSERT INTO lu_parent_project(
 	(8,'DOE BRI aerial',NULL,NULL),
 	(9,'DOE BRI boat',NULL,NULL),
 	(10,'EcoMon (NEFSC Ecosystem Monitoring) Cruises',
-		'Shelf-wide Research Vessel Surveys are conducted 6-7 times per year over the continental shelf from Cape Hatteras, North Carolina to Cape Sable, Nova Scotia, using NOAA research ships or charter vessels. Three surveys are performed jointly with the bottom trawl surveys in the winter, spring and autumn. An additional four cruises, conducted in winter, late spring, late summer and late autumn, are dedicated to plankton and hydrographic data collection. The Cape Hatteras to Cape Sable area is divided into four regions, and 30 randomly selected stations are targeted for sampling from each region.',
+		'Shelf-wide Research Vessel Surveys are conducted 6-7 times per year over the 
+		continental shelf from Cape Hatteras, North Carolina to Cape Sable, Nova Scotia, 
+		using NOAA research ships or charter vessels. Three surveys are performed jointly 
+		with the bottom trawl surveys in the winter, spring and autumn. An additional four 
+		cruises, conducted in winter, late spring, late summer and late autumn, are dedicated 
+		to plankton and hydrographic data collection. The Cape Hatteras to Cape Sable area is 
+		divided into four regions, and 30 randomly selected stations are targeted for sampling from each region.',
 		'https://www.nefsc.noaa.gov/HydroAtlas/'),
 	(11,'Florida Light and Power, Long Island',NULL,NULL),
 	(12,'Herring Acoustic',NULL,NULL),
@@ -1088,8 +1134,18 @@ INSERT INTO lu_parent_project(
 	(19,'StellwagenBankNMS standardized transects',NULL,NULL),
 	(20,'StellwagenBankNMS Whale Watch',NULL,NULL),
 	(21,'Deepwater Wind BI Boat',NULL,NULL),
-	(22,'StellwagenBankNMS second side transects',NULL,NULL);
---
+	(22,'StellwagenBankNMS second side transects',NULL,NULL),
+	(23,'StellwagenBankNMS "other" protocol',NULL,NULL),
+	(24,'NYSERDA','In preparation for offshore wind energy development, the New York State Energy and 
+	Research Development Authority (NYSERDA) has initiated the largest offshore high resolution aerial 
+	survey of marine and bird life in U.S. history. Normandeau Associates, Inc. and APEM Ltd (Normandeau-APEM team) 
+	will gather 3 years of baseline surveys to assess the entire New York Offshore Planning Area (OPA) 
+	with particular emphasis on the Wind Energy Area (WEA).  The surveys use ultra-high resolution 
+	aerial digital imagery to assess use by birds, marine mammals, turtles, and fish. This proactive 
+	study of potential impacts will facilitate a more efficient track to energy production offshore New 
+	York by providing the necessary information to meet the U.S. Bureau of Ocean Energy Management''s (BOEM''s) 
+	regulatory requirements for environmental review of WEAs.','https://remote.normandeau.com/nys_overview.php');
+-- select * from lu_parent_project
  
 ------------------------
 -- create main tables --
@@ -1276,8 +1332,7 @@ INSERT INTO dataset(
 	(121,NULL,'NOAA/NMFS_NEFSCBoat2004','b','cts','ot',300,300,5,'yes','yes',52,'NOAA',10,1),
 	(120,NULL,'NOAA/NMFS_NEFSCBoat2007','b','cts','ot',300,300,5,'yes','yes',52,'NOAA',11,1),
 	(32,NULL,'NOAABycatch','b','byc','og',NULL,NULL,5,'yes',NULL,19,'NOAA',NULL,1),        		
-	(20,NULL,'NOAAMBO7880','b','dts','ot',300,300,5,'yes','yes',15,'NOAA',NULL,1),   
-	(173,NULL,'NYSERDA_APEM',NULL,NULL,NULL,NULL,NULL,0,'no',NULL,NULL,'BOEM,APEM',NULL,1),					
+	(20,NULL,'NOAAMBO7880','b','dts','ot',300,300,5,'yes','yes',15,'NOAA',NULL,1),   					
 	(23,NULL,'Patteson','b','go','og',NULL,NULL,5,'yes',NULL,32,NULL,NULL,1),        		
 	(92,NULL,'PIROP','b',NULL,NULL,NULL,NULL,7,'yes',NULL,16,NULL,NULL,1),				
 	(75,NULL,'PlattsBankAerial','a','cts','ot',340,170 ,5,'yes',NULL,39,NULL,99.892,1),        		
@@ -1366,160 +1421,180 @@ INSERT INTO dataset(
 	(239,22,'StellwagenBankNMS_SS_Aug2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1),
 	(240,22,'StellwagenBankNMS_SS_Sep2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1),
 	(241,22,'StellwagenBankNMS_SS_Oct2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1),
-	(242,22,'StellwagenBankNMS_SS_Dec2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1);
---	(,21,'DeepwaterWindBlockIsland0910_camera','c','cts','ot',60,60,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',53,1),
+	(242,22,'StellwagenBankNMS_SS_Dec2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1),
+	(243,21,'DeepwaterWindBlockIsland0910_camera','c','cts','ot',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',53,1),
+	(244,20,'StellwagenBankNMS_WW_2011-10-22','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(245,20,'StellwagenBankNMS_WW_2012-06-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(246,20,'StellwagenBankNMS_WW_2012-06-24','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(247,20,'StellwagenBankNMS_WW_2012-07-01','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(248,20,'StellwagenBankNMS_WW_2012-07-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(249,20,'StellwagenBankNMS_WW_2012-07-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(250,20,'StellwagenBankNMS_WW_2012-08-12','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(251,20,'StellwagenBankNMS_WW_2012-08-19','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(252,20,'StellwagenBankNMS_WW_2012-08-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(253,20,'StellwagenBankNMS_WW_2012-08-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(254,20,'StellwagenBankNMS_WW_2012-09-01','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(255,20,'StellwagenBankNMS_WW_2012-09-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(256,20,'StellwagenBankNMS_WW_2012-09-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(257,20,'StellwagenBankNMS_WW_2012-09-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(258,20,'StellwagenBankNMS_WW_2012-09-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(259,20,'StellwagenBankNMS_WW_2012-09-22','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(260,20,'StellwagenBankNMS_WW_2012-09-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(261,20,'StellwagenBankNMS_WW_2012-10-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(262,20,'StellwagenBankNMS_WW_2012-10-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(263,20,'StellwagenBankNMS_WW_2012-10-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(264,20,'StellwagenBankNMS_WW_2013-06-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(265,20,'StellwagenBankNMS_WW_2013-06-19','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(266,20,'StellwagenBankNMS_WW_2013-06-23','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(267,20,'StellwagenBankNMS_WW_2013-06-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(268,20,'StellwagenBankNMS_WW_2013-06-29','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(269,20,'StellwagenBankNMS_WW_2013-06-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(270,20,'StellwagenBankNMS_WW_2013-07-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(271,20,'StellwagenBankNMS_WW_2013-07-14','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(272,20,'StellwagenBankNMS_WW_2013-07-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(273,20,'StellwagenBankNMS_WW_2013-07-28','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(274,20,'StellwagenBankNMS_WW_2013-08-03','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(275,20,'StellwagenBankNMS_WW_2013-08-04','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(276,20,'StellwagenBankNMS_WW_2013-08-06','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(277,20,'StellwagenBankNMS_WW_2013-08-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(278,20,'StellwagenBankNMS_WW_2013-08-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(279,20,'StellwagenBankNMS_WW_2013-08-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(280,20,'StellwagenBankNMS_WW_2013-08-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(281,20,'StellwagenBankNMS_WW_2013-08-24','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(282,20,'StellwagenBankNMS_WW_2013-08-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(283,20,'StellwagenBankNMS_WW_2013-08-31','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(284,20,'StellwagenBankNMS_WW_2013-09-04','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(285,20,'StellwagenBankNMS_WW_2013-09-14','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(286,20,'StellwagenBankNMS_WW_2013-09-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(287,20,'StellwagenBankNMS_WW_2013-09-29','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(288,20,'StellwagenBankNMS_WW_2013-10-05','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(289,20,'StellwagenBankNMS_WW_2013-10-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(290,20,'StellwagenBankNMS_WW_2013-10-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(291,20,'StellwagenBankNMS_WW_2013-10-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(292,20,'StellwagenBankNMS_WW_2013-11-10','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(293,20,'StellwagenBankNMS_WW_2014-05-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(294,20,'StellwagenBankNMS_WW_2014-05-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(295,20,'StellwagenBankNMS_WW_2014-05-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(296,20,'StellwagenBankNMS_WW_2014-06-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(297,20,'StellwagenBankNMS_WW_2014-06-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(298,20,'StellwagenBankNMS_WW_2014-06-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(299,20,'StellwagenBankNMS_WW_2014-06-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(300,20,'StellwagenBankNMS_WW_2014-06-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(301,20,'StellwagenBankNMS_WW_2014-06-28','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(302,20,'StellwagenBankNMS_WW_2014-07-10','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(303,20,'StellwagenBankNMS_WW_2014-07-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(304,20,'StellwagenBankNMS_WW_2014-07-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(305,20,'StellwagenBankNMS_WW_2014-07-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(306,20,'StellwagenBankNMS_WW_2014-07-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(307,20,'StellwagenBankNMS_WW_2014-07-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(308,20,'StellwagenBankNMS_WW_2014-07-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(309,20,'StellwagenBankNMS_WW_2014-07-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(310,20,'StellwagenBankNMS_WW_2014-08-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(311,20,'StellwagenBankNMS_WW_2014-08-03','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(312,20,'StellwagenBankNMS_WW_2014-08-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(313,20,'StellwagenBankNMS_WW_2014-08-10','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(314,20,'StellwagenBankNMS_WW_2014-08-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(315,20,'StellwagenBankNMS_WW_2014-08-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(316,20,'StellwagenBankNMS_WW_2014-08-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(317,20,'StellwagenBankNMS_WW_2014-08-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(318,20,'StellwagenBankNMS_WW_2014-08-31','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(319,20,'StellwagenBankNMS_WW_2014-09-06','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(320,20,'StellwagenBankNMS_WW_2014-09-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(321,20,'StellwagenBankNMS_WW_2014-09-14','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(322,20,'StellwagenBankNMS_WW_2014-09-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(323,20,'StellwagenBankNMS_WW_2014-09-28','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(324,20,'StellwagenBankNMS_WW_2014-10-05','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(325,20,'StellwagenBankNMS_WW_2014-10-12','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(326,20,'StellwagenBankNMS_WW_2014-10-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(327,20,'StellwagenBankNMS_WW_2014-10-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(328,20,'StellwagenBankNMS_WW_2014-10-31','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(329,20,'StellwagenBankNMS_WW_2014-11-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(330,20,'StellwagenBankNMS_WW_2014-11-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(331,20,'StellwagenBankNMS_WW_2015-04-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(332,20,'StellwagenBankNMS_WW_2015-04-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(333,20,'StellwagenBankNMS_WW_2015-05-10','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(334,20,'StellwagenBankNMS_WW_2015-05-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(335,20,'StellwagenBankNMS_WW_2015-05-24','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(336,20,'StellwagenBankNMS_WW_2015-05-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(337,20,'StellwagenBankNMS_WW_2015-05-31','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(338,20,'StellwagenBankNMS_WW_2015-06-07','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(339,20,'StellwagenBankNMS_WW_2015-06-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(340,20,'StellwagenBankNMS_WW_2015-06-14','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(341,20,'StellwagenBankNMS_WW_2015-06-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(342,20,'StellwagenBankNMS_WW_2015-06-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(343,20,'StellwagenBankNMS_WW_2015-06-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(344,20,'StellwagenBankNMS_WW_2015-07-05','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(345,20,'StellwagenBankNMS_WW_2015-07-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(346,20,'StellwagenBankNMS_WW_2015-07-12','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(347,20,'StellwagenBankNMS_WW_2015-07-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(348,20,'StellwagenBankNMS_WW_2015-07-19','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(349,20,'StellwagenBankNMS_WW_2015-07-23','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(350,20,'StellwagenBankNMS_WW_2015-07-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(351,20,'StellwagenBankNMS_WW_2015-08-01','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(352,20,'StellwagenBankNMS_WW_2015-08-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(353,20,'StellwagenBankNMS_WW_2015-08-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(354,20,'StellwagenBankNMS_WW_2015-08-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(355,20,'StellwagenBankNMS_WW_2015-08-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(356,20,'StellwagenBankNMS_WW_2015-08-22','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(357,20,'StellwagenBankNMS_WW_2015-08-23','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(358,20,'StellwagenBankNMS_WW_2015-08-29','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(359,20,'StellwagenBankNMS_WW_2015-09-06','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(360,20,'StellwagenBankNMS_WW_2015-09-12','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(361,20,'StellwagenBankNMS_WW_2015-09-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(362,20,'StellwagenBankNMS_WW_2015-09-19','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(363,20,'StellwagenBankNMS_WW_2015-09-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(364,20,'StellwagenBankNMS_WW_2015-09-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(365,20,'StellwagenBankNMS_WW_2015-09-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(366,20,'StellwagenBankNMS_WW_2015-10-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(367,20,'StellwagenBankNMS_WW_2015-10-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(368,20,'StellwagenBankNMS_WW_2015-10-24','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(369,20,'StellwagenBankNMS_WW_2015-11-01','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(370,20,'StellwagenBankNMS_WW_2015-11-07','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(371,23,'StellwagenBankNMS_Other_Sept2013','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),--listed as standardized but is in question
+	(372,23,'StellwagenBankNMS_Other_2011-08-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(373,23,'StellwagenBankNMS_Other_2011-09-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(374,23,'StellwagenBankNMS_Other_2011-09-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(375,23,'StellwagenBankNMS_Other_2011-10-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(376,23,'StellwagenBankNMS_Other_2011-12-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(377,23,'StellwagenBankNMS_Other_2012-04-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(378,23,'StellwagenBankNMS_Other_2013-07-28','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(379,23,'StellwagenBankNMS_Other_2013-09-04','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(380,23,'StellwagenBankNMS_Other_2014-07-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(381,23,'StellwagenBankNMS_Other_2014-07-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(382,23,'StellwagenBankNMS_Other_2014-08-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
+	(383,10,'EcoMonFeb2011','b','cts','ot',300,300,0,'no',NULL,NULL,'NOAA',NULL,1),--DEL 1102
+	(384,10,'EcoMonJun2011','b','cts','ot',300,300,0,'no',NULL,NULL,'NOAA',NULL,1),--DEL 1105
+	(385,10,'EcoMonJun2013','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--GU 1302
+	(386,10,'EcoMonNov2013','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--GU 1305
+	(387,10,'EcoMonMar2014','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--GU 1401
+	(388,10,'EcoMonMay2015','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--HB 1502
+	(389,10,'EcoMonOct2015','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--GU 1506 
+	(390,10,'EcoMonAug2016','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--PC 1607
+	(391,10,'EcoMonMay2016','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--GU 1608
+	(392,10,'EcoMonOct2016','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--PC 1609 no bird observer 
+	(393,10,'EcoMonFeb2017','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--HB 1701
+	(394,10,'EcoMonJune2017','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),--GU 1706
+	(395,1,'AMAPPS_FWS_Aerial_Summer2017','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1),
+	(173,24,'NYSERDA_APEM_1','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(396,1,'AMAPPS_FWS_Aerial_2018','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1),
+	(397,1,'AMAPPS_FWS_Aerial_2019','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1),
+	(398,24,'NYSERDA_APEM_2','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(399,24,'NYSERDA_APEM_3','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(400,24,'NYSERDA_APEM_4','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(401,24,'NYSERDA_APEM_5','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(402,24,'NYSERDA_APEM_6','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(403,24,'NYSERDA_APEM_7','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(404,24,'NYSERDA_APEM_8','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(405,24,'NYSERDA_APEM_9','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(406,24,'NYSERDA_APEM_10','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(407,24,'NYSERDA_APEM_11','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1),
+	(408,24,'NYSERDA_APEM_12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1);
+--	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2017','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1),
+--	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2018','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1),
+--	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2019','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1),
 
-	--(,20,'StellwagenBankNMS_WW_2011-10-22','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-06-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-06-24','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-07-01','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-07-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-07-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-08-12','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-08-19','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-08-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-08-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-09-01','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-09-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-09-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-09-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-09-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-09-22','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-09-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-10-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-10-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2012-10-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-06-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-06-19','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-06-23','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-06-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-06-29','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-06-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-07-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-07-14','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-07-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-07-28','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-03','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-04','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-06','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-24','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-08-31','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-09-04','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-09-14','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-09-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-09-29','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-10-05','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-10-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-10-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-10-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2013-11-10','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-05-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-05-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-05-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-06-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-06-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-06-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-06-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-06-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-06-28','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-07-10','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-07-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-07-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-07-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-07-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-07-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-07-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-07-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-03','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-10','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-16','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-08-31','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-09-06','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-09-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-09-14','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-09-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-09-28','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-10-05','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-10-12','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-10-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-10-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-10-31','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-11-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2014-11-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-04-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-04-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-05-10','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-05-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-05-24','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-05-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-05-31','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-06-07','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-06-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-06-14','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-06-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-06-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-06-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-07-05','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-07-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-07-12','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-07-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-07-19','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-07-23','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-07-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-08-01','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-08-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-08-08','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-08-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-08-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-08-22','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-08-23','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-08-29','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-09-06','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-09-12','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-09-13','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-09-19','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-09-20','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-09-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-09-27','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-10-11','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-10-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-10-24','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-11-01','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,20,'StellwagenBankNMS_WW_2015-11-07','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	----other
-	--(,,'StellwagenBankNMS_Other_Sept2013','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),--listed as standardized but is in question
-	--(,,'StellwagenBankNMS_Other_2011-08-02','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2011-09-15','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2011-09-21','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2011-10-18','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2011-12-30','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2012-04-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2013-07-28','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2013-09-04','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2014-07-25','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2014-07-26','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,,'StellwagenBankNMS_Other_2014-08-09','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1),
-	--(,10,'EcoMonMar2014','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonOct2015','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonMay2015','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonOct2016','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonMay2016','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonAug2016','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonFeb2017','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonJun2013','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonNov2013','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1),
-	--(,10,'EcoMonFeb2011','b','cts','ot',300,300,0,'no',NULL,NULL,'NOAA',NULL,1),
-	--(,10,'EcoMonJun2011','b','cts','ot',300,300,0,'no',NULL,NULL,'NOAA',NULL,1);
+
+-- select * from dataset
 --
 
 -- create transect table
@@ -1558,6 +1633,7 @@ CREATE TABLE transect (
 -- create observation table
 CREATE TABLE observation (
 	observation_id int not null,
+	source_obs_id int null, 
 	dataset_id smallint not null,
 	transect_id int null, 
 	obs_dt date null,
@@ -1571,9 +1647,12 @@ CREATE TABLE observation (
 	observer_tx nvarchar(20) null,
 	observer_position nvarchar(20) null,
 	seconds_from_midnight numeric null,
+	original_age_tx nvarchar(50) null,
 	age_id tinyint null,
 	plumage_tx nvarchar(50) null,
+	original_behavior_tx nvarchar(100) null,
 	behavior_id tinyint null,
+	original_sex_tx varchar(50) null,
 	sex_id tinyint null,
 	travel_direction_tx nvarchar(50) null,
 	heading_tx nvarchar(50) null,
@@ -1678,17 +1757,22 @@ INSERT INTO links_and_literature(
 	(28,33,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2007/MAY_ECOMON_DEL0706/CRUISE_REPORT_2007006DE.pdf',NULL,NULL,NULL,NULL),
 	(29,74,NULL,'https://gcmd.gsfc.nasa.gov/search/Metadata.do?from=getdif&subset=GCMD&entry=%5BGCMD%5DGoMA-Platts_Bank_Aerial_Survey#metadata',NULL,NULL,NULL,NULL),
 	(30,89,NULL,NULL,NULL,'Kristopher J. Winiarski, M. Louise Burt, Eric Rexstad, David L. Miller, Carol L. Trocki, Peter W. C.Paton, and Scott R. McWilliams. 2014. Integrating aerial and ship surveys of marine birds into a combineddensity surface model: A case study of wintering Common Loons. The Condor. 116(2):149-161','https://www.researchgate.net/publication/260553628_Integrating_aerial_and_ship_surveys_of_marine_birds_into_a_combined_density_surface_model_A_case_study_of_wintering_Common_Loons','10.1650/CONDOR-13-085.1'),
-	(31,90,NULL,NULL,NULL,'Kristopher J. Winiarski, M. Louise Burt, Eric Rexstad, David L. Miller, Carol L. Trocki, Peter W. C.Paton, and Scott R. McWilliams. 2014. Integrating aerial and ship surveys of marine birds into a combineddensity surface model: A case study of wintering Common Loons. The Condor. 116(2):149-161','https://www.researchgate.net/publication/260553628_Integrating_aerial_and_ship_surveys_of_marine_birds_into_a_combined_density_surface_model_A_case_study_of_wintering_Common_Loons','10.1650/CONDOR-13-085.1');
-
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2016/AUG_ECOMON_PC1607/CRUISE_REPORT_2016007PC.pdf',NULL,NULL,NULL),
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2016/MAY_ECOMON_GU1608/CRUISE_REPORT_2016008GU.pdf',NULL,NULL,NULL),
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2015/MAY_ECOMON_HB1502/CRUISE_REPORT_2015002HB.pdf',NULL,NULL,NULL),
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2015/OCT_ECOMON_GU1506/CRUISE_REPORT_2015006GU.pdf',NULL,NULL,NULL),
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2014/MAR_ECOMON_GU1401/CRUISE_REPORT_2014001GU.pdf',NULL,NULL,NULL),
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/JUN_ECOMON_GU1302/CRUISE_REPORT_2013002GU.pdf',NULL,NULL,NULL),
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/NOV_ECOMON_GU1305/CRUISE_REPORT_2013005GU.pdf',NULL,NULL,NULL),
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2011/FEB_ECOMON_DEL1102/CRUISE_REPORT_2011002DE.pdf',NULL,NULL,NULL),
---	(, ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2011/JUN_ECOMON_DEL1105/CRUISE_REPORT_2011005DE.pdf',NULL,NULL,NULL);
+	(31,90,NULL,NULL,NULL,'Kristopher J. Winiarski, M. Louise Burt, Eric Rexstad, David L. Miller, Carol L. Trocki, Peter W. C.Paton, and Scott R. McWilliams. 2014. Integrating aerial and ship surveys of marine birds into a combineddensity surface model: A case study of wintering Common Loons. The Condor. 116(2):149-161','https://www.researchgate.net/publication/260553628_Integrating_aerial_and_ship_surveys_of_marine_birds_into_a_combined_density_surface_model_A_case_study_of_wintering_Common_Loons','10.1650/CONDOR-13-085.1'),
+ 	(32,390 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2016/AUG_ECOMON_PC1607/CRUISE_REPORT_2016007PC.pdf',NULL,NULL,NULL,NULL),
+ 	(33,391 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2016/MAY_ECOMON_GU1608/CRUISE_REPORT_2016008GU.pdf',NULL,NULL,NULL,NULL),
+ 	(34,388 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2015/MAY_ECOMON_HB1502/CRUISE_REPORT_2015002HB.pdf',NULL,NULL,NULL,NULL),
+ 	(35,389 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2015/OCT_ECOMON_GU1506/CRUISE_REPORT_2015006GU.pdf',NULL,NULL,NULL,NULL),
+ 	(36,387 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2014/MAR_ECOMON_GU1401/CRUISE_REPORT_2014001GU.pdf',NULL,NULL,NULL,NULL),
+ 	(37,385 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/JUN_ECOMON_GU1302/CRUISE_REPORT_2013002GU.pdf',NULL,NULL,NULL,NULL),
+ 	(38,386 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2013/NOV_ECOMON_GU1305/CRUISE_REPORT_2013005GU.pdf',NULL,NULL,NULL,NULL),
+ 	(39,383 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2011/FEB_ECOMON_DEL1102/CRUISE_REPORT_2011002DE.pdf',NULL,NULL,NULL,NULL),
+ 	(40,384 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2011/JUN_ECOMON_DEL1105/CRUISE_REPORT_2011005DE.pdf',NULL,NULL,NULL,NULL),
+    (41,393 ,NULL,'https://www.nefsc.noaa.gov/HydroAtlas/2017/FEB_ECOMON_HB1701/CRUISE_REPORT_2017001HB.pdf',NULL,NULL,NULL,NULL),
+	(42,173,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/Summary%20of%20Summer%202016%20Survey%201.pdf',NULL,NULL,NULL,NULL),
+	(43,398,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA-Fall%202016%20Survey2_Summary.pdf',NULL,NULL,NULL,NULL),
+	(44,399,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA%20Winter%202017%20-%20Survey%20Summary%20Report.pdf',NULL,NULL,NULL,NULL),
+	(45,400,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA%20Spring%202017%20-%20Survey%20Summary%20Report.pdf',NULL,NULL,NULL,NULL),
+	(46,401,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA%20Summer%202017%20-%20Survey%20Summary%20Report.pdf',NULL,NULL,NULL,NULL);
 -- select * from links_and_literature
 
 --ECOMON Nov 2014 no birds in report? combined with Herring Acoustic https://www.nefsc.noaa.gov/HydroAtlas/2014/NOV_ECOMON_PC1405/CRUISE_REPORT_2014005PC.pdf
@@ -1715,24 +1799,30 @@ GO
 
 -- select * from progress_table
 INSERT INTO progress_table(
-	dataset_id, share_level_id, dataset_name, action_required_or_taken,
-	date_of_action, who_will_act, data_acquired,
-	metadata_acquired, report_acquired, additional_info)
+	dataset_id, 
+	share_level_id, 
+	dataset_name, 
+	action_required_or_taken,
+	date_of_action, 
+	who_will_act, 
+	data_acquired,
+	metadata_acquired, 
+	report_acquired, 
+	additional_info)
 	VALUES
 	(92,7,'PIROP','need to investigate',NULL,'KC',0,0,0,'Apparently already in database but across several other surveys, need to figure out which'),
 	(93,0,'SEANET','need to investigate',NULL,'KC',0,0,0,'Not sure that we actually want this in here'),
 	(96,0,'NantucketShoals1998','need to investigate',NULL,'TW',0,0,0,NULL),
 	(97,0,'DEandChesBaysUSFWS1190','need to investigate',NULL,'MTJ/KC',0,0,0,NULL),
 	(100,0,'AtlanticFlywaySeaducks','need to investigate',NULL,'MTJ/KC',0,0,0,NULL),
-	(101,0,'DUMLOnslowBay2007','need to investigate',NULL,'AW',0,0,0,NULL),
+	(101,0,'DUMLOnslowBay2007','requested',CAST('2017-10-18' as date),'AW',0,0,0,'data provider on materinty leave, will contact again in a few months'),
 	(106,0,'WaterfowlUSFWS2001','need to investigate',NULL,'MTJ/KC',0,0,0,NULL),
 	(119,0,'ECSAS','Arliss has, on hold for now',NULL,'KC',0,0,0,'waiting until data is published'),
 	(163,0,'RoyalSociety','need to investigate',NULL,'TW',0,0,0,NULL),
-	(166,0,'BarHarborWW09','requested multiple times',CAST('2017-7-21' AS DATE),'KC',0,0,0,NULL),
-	(167,0,'BarHarborWW010','requested multiple times',CAST('2017-7-21' AS DATE),'KC',0,0,0,NULL),
+	(166,0,'BarHarborWW09','requested multiple times',CAST('2017-10-17' as date),'KC',0,0,0,NULL),
+	(167,0,'BarHarborWW010','requested multiple times',CAST('2017-10-17' as date),'KC',0,0,0,NULL),
 	(169,99,'BOEMHighDef_NC2011Camera','need to finish QA/QC',NULL,'KC',1,0,1,'There were issues with the gps and time'),
-	(172,9,'BRIMaine2016','looked at data, needs QA/QC',NULL,'KC',1,0,0,NULL),
-	(173,0,'NYSERDA_APEM','need to invevstigate',NULL,'KC',0,0,0,'Was in contact with provider about submission guidelines, need to check back'),
+	(172,99,'BRIMaine2016','QA/QC in progress',NULL,'KC',1,0,0,NULL),
 	(95,99,'StellwagenBankNMS_Jun2012','QA/QC in progress',NULL,'KC',1,1,0,'Script from Arliss as guide'),	
 	(182,99,'StellwagenBankNMS_Aug2012','QA/QC in progress',NULL,'KC',1,1,0,'Script from Arliss as guide'),
 	(183,99,'StellwagenBankNMS_Oct2012','QA/QC in progress',NULL,'KC',1,1,0,'Script from Arliss as guide'),
@@ -1796,18 +1886,28 @@ INSERT INTO progress_table(
 	(240,99,'StellwagenBankNMS_SS_Sep2015','QA/QC in progress',NULL,'KC',1,1,0,NULL),
 	(241,99,'StellwagenBankNMS_SS_Oct2015','QA/QC in progress',NULL,'KC',1,1,0,NULL),
 	(242,99,'StellwagenBankNMS_SS_Dec2015','QA/QC in progress',NULL,'KC',1,1,0,NULL),
---	(,0,'EcoMonMar2014','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonOct2015','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonMay2015','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonOct2016','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonMay2016','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonAug2016','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonFeb2017','need to request',NULL,'TW/KC',0,0,0,'In contact with TW and AW about this'),
---	(,0,'EcoMonJun2013','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonNov2013','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonFeb2011','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
---	(,0,'EcoMonJun2011','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),;
---
+	(387,0,'EcoMonMar2014','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(389,0,'EcoMonOct2015','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(388,0,'EcoMonMay2015','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(391,0,'EcoMonMay2016','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(390,0,'EcoMonAug2016','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(393,0,'EcoMonFeb2017','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(385,0,'EcoMonJun2013','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(386,0,'EcoMonNov2013','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(383,0,'EcoMonFeb2011','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(384,0,'EcoMonJun2011','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
+	(395,99,'FWS_AMAPPS_Aerial_Summer2017','QA/QC in progress',NULL,'KC',1,0,0,'In contact with the last three observers'),
+	(173,0,'NYSERDA_APEM_1','requested',CAST('2017-10-18' as date),'KC',0,0,1,'working on details with provider'),
+	(398,0,'NYSERDA_APEM_2','requested',CAST('2017-10-18' as date),'KC',0,0,1,'working on details with provider'),
+	(399,0,'NYSERDA_APEM_3','requested',CAST('2017-10-18' as date),'KC',0,0,1,'working on details with provider'),
+	(400,0,'NYSERDA_APEM_4','requested',CAST('2017-10-18' as date),'KC',0,0,1,'working on details with provider'),
+	(401,0,'NYSERDA_APEM_5','requested',CAST('2017-10-18' as date),'KC',0,0,1,'working on details with provider'),
+	(243,9,'DeepwaterWindBlockIsland0910_camera','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating');
+-- 	update progress_table
+-- 	set 
+--	date_of_action=CAST('2017-10-18' as date)
+-- 	where dataset_id = 401
+-- select * from progress_table
 
 --create boem lease block table
 CREATE TABLE boem_lease_blocks (
