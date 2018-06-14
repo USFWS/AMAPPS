@@ -58,7 +58,7 @@ obs$species[obs$species %in% "WTTB"] = "WTTR" #White-tailed tropicbird
 obs = mutate(obs, 
              date = as.Date(sapply(strsplit(sightdatetimelocal," "),head,1),format="%d-%b-%y"), 
              time = sapply(strsplit(sightdatetimelocal," "),tail,1)) #%>% 
-  #dplyr::select(-sightdatetimelocal)
+#dplyr::select(-sightdatetimelocal)
 
 effort = effort %>% 
   arrange(tripid,transect,leg,id) %>% 
@@ -71,7 +71,7 @@ effort = effort %>%
          p = sapply(strsplit(datetimelocal," "),tail,1),
          hour = ifelse(p %in% "PM" & !hour %in% "12", hour+12, hour),
          time = paste(hour,min,sec,sep=":")) #%>% 
-  #dplyr::select(-datetimelocal,-hour,-min,-sec,-p)
+#dplyr::select(-datetimelocal,-hour,-min,-sec,-p)
 # ------- #
 
 # ------- #
@@ -122,7 +122,7 @@ effort %>% filter(type %in% c("BEGCNT","ENDCNT")) %>%
 obs = mutate(obs, effort = "on")
 
 
-  
+
 # fix those with odd efforts
 # x = effort[effort$tripid %in% "GU1702" & effort$transect %in% 83,] %>% 
 #   mutate(type = ifelse(type %in% "WAYPNT","W",type)) %>% arrange(time)
@@ -161,17 +161,24 @@ effort$comments[effort$tripid %in% "GU1702" & effort$transect %in% 83 & effort$t
 #
 # combine and assign
 obstrack = bind_rows(obs,effort) %>% 
-   mutate(datetime = as.POSIXct(paste(date, time, sep = " "), format = "%Y-%m-%d %H:%M:%S")) %>% 
-   arrange(tripid,datetime) %>%
-   mutate(newId = seq(1:length(id)), effort = ifelse(newId %in% 1:3,"off",effort)) %>% # because can't start off effort with na.locf
-   group_by(tripid,date) %>%
-   mutate(effort = ifelse(newId<newId[!is.na(effort)][1],"off",effort), effort = na.locf(effort))
+  mutate(datetime = as.POSIXct(paste(date, time, sep = " "), format = "%Y-%m-%d %H:%M:%S")) %>% 
+  arrange(tripid,datetime) %>%
+  mutate(newId = seq(1:length(id)), effort = ifelse(newId %in% 1:3,"off",effort)) %>% # because can't start off effort with na.locf
+  group_by(tripid,date) %>%
+  mutate(effort = ifelse(newId<newId[!is.na(effort)][1],"off",effort), effort = na.locf(effort))
 
 #obstrack$effort = na.locf(obstrack$effort)
 obstrack$transect[obstrack$effort %in% "on"] = na.locf(obstrack$transect[obstrack$effort %in% "on"])
 obstrack$effort[obstrack$type %in% c('BEGCNT','ENDCNT')] = "on"
 obstrack$transect[obstrack$effort %in% "off"] = NA
 obstrack$offline = ifelse(obstrack$effort %in% "off",1,0)
+
+# fix offline obs after last end
+obstrack = obstrack %>% arrange(desc(datetime)) %>%
+  group_by(tripid,transect) %>%
+  mutate(offline = ifelse(newId>newId[type %in% "ENDCNT"][1],1,offline)) %>%
+  ungroup() %>% 
+  arrange(datetime)
 
 # pull obstrack apart
 rm(obs,effort)
@@ -220,7 +227,7 @@ write.csv(effort6, paste(dir.out,"GU1706_effort.csv",sep="/"))
 # test plot
 require(ggplot2)
 
-n = c(1:3)
+n = c(1:5)
 e = effort2
 o = obs2
 transect.list = sort(unique(e$transect))
@@ -230,7 +237,7 @@ ggplot(e[e$transect %in% transect.list[n],],aes(lon,lat,col=as.character(transec
   geom_point(data=e[e$transect %in% transect.list[n] & e$type %in% "ENDCNT",], aes(x=lon, y=lat),col="red",size=3,shape=9)+
   theme_bw()+
   geom_point(data=o[o$transect %in% transect.list[n] & o$offline %in% 0,],aes(x=lon,y=lat,col=as.character(transect)),shape=3,size=3)+
-  geom_point(data=o[o$transect %in% transect.list[n] & !o$offline %in% 0,],aes(x=lon,y=lat),shape=3,size=3,col="grey")
+  geom_point(data=o[o$transect %in% transect.list[n] & !o$offline %in% 0,],aes(x=lon,y=lat),shape=6,size=3,col="grey")
 
 
 ggplot(e,aes(lon,lat,col=as.character(transect)))+geom_point()+
