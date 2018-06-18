@@ -1,5 +1,7 @@
 #-------------------- #
 # Pam, looking for flight heights of shorebirds
+# created April 2018
+# edited June 2018 for updated request of figure
 # ------------------- #
 
 # ------------------------ #
@@ -25,8 +27,8 @@ dir.out = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/Pam_shorebird_fligh
 # ------------------------ #
 # get dataset list
 db <- dbConnect(odbc::odbc(),driver='SQL Server',server='ifw-dbcsqlcl1',database='NWASC')
-dataset = dbGetQuery(db, "select * from dataset2")
-spp = dbGetQuery(db, "select * from lu_species2")
+dataset = dbGetQuery(db, "select * from dataset")
+spp = dbGetQuery(db, "select * from lu_species")
 
 # get old data
 db <- dbConnect(odbc::odbc(),driver='SQL Server',server='ifw9mbmsvr008',database='SeabirdCatalog')
@@ -138,13 +140,39 @@ p=ggplot(all_dat, aes(reorder(common_name,fh), fh,
 p
 ggsave(file = paste(dir.out, "flight_heights.png",sep="/"),plot=p)  
 
-p=ggplot(all_dat, aes(reorder(common_name,fh), fh, fill=common_name))+
+# give.n <- function(x){
+#   return(c(y = -15, label = length(x)))
+# }
+# library(grid)
+# test=grobTree(textGrob("n=",x=rep(-20,12),y=unique(all_dat$common_name)))
+# z=as.factor(sort(unique(all_dat$common_name)))
+all_dat = mutate(all_dat, n = 1,
+                 n = ifelse(common_name %in% "Black-bellied Plover",7,n),
+                 n = ifelse(common_name %in% "Dunlin",14,n),
+                 n = ifelse(common_name %in% "Least Sandpiper",27,n),
+                 n = ifelse(common_name %in% "Unidentified shorebird",75,n),
+                 n = ifelse(common_name %in% "Ruddy Turnstone",4,n),
+                 n = ifelse(common_name %in% "Sanderling",39,n),
+                 n = ifelse(common_name %in% "Semipalmated Plover",9,n),
+                 n = ifelse(common_name %in% "Semipalmated Sandpiper",23,n),
+                 n = ifelse(common_name %in% "Unidentified Sandpiper",4,n),
+                 n = ifelse(common_name %in% "Unidentified small shorebird",29,n),
+                 new_common = paste(common_name, "(n=", n, ")", sep=" "))
+
+p=ggplot(all_dat, aes(reorder(new_common,fh), fh, fill=common_name))+
   geom_boxplot()+
   coord_flip()+
   theme_bw()+ 
   xlab("Species")+
   ylab("Flight Height in meters")+
   ggtitle("Flight Heights in the Northwest Atlantic Seabird Catalog")+
-  theme(legend.position = "none")
+  theme(legend.position = "none",
+        text = element_text(size=20))#+ 
+  #stat_summary(fun.data = give.n, geom = "text", 
+  #             position = position_dodge(width = 0.75))#+
+  #annotate_custom(test)+
+  #annotate("text",x=rep(-20,12),y=z,label=rep("n=",12))
+ # text(data = all_dat, aes(common_name, yy), 
+  #     row.names(n), cex=0.6, pos=4, col="red")
 p
 ggsave(file = paste(dir.out, "flight_heights_boxplot.png",sep="/"),plot=p)  
