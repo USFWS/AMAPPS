@@ -128,7 +128,8 @@ INSERT INTO lu_people([user_id], name, affiliation, active_status,work_email_onl
 	(77,'Randy Dettmers','USFWS','active','randy_dettmers@fws.gov'),
 	(78,'Jo Anna Lutmerding','USFWS','active','jo_lutmerding@fws.gov'),
 	(79,'Kaye London','USFWS','active','kaye_london@fws.gov'),
-	(80,'Andrew Allyn','UMass','active',NULL);
+	(80,'Andrew Allyn','UMass','active',NULL),
+	(81,'Sarah Yates','USFWS','active','sarah_yates@fws.gov');
 /* 
 update lu_people
 set name = 'Jo Anna Lutmerding'
@@ -1708,7 +1709,7 @@ INSERT INTO dataset(
 	(413,25,'GOMCES 2014','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
     (414,25,'GOMCES 2015','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
     (415,25,'GOMCES 2016','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
-	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','cbc','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);--,
+	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','dth','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);--,
 	--(417,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 	--(418,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 
@@ -1723,7 +1724,7 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-survey_type_cd = 'f'
+survey_method_cd = 'dth'
 where dataset_id = 416
 	
 */
@@ -2022,8 +2023,16 @@ GO
 --
 -- select * from progress_table
 INSERT INTO progress_table(
-	dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
-	data_acquired, metadata_acquired, report_acquired, additional_info)
+	dataset_id, 
+	share_level_id, 
+	dataset_name, 
+	action_required_or_taken, 
+	date_of_action, 
+	who_will_act, 
+	data_acquired, 
+	metadata_acquired, 
+	report_acquired, 
+	additional_info)
 	VALUES
  	(92,7,'PIROP','need to investigate',NULL,'KC',0,0,0,'Apparently already in database but across several other surveys, need to figure out which'),
  	(93,0,'SEANET','need to investigate',NULL,'KC',0,0,0,'Not sure that we actually want this in here'),
@@ -2066,16 +2075,17 @@ INSERT INTO progress_table(
 	(386,0,'EcoMonNov2013','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
 	(383,0,'EcoMonFeb2011','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
 	(384,0,'EcoMonJun2011','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
-	(173,0,'NYSERDA_APEM_1','requested again',CAST('2018-05-01' as date),'KC',0,0,1,'working on details with provider'),
-	(398,0,'NYSERDA_APEM_2','requested again',CAST('2018-05-01' as date),'KC',0,0,1,'working on details with provider'),
-	(399,0,'NYSERDA_APEM_3','requested again',CAST('2018-05-01' as date),'KC',0,0,1,'working on details with provider'),
-	(400,0,'NYSERDA_APEM_4','requested again',CAST('2018-05-01' as date),'KC',0,0,1,'working on details with provider'),
-	(401,0,'NYSERDA_APEM_5','requested again',CAST('2018-05-01' as date),'KC',0,0,1,'working on details with provider'),
+	--(173,0,'NYSERDA_APEM_1','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
+	--(398,0,'NYSERDA_APEM_2','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
+	--(399,0,'NYSERDA_APEM_3','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
+	--(400,0,'NYSERDA_APEM_4','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
+	--(401,0,'NYSERDA_APEM_5','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
 	(243,9,'DeepwaterWindBlockIsland0910_camera','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
     (119,9,'ECSAS','Data downloaded from OBIS, needs effort data',NULL,'KC',1,1,0,'Arliss has full dataset'),
 	(413,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),
 	(414,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),	
 	(415,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL);
+	--(416,9,'BIWF_','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
 
 --  dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
 --  data_acquired, metadata_acquired, report_acquired, additional_info)
@@ -2160,7 +2170,10 @@ INSERT INTO requests(
 	(26,'data',60,'flight heights for shorebirds',CAST('2018-04-12' AS DATE),'filled',CAST('2018-04-13' AS DATE),NULL),
 	(27,'data',60,'make boxplot for shorebird flight heights',CAST('2018-04-12' AS DATE),'filled',CAST('2018-04-13' AS DATE),NULL),
 	(28,'data',65,'all effort data',CAST('2018-04-30' AS DATE),'not filled',NULL,NULL),
-	(29,'data',77,'redo landbird obs, add dataset info',CAST('2018-05-10' AS DATE),'not filled',NULL,NULL);
+	(29,'data',77,'redo landbird obs, add dataset info',CAST('2018-05-10' AS DATE),'not filled',NULL,NULL),
+	(30,'service',81,'AMAPPS winter 2014 DCCO',CAST('2018-06-14' AS DATE),'filled',CAST('2018-06-14' AS DATE),NULL),
+	(31,'data',60,'update boxplot for shorebird flight heights',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-18' AS DATE),'add n='),
+	(32,'data',62,'copy of the species table',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-15' AS DATE),'add n=');
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
