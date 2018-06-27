@@ -941,7 +941,9 @@ INSERT INTO lu_survey_type(survey_type_cd,survey_type_ds)
 	('b','boat'),
 	('c','camera'),
 	('f','fixed ground survey'),
-	('g','area-wide ground survey');
+	('g','area-wide ground survey');/*,
+	('p','passive acoustics detectors'),
+	('d','active acoustic detectors');*/
 --
 
 CREATE TABLE lu_platform_name(
@@ -1203,7 +1205,24 @@ INSERT INTO lu_parent_project(
 	(18,'EcoMon/HerringAcoutic combo',NULL,NULL),
 	(19,'StellwagenBankNMS standardized transects',NULL,NULL),
 	(20,'StellwagenBankNMS Whale Watch',NULL,NULL),
-	(21,'Deepwater Wind BI Boat',NULL,NULL),
+	(21,'BIWF','"Deepwater Wind Rhode Island, LLC (Deepwater) contracted Tetra Tech EC, Inc. (Tetra Tech) to complete 
+			a comprehensive baseline assessment of avian and bat resources within and surrounding the Block 
+			Island Wind Farm (BIWF) Project Area in an effort to characterize the avian and bat communities and 
+			use this information to assess the potential impacts posed to these resources by the proposed BIWF. 
+			Surveys were performed in the offshore area where wind turbine generators (WTGs) are proposed as 
+			well as adjacent offshore and nearshore areas. In addition, surveys were conducted along the southern 
+			coast of Block Island and a portion of the north shore of the Great Salt Pond. Collectively these areas 
+			comprised the BIWF Study Area.  
+			Surveys that were part of the study included onshore sea-watch point counts, offshore boat-based 
+			transects, high definition aerial videography of the offshore portion of the BIWF Study Area, MERLIN 
+			avian radar, VESPER vertical profiling radar, Next Generation Weather Radar (NEXRAD) historical 
+			migration data review, radar validation, as well as avian acoustic monitoring and passive and active bat 
+			acoustic monitoring. These surveys were completed between February 2009 and September 2011. Seawatch 
+			point counts, boat-based transects, and aerial videography surveys included identification of 
+			species as well as collection of data on abundance and spatial and temporal distributions, while MERLIN 
+			and VESPER radars provided additional detailed information on passage rates and flight heights. Bat and 
+			avian acoustics were collected to gain insight on nocturnal activity in the Study Area."',
+			'http://dwwind.com/project/block-island-wind-farm/'),
 	(22,'StellwagenBankNMS second side transects',NULL,NULL),
 	(23,'StellwagenBankNMS "other" protocol',NULL,NULL),
 	(24,'NYSERDA','In preparation for offshore wind energy development, the New York State Energy and 
@@ -1242,7 +1261,7 @@ INSERT INTO lu_parent_project(
 */
 
 -- select * from lu_parent_project
- 
+
 ------------------------
 -- create main tables --
 ------------------------
@@ -1688,9 +1707,12 @@ INSERT INTO dataset(
 	(412,10,'EcoMonOct2017_GU1706','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,NULL),
 	(413,25,'GOMCES 2014','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
     (414,25,'GOMCES 2015','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
-    (415,25,'GOMCES 2016','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25);
+    (415,25,'GOMCES 2016','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
+	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','cbc','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);--,
+	--(417,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
+	--(418,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 
--- 	(,21,'DeepwaterWindBlockIsland_bats',NULL,NULL,NULL,NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL),
+
 --	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2018','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
 --	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2019','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
 
@@ -1701,13 +1723,53 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-platform_name_id = 26
-where dataset_id in (95,182,183,184,185,186,187,188,189,190,
-191,192,193,194,195,196,197,198,199,200,201,202,203,204)
+survey_type_cd = 'f'
+where dataset_id = 416
 	
 */
 
 -- select * from dataset
+
+-- adding summary data 
+update dataset
+set
+dataset_summary = '"Surveys were conducted for
+30 minutes at each point, during which time all birds seen or heard were recorded on standardized data
+sheets. Binoculars (10x42 millimeters [mm]) and spotting scopes (15–46x60 mm) were used to aid in
+sighting birds, and observers used field reference materials to confirm identification(Sibley 2000,
+Paulson 2005, Proctor and Lynch 2005, O’Brien et al. 2006). Sea watch surveys focused on the
+crepuscular periods of the day: dawn and dusk. During dawn surveys point counts began approximately
+one-half hour before sunrise, and during dusk surveys counts ended approximately one-half hour after
+the sunset. Points were surveyed during the morning and evening periods at an approximately equal
+frequency to avoid potential biases related to survey timing. Information on species, number of
+individuals, flight ecology, relative age (adult or juvenile), and behavior (foraging, direct flight, and
+perched on the ground or water) were recorded. For birds observed in flight, the vertical flight elevation
+above the ground or water was estimated and recorded in the following categories: <10 m (<33 ft), 10–
+25 m (33–82 ft), 26–125 m (85–410 ft), 126–200 m (413–656 ft), and >200 m (>656 ft). Bird observations
+were recorded in distance increments (bins) similar to those used in the RI Ocean SAMP sea watch
+surveys: 0–500 m (0–1,640 ft), 500–1,500 m (1,640–4,921 ft), and 1,500–3,000 m (4,921–9,843 ft); the
+maximum distance sampled was 3 km (1.9 mi) offshore, or less, as visibility permitted (Paton, Winiarski
+et al. 2010). Weather observations were recorded including ambient temperature, wind speed, wind
+direction, sea state (Douglas Sea Scale), and visibility."'
+where dataset_id = 416
+
+/*update dataset
+set
+dataset_summary = '"In addition to the four detectors deployed on Block Island a detector was deployed on each of two
+buoys, at a height of 2.5 m (8.2 ft) above mean sea level (AMSL). One detector was deployed on a
+weather buoy anchored 5.6 km (3 nm) south of the island, and a second buoy 27.8 km (15 nm) east of
+Block Island (Figure 3.3.1). Anabat SD-1 detectors (Titley Electronics, Inc.) were used and weatherized
+for the marine environment. Each detector was set up to transmit data via a cellular connection. The
+detector received power from the buoy’s internal solar power system. The microphone of the buoy
+detector was buffered from the marine environment by a 90 degree sweep section of PVC piping, with a
+small drain hole in the bottom (Appendix A). The PVC tube was intended to prevent sea spray from
+directly contacting the microphone’s elements. The PVC tubing acted as a deflector for potential call
+sequences to be recorded by the unit, similar to the deflector plates used on the onshore passive
+acoustic setups (Appendix A). Sensitivity of the microphone was tested prior to deployment using a bat
+chirper (Tony Massena, Nevada) which produces a constant 40 kHz tone. The detectors were calibrated
+prior to deployment to ensure that bat calls would be detected within a maximum range of 30 m (98 ft)
+at 40 kHz"'
+where dataset_id = 417*/
 
 --create revisions table
 CREATE TABLE lu_revision_details (
