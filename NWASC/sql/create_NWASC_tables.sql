@@ -1688,12 +1688,10 @@ INSERT INTO dataset(
 	(393,10,'EcoMonMay2017_GU1701','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,23),
 	(394,10,'EcoMonJune2017_GU1702','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,23),
 	(395,1,'AMAPPS_FWS_Aerial_Summer2017','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(173,24,'NYSERDA_APEM_1','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(396,1,'AMAPPS_FWS_Aerial_2018','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(397,1,'AMAPPS_FWS_Aerial_2019','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(398,24,'NYSERDA_APEM_2','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(399,24,'NYSERDA_APEM_3','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(400,24,'NYSERDA_APEM_4','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(173,24,'NYSERDA_APEM_1','c','cts','ot',NULL,NULL,99,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(398,24,'NYSERDA_APEM_2','c','cts','ot',NULL,NULL,99,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(399,24,'NYSERDA_APEM_3','c','cts','ot',NULL,NULL,99,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(400,24,'NYSERDA_APEM_4','c','cts','ot',NULL,NULL,99,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(401,24,'NYSERDA_APEM_5','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(402,24,'NYSERDA_APEM_6','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(403,24,'NYSERDA_APEM_7','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
@@ -1709,9 +1707,12 @@ INSERT INTO dataset(
 	(413,25,'GOMCES 2014','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
     (414,25,'GOMCES 2015','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
     (415,25,'GOMCES 2016','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
-	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','dth','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);--,
-	--(417,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
-	--(418,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
+	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','dth','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL),
+	(396,1,'AMAPPS_FWS_Aerial_summer2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
+	(397,1,'AMAPPS_FWS_Aerial_2019','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
+	(417,1,'AMAPPS_FWS_Aerial_fall2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL);
+	--(418,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
+	--(419,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 
 
 --	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2018','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
@@ -1724,12 +1725,13 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-survey_method_cd = 'dth'
-where dataset_id = 416
-	
+share_level_id = 5,
+in_database = 'yes'
+where dataset_id in (393, 394, 412)
+
 */
 
--- select * from dataset
+-- select * from dataset order by share_level_id
 
 -- adding summary data 
 update dataset
@@ -2085,7 +2087,7 @@ INSERT INTO progress_table(
 	(413,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),
 	(414,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),	
 	(415,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL);
-	--(416,9,'BIWF_','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
+	--(416,9,'BIWF_onshore_sea_watch_avian_surveys','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
 
 --  dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
 --  data_acquired, metadata_acquired, report_acquired, additional_info)
@@ -2173,14 +2175,18 @@ INSERT INTO requests(
 	(29,'data',77,'redo landbird obs, add dataset info',CAST('2018-05-10' AS DATE),'not filled',NULL,NULL),
 	(30,'service',81,'AMAPPS winter 2014 DCCO',CAST('2018-06-14' AS DATE),'filled',CAST('2018-06-14' AS DATE),NULL),
 	(31,'data',60,'update boxplot for shorebird flight heights',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-18' AS DATE),'add n='),
-	(32,'data',62,'copy of the species table',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-15' AS DATE),'add n=');
+	(32,'data',62,'copy of the species table',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-15' AS DATE),NULL);
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
-/*	update data_requests 
+/*	update requests 
 	set date_filled = CAST('2017-07-17' AS DATE), 
 	request_status = 'filled'  
 	where request_id = 7
+
+	update requests 
+	set additional_notes = NULL
+	where request_id = 32
 */
 
 /*  look up people who need to be contacted for a project */ 
