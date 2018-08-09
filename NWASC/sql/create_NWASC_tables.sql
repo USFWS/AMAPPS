@@ -1688,14 +1688,14 @@ INSERT INTO dataset(
 	(393,10,'EcoMonMay2017_GU1701','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,23),
 	(394,10,'EcoMonJune2017_GU1702','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,23),
 	(395,1,'AMAPPS_FWS_Aerial_Summer2017','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(173,24,'NYSERDA_APEM_1','c','cts','ot',NULL,NULL,99,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(398,24,'NYSERDA_APEM_2','c','cts','ot',NULL,NULL,99,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(399,24,'NYSERDA_APEM_3','c','cts','ot',NULL,NULL,99,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(400,24,'NYSERDA_APEM_4','c','cts','ot',NULL,NULL,99,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(401,24,'NYSERDA_APEM_5','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(402,24,'NYSERDA_APEM_6','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(403,24,'NYSERDA_APEM_7','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(404,24,'NYSERDA_APEM_8','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(173,24,'NYSERDA_OPA_Survey1_Summer2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(398,24,'NYSERDA_OPA_Survey2_Fall2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(399,24,'NYSERDA_OPA_Survey3_Winter2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(400,24,'NYSERDA_OPA_Survey4_Spring2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(401,24,'NYSERDA_WEA_Survey1_Summer2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(402,24,'NYSERDA_WEA_Survey2_Fall2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(403,24,'NYSERDA_WEA_Survey3_Winter2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(404,24,'NYSERDA_WEA_Survey4_Spring2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(405,24,'NYSERDA_APEM_9','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(406,24,'NYSERDA_APEM_10','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(407,24,'NYSERDA_APEM_11','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
@@ -1725,13 +1725,13 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-share_level_id = 5,
-in_database = 'yes'
-where dataset_id in (393, 394, 412)
+dataset_type_cd = 'go'
+where dataset_id in (173,398,399,400, 401,402,403,404)
 
 */
 
 -- select * from dataset order by share_level_id
+-- select * from dataset where parent_project = 24
 
 -- adding summary data 
 update dataset
