@@ -1226,7 +1226,7 @@ INSERT INTO lu_parent_project(
 			'http://dwwind.com/project/block-island-wind-farm/'),
 	(22,'StellwagenBankNMS second side transects',NULL,NULL),
 	(23,'StellwagenBankNMS "other" protocol',NULL,NULL),
-	(24,'NYSERDA','In preparation for offshore wind energy development, the New York State Energy and 
+	(24,'NYSERDA','"In preparation for offshore wind energy development, the New York State Energy and 
 		Research Development Authority (NYSERDA) has initiated the largest offshore high resolution aerial 
 		survey of marine and bird life in U.S. history. Normandeau Associates, Inc. and APEM Ltd (Normandeau-APEM team) 
 		will gather 3 years of baseline surveys to assess the entire New York Offshore Planning Area (OPA) 
@@ -1234,7 +1234,9 @@ INSERT INTO lu_parent_project(
 		aerial digital imagery to assess use by birds, marine mammals, turtles, and fish. This proactive 
 		study of potential impacts will facilitate a more efficient track to energy production offshore New 
 		York by providing the necessary information to meet the U.S. Bureau of Ocean Energy Management''s (BOEM''s) 
-		regulatory requirements for environmental review of WEAs.','https://remote.normandeau.com/nys_overview.php'),
+		regulatory requirements for environmental review of WEAs." It should be noted that all counts for each record are one. 
+	 	The data may need to be combined by date, time, and species to get a total count at that location during that time.
+	 	There is also spatial overlap between some transects as well as between OPA and WEA.','https://remote.normandeau.com/nys_overview.php'),
 	(25,'GOMCES','During the summers of 2014, 2015 and 2016, a multidisciplinary science team collected ecosystem 
 		data within the Gulf of Maine coastal zone (waters ~ 2 – 150 m deep) as part of the Gulf of Maine Coastal 
 		Ecosystem Survey (GOMCES). There were 11 transects. Marine bird and mammal surveys were completed using a 
