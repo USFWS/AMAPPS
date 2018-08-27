@@ -1,5 +1,5 @@
 # -------------- #
-# query for D. Bigger to check if Avian NJDEP is in the db
+# query for D. Bigger to check if aerial NJDEP is in the db (https://www.nj.gov/dep/dsr/ocean-wind/report.htm)
 # if so, then we should split this out from the boat surveys
 # -------------- #
 
