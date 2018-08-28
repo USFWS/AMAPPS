@@ -36,7 +36,8 @@ For USFWS MB personel, all documentation is housed in M:/seabird_database folder
 2) Where to obtain survey data for processing 
 --------------------------------------------------------
 [id3]: https://connect.doi.gov/fws/Portal/acjv/seabird/SitePages/Home.aspx
-- AMAPPS data can be found on the SharePoint [site][id3]. You will need premission to log onto this site. Download all of the processed observation and track files and save them in the Survey_Data/AMAPPS/AMAPPS_year_mo folder.
+[id4]: https://myaccount.fws.gov/
+- AMAPPS data can be found on the [SharePoint site][id3]. You will need premission to log onto this site. Download all of the processed observation and track files and save them in the Survey_Data/AMAPPS/AMAPPS_year_mo folder. Hint: the user name is IFW\shortname, if you don't capitalize the IFW it won't work. You can check your shortname in [myaccount.fws.gov] 
 
 
 3) Quality Control / Data Processing in R and GIS 
