@@ -586,15 +586,11 @@ INSERT INTO lu_species(
 	(4,'BLAT','Blackfin Tuna',NULL,'Thunnus','atlanticus',172427,NULL),
 	(4,'BLMA','Blue Marlin',NULL,'Makaira','nigricans',172491,NULL),
 	(4,'BLSH','Blue Shark',NULL,'Prionace','glauca',160424,NULL),
-	(4,'BLST','Bluntnose Stingray',NULL,'Dasyatis','say',160954,NULL),
 	(4,'BLUE','Bluefish',NULL,'Pomatomus','saltatrix',168559,NULL),
 	(4,'BONI','Bonito',NULL,'Scombridae','spp.',172398,NULL),
-	(4,'COBI','Cobia',NULL,'Rachycentron','canadum',168566,NULL),
 	(4,'CNRA','Cownose Ray',NULL,'Rhinoptera','bonasus',160985,NULL),
-	(4,'DUSH','Dusky Shark',NULL,'Carcharhinus','obscurus',160268,NULL),
 	(4,'FAAL','False Albacore',NULL,'Euthynnus','alletteratus',172402,NULL),
 	(4,'FISH','Unidentified fish','Osteichthyes',NULL,NULL,161030,NULL),
-	(4,'GHSH','Great Hammerhead Shark',NULL,'Sphyrna','mokarran',160515,NULL),
 	(4,'GOMR','Giant Oceanic Manta Ray',NULL,'Manta','birostris',160992,NULL),
 	(4,'GWSH','Great White Shark',NULL,'Carcharodon','carcharias',159903,NULL),
 	(4,'HASH','Hammerhead shark','Sphyrnidae spp.',NULL,NULL,160497,NULL),
@@ -608,15 +604,10 @@ INSERT INTO lu_species(
 	(4,'SAIL','Sailfish',NULL,'Istiophorus','platypterus',172488,NULL),
 	(4,'SCHA','Scalloped Hammerhead Shark',NULL,'Sphyrna','lewini',160508,NULL),
 	(4,'SHAR','Unidentified shark','Elasmobranchii spp.',NULL,NULL,159786,NULL),
-	(4,'SHSH','Smooth Hammerhead shark',NULL,'Sphyrna','zygaena',160505,NULL),
-	(4,'SHSU','Sharptail Sunfish',NULL,'Masturus','lanceolatus',173419,NULL), 
 	(4,'SKTU','Skipjack Tuna',NULL,'Katsuwonus','pelamis',172401,NULL),
-	(4,'SMSH','Shortfin Mako Shark',NULL,'Isurus','oxyrinchus',159924,NULL),
-	(4,'SPDF','Spiny dogfish (Spurdog, Grayfish, piked dogfish)',NULL,'Squalus','acanthias',160617,NULL),
 	(4,'SPMA','Spanish mackerels','Scomberomorus spp.',NULL,NULL,172434,NULL),
 	(4,'SWFI','Unidentified Swordfish spp.','Xiphiidae spp.',NULL,NULL,172480,NULL),
 	(4,'THHE','Thread Herrings','Opisthonema spp.',NULL,NULL,161747,NULL),
-	(4,'TISH','Tiger shark',NULL,'Galeocerdo','cuvier',160189,NULL),
 	(4,'TUNA','Unidentified tuna','Scombridae',NULL,NULL,172398,NULL),
 	(4,'UFFI','Unidentified flying fish','Exocoetidae spp.',NULL,NULL,165431,NULL),
 	(4,'UNEL','Unidentified elasmobranch (Shark, Ray, Skate)','Elasmobranch',NULL,NULL,NULL,NULL),
@@ -627,7 +618,6 @@ INSERT INTO lu_species(
 	(4,'UNTS','Unidentified thresher shark',NULL,NULL,NULL,NULL,NULL),
 	(4,'WAHO','Wahoo',NULL,'Acanthocybium','solandri',172451,NULL),
 	(4,'WHMA','White Marlin',NULL,'Kajikia','albida',768126,NULL),
-	(4,'WHSH','Whale shark',NULL,'Rhincodon','typus',159857,NULL),
 	(4,'YETU','Yellowfin Tuna',NULL,'Thunnus','albacares',172423,NULL),
 	(4,'BAIT','bait ball',NULL,NULL,NULL,NULL,NULL),
 	(4,'CAJE','Cannonball Jelly',NULL,'Stomolophus','meleagris',51926,NULL),
@@ -635,13 +625,22 @@ INSERT INTO lu_species(
 	(4,'MOON','Moon Jellyfish',NULL,'Aurelia','aurita',51701,NULL),
 	(4,'PMOW','Portuguese Man o'' War',NULL,'Physalia','physalis',719181,NULL),
 	(4,'UNJE','Unidentified jellyfish','Scyphozoa spp.',NULL,NULL,51483,NULL),
+	(4,'BLST','Bluntnose Stingray',NULL,'Dasyatis','say',160954,NULL),
+	(4,'COBI','Cobia',NULL,'Rachycentron','canadum',168566,NULL),
+	(4,'DUSH','Dusky Shark',NULL,'Carcharhinus','obscurus',160268,NULL),
+	(4,'GHSH','Great Hammerhead Shark',NULL,'Sphyrna','mokarran',160515,NULL),
+	(4,'SHSU','Sharptail Sunfish',NULL,'Masturus','lanceolatus',173419,NULL), 
+	(4,'SMSH','Shortfin Mako Shark',NULL,'Isurus','oxyrinchus',159924,NULL),
+	(4,'SHSH','Smooth Hammerhead shark',NULL,'Sphyrna','zygaena',160505,NULL),
+	(4,'SPDF','Spiny dogfish (Spurdog, Grayfish, piked dogfish)',NULL,'Squalus','acanthias',160617,NULL),
+	(4,'TISH','Tiger shark',NULL,'Galeocerdo','cuvier',160189,NULL),
+	(4,'WHSH','Whale shark',NULL,'Rhincodon','typus',159857,NULL),
 
 	(5,'ALGA','Algal bloom',NULL,NULL,NULL,NULL,NULL),
 	(5,'ANTE','Antennae',NULL,NULL,NULL,NULL,NULL),
 	(5,'BALN','balloon',NULL,NULL,NULL,NULL,NULL),
 	(5,'BUOY','buoy',NULL,NULL,NULL,NULL,NULL),
 	(5,'CHAN','Change in personnel, station, transect, etc.',NULL,NULL,NULL,NULL,NULL),
-	(5,'CLSU','Cloudless Sulphur',NULL,'Phoebis','sennae',777750,NULL),
 	(5,'ERRO','error',NULL,NULL,NULL,NULL,NULL),
 	(5,'FGGI','fixed gear-gill net',NULL,NULL,NULL,NULL,NULL),
 	(5,'FGLO','fixed gear-lobster',NULL,NULL,NULL,NULL,NULL),
@@ -657,7 +656,6 @@ INSERT INTO lu_species(
 	(5,'MYBA','Mylar balloon',NULL,NULL,NULL,NULL,NULL),
 	--(5,'NONE','none',NULL,NULL),--change to unkn
 	(5,'OCFR','ocean front',NULL,NULL,NULL,NULL,NULL),
-	(5,'ORSU','Orange Sulphur',NULL,'Colias','eurytheme',188528,NULL),
 	(5,'PLAS','plastic',NULL,NULL,NULL,NULL,NULL),
 	(5,'POBE','Polar Bear',NULL,'Ursus','maritimus',180542,NULL),
 	(5,'PONY','Pony',NULL,NULL,NULL,NULL,NULL),
@@ -687,6 +685,8 @@ INSERT INTO lu_species(
 	(6,'UBUT','Unidentified butterfly',NULL,NULL,NULL,NULL,NULL),
 	(6,'UNMO','Unidentified Moth',NULL,NULL,NULL,NULL,NULL),
 	(6,'WAGL','Wandering Glider',NULL,'Pantala','flavescens',101801,NULL),
+	(6,'ORSU','Orange Sulphur',NULL,'Colias','eurytheme',188528,NULL),
+	(6,'CLSU','Cloudless Sulphur',NULL,'Phoebis','sennae',777750,NULL),
 
 	(7,'BOAC','Boat-Aircraft carrier',NULL,NULL,NULL,NULL,NULL),
 	(7,'BOAT','Boat-Unidentified',NULL,NULL,NULL,NULL,NULL),
@@ -923,10 +923,8 @@ INSERT INTO lu_species(
 /*
 update lu_species
 set
-common_name  = 'Herald/Trinidad Petrel',
-[group] = 'heraldica and arminjoniana subspecies',
-ITIS_id = NULL
-where spp_cd = 'HEPE'
+species_type_id = 6
+where spp_cd in ('ORSU','CLSU')
 
 select * from lu_species order by species_type_id, spp_cd
 
@@ -1236,7 +1234,7 @@ INSERT INTO lu_parent_project(
 			'http://dwwind.com/project/block-island-wind-farm/'),
 	(22,'StellwagenBankNMS second side transects',NULL,NULL),
 	(23,'StellwagenBankNMS "other" protocol',NULL,NULL),
-	(24,'NYSERDA','"In preparation for offshore wind energy development, the New York State Energy and 
+	(24,'NYSERDA','In preparation for offshore wind energy development, the New York State Energy and 
 		Research Development Authority (NYSERDA) has initiated the largest offshore high resolution aerial 
 		survey of marine and bird life in U.S. history. Normandeau Associates, Inc. and APEM Ltd (Normandeau-APEM team) 
 		will gather 3 years of baseline surveys to assess the entire New York Offshore Planning Area (OPA) 
@@ -1244,9 +1242,7 @@ INSERT INTO lu_parent_project(
 		aerial digital imagery to assess use by birds, marine mammals, turtles, and fish. This proactive 
 		study of potential impacts will facilitate a more efficient track to energy production offshore New 
 		York by providing the necessary information to meet the U.S. Bureau of Ocean Energy Management''s (BOEM''s) 
-		regulatory requirements for environmental review of WEAs." It should be noted that all counts for each record are one. 
-	 	The data may need to be combined by date, time, and species to get a total count at that location during that time.
-	 	There is also spatial overlap between some transects as well as between OPA and WEA.','https://remote.normandeau.com/nys_overview.php'),
+		regulatory requirements for environmental review of WEAs.','https://remote.normandeau.com/nys_overview.php'),
 	(25,'GOMCES','During the summers of 2014, 2015 and 2016, a multidisciplinary science team collected ecosystem 
 		data within the Gulf of Maine coastal zone (waters ~ 2 – 150 m deep) as part of the Gulf of Maine Coastal 
 		Ecosystem Survey (GOMCES). There were 11 transects. Marine bird and mammal surveys were completed using a 
@@ -1262,7 +1258,8 @@ INSERT INTO lu_parent_project(
 		entered the data in real-time on a computer connected directly to a GPS unit using the program DLog 
 		(R. G. Ford Inc., Portland, OR), such that each sighting had a specific time and location stamp. Each sighting 
 		record also included observation variables (e.g., glare, visibility, wave height, weather).',
-		'https://gomces.wordpress.com/');
+		'https://gomces.wordpress.com/'),
+	(26, 'NJDEP baseline studies','','https://www.nj.gov/dep/gis/digidownload/metadata/windpower/fauna.htm ; https://www.nj.gov/dep/gis/windpower.html');
 
 --	project_id, project_name, project_ds, project_url
 
@@ -1708,10 +1705,6 @@ INSERT INTO dataset(
 	(402,24,'NYSERDA_WEA_Survey2_Fall2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(403,24,'NYSERDA_WEA_Survey3_Winter2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(404,24,'NYSERDA_WEA_Survey4_Spring2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(405,24,'NYSERDA_APEM_9','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(406,24,'NYSERDA_APEM_10','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(407,24,'NYSERDA_APEM_11','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(408,24,'NYSERDA_APEM_12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(409,2,'AMAPPS_NOAA/NMFS_NEFSCAerial2010','a','cts','ot',NULL,NULL,0,'no',NULL,NULL,'BOEM,USFWS,NOAA,NAVY',NULL,NULL,NULL),
 	(410,2,'AMAPPS_NOAA/NMFS_NEFSCAerial2012','a','cts','ot',NULL,NULL,0,'no',NULL,NULL,'BOEM,USFWS,NOAA,NAVY',NULL,NULL,NULL),
 	(411,2,'AMAPPS_NOAA/NMFS_NEFSC_2017','b','cts','ot',300,300,5,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
@@ -1722,11 +1715,28 @@ INSERT INTO dataset(
 	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','dth','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL),
 	(396,1,'AMAPPS_FWS_Aerial_summer2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
 	(397,1,'AMAPPS_FWS_Aerial_2019','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(417,1,'AMAPPS_FWS_Aerial_fall2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL);
-	--(418,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
-	--(419,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
+	(417,1,'AMAPPS_FWS_Aerial_fall2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
+	(405,24,'NYSERDA_WEA_Survey5','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(406,24,'NYSERDA_OPA_Survey5','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(407,24,'NYSERDA_WEA_Survey6','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(408,24,'NYSERDA_OPA_Survey6','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(418,24,'NYSERDA_WEA_Survey7','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(419,24,'NYSERDA_OPA_Survey7','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(420,24,'NYSERDA_WEA_Survey8','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(421,24,'NYSERDA_OPA_Survey8','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(422,24,'NYSERDA_WEA_Survey9','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(423,24,'NYSERDA_OPA_Survey9','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(424,24,'NYSERDA_WEA_Survey10','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(425,24,'NYSERDA_OPA_Survey10','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(426,24,'NYSERDA_WEA_Survey11','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(427,24,'NYSERDA_OPA_Survey11','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(428,24,'NYSERDA_WEA_Survey12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(429,24,'NYSERDA_OPA_Survey12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(430,26,'NJDEP_aerial2008','a','cts','de',2000,1000,99,'no',NULL,56,'NJDEP,BOEM',110,1,NULL);
 
 
+--  (4XX,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
+--  (4XX,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 --	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2018','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
 --	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2019','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
 
@@ -1737,9 +1747,8 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-dataset_type_cd = 'go'
-where dataset_id in (173,398,399,400, 401,402,403,404)
-
+dataset_name = 'NYSERDA_OPA_Survey6'
+where dataset_id in (408)
 */
 
 -- select * from dataset order by share_level_id
@@ -1986,7 +1995,9 @@ INSERT INTO links_and_literature(
 	(50,149,NULL,'https://www.nefsc.noaa.gov/psb/AMAPPS/docs/NMFS_AMAPPS_2014_annual_report_Final.pdf',NULL,NULL,NULL,NULL),
 	(51,116,NULL,'https://www.nefsc.noaa.gov/psb/AMAPPS/docs/NMFS_AMAPPS_2013_annual_report_FINAL3.pdf',NULL,NULL,NULL,NULL),
 	(52,409,NULL,'https://www.nefsc.noaa.gov/psb/AMAPPS/docs/Final_2010AnnualReportAMAPPS_19Apr2011.pdf',NULL,NULL,NULL,NULL),
-	(53,410,NULL,'https://www.nefsc.noaa.gov/psb/AMAPPS/docs/NMFS_AMAPPS_2012_annual_report_FINAL.pdf',NULL,NULL,NULL,NULL);
+	(53,410,NULL,'https://www.nefsc.noaa.gov/psb/AMAPPS/docs/NMFS_AMAPPS_2012_annual_report_FINAL.pdf',NULL,NULL,NULL,NULL),
+	(54,430,'https://www.nj.gov/dep/gis/digidownload/metadata/windpower/fauna.htm','https://www.nj.gov/dep/dsr/ocean-wind/vol2-chapter%203.pdf',NULL,NULL,NULL,NULL);
+
 --  (54,4__,NULL,'https://www.researchgate.net/publication/324274508_THE_GULF_OF_MAINE_COASTAL_ECOSYSTEM_SURVEY_PROJECT_END_REPORT',NULL,NULL,NULL,'10.13140/RG.2.2.14932.71045')
 --  (id, dataset_id, data_url, report, data_citation, publications, publication_url, publication_DOI)
 
