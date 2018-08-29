@@ -1888,7 +1888,7 @@ CREATE TABLE observation (
 	observer_confidence nvarchar(50) null,
 	--boem_lease_block_id smallint null,
 	observer_comments nvarchar(250) null,
-	geom_line nvarchar(MAX) null,
+	geographyColumn geography null,
 	admin_notes nvarchar(250) null,
 	PRIMARY KEY(observation_id),
 	FOREIGN KEY(dataset_id) REFERENCES dataset(dataset_id),
@@ -1898,9 +1898,10 @@ CREATE TABLE observation (
 	FOREIGN KEY(behavior_id) REFERENCES lu_behaviors(behavior_id),
 	FOREIGN KEY(age_id) REFERENCES lu_age(age_id),
 	FOREIGN KEY(sex_id) REFERENCES lu_sex(sex_id),
-	--FOREIGN KEY(boem_lease_block_id) REFERENCES lu_boem_lease_blocks(boem_lease_block_id)
 );
 --
+-- select * from observation
+
 
 -- create track table
 CREATE TABLE track (
@@ -2125,21 +2126,12 @@ INSERT INTO progress_table(
 /*
 -- remove dataset that was uploaded
 delete from progress_table
-where dataset_id = 172
+where dataset_id in (173,398,399,400,401,416)
 */
 
 
 /* select progress table script template */ 
 --  select * from progress_table order by dataset_name
-
---create boem lease block table
-CREATE TABLE boem_lease_blocks (
-	prot_nb nvarchar(20) not null,
- 	block_nb nvarchar(20) not null,
-	geom_line nvarchar(MAX) not null,
-	Primary Key (prot_nb,block_nb)
-);
---
 
 -- create data request table
 CREATE TABLE requests (
@@ -2159,7 +2151,7 @@ GO
 INSERT INTO requests(
 	request_id,request_type,requester,request_info,date_requested,
 	request_status,date_filled,additional_notes)
-	VALUES 
+	VALUES
 	(1,'data',68,'Segmentation product of all datasets used in Phase 1 of NOAA modeling and additional data for phase 2, see share google spreadsheet for details',
 		CAST('2014-01-01' AS DATE),'filled',CAST('2017-04-04' AS DATE),
 		'NOAA will need additional datasets to quality control their model in late 2017'),
@@ -2198,18 +2190,25 @@ INSERT INTO requests(
 	(29,'data',77,'redo landbird obs, add dataset info',CAST('2018-05-10' AS DATE),'not filled',NULL,NULL),
 	(30,'service',81,'AMAPPS winter 2014 DCCO',CAST('2018-06-14' AS DATE),'filled',CAST('2018-06-14' AS DATE),NULL),
 	(31,'data',60,'update boxplot for shorebird flight heights',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-18' AS DATE),'add n='),
-	(32,'data',62,'copy of the species table',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-15' AS DATE),NULL);
+	(32,'data',62,'copy of the species table',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-15' AS DATE),NULL),
+	(33,'service',65,'check NJDEP data for aerial data', cast('2018-08-27' as date), 'filled', cast('2018-08-28' as date), 'aerial data was not in db');
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
-/*	update requests 
+/*	common updates
+
+	-- 
+
+	update requests 
 	set date_filled = CAST('2017-07-17' AS DATE), 
 	request_status = 'filled'  
 	where request_id = 7
 
+	--
+
 	update requests 
-	set additional_notes = NULL
-	where request_id = 32
+	set additional_notes = 'aerial data was not in db'
+	where request_id = 33
 */
 
 /*  look up people who need to be contacted for a project */ 
