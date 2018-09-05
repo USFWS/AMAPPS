@@ -1,4 +1,6 @@
 # -------------- #
+# pull all njdep and nj data
+#
 # We are looking for the following:
 #   
 # 1) NJDEP Ecological baseline Studies survey observations and effort data 
@@ -8,6 +10,13 @@
 # between 38.93N and 41.36N latitude (the south and north most latitudes) 
 # or state territorial waters extended out to the EEZ, whichever is 
 # easiest from the Seabird Catalog.
+#
+### had to export effort linestrings and multilinestrings as shapefiles
+### commands code below
+# ogr2ogr -f "ESRI Shapefile" "C:/Users/kecoleman/shapefiles_from_mssql" 
+# "MSSQL:server=ifw9mbmsvr008; database = SeabirdCatalog; trusted_connection=yes; driver = SQL server;"
+# -sql "select * from transect where dataset_id = 91" 
+# -overwrite -nln njdep_transect -nlt LINESTRING -a_srs "EPSG:4269"
 # -------------- #
 
 
@@ -18,6 +27,7 @@ library(readxl)
 require(RODBC)
 require(odbc)
 require(dplyr)
+require(rgdal)
 # -------------- #
 
 
@@ -35,10 +45,35 @@ old_effort2 = filter(old.effort, transect_id %in% old.obs$transect_id) # need to
 
 njdep.obs = dbGetQuery(db,"select geography.Lat as latitude, geography.Long as longitude, *
                      from observation where dataset_id = 91")
-njdep.effort = dbGetQuery(db,"select [Geometry].STY as latitude, 
-                        [Geometry].STX as longitude, * from transect 
-                          where dataset_id = 91")
 dbDisconnect(db)
+
+sldf = readOGR("C:/Users/kecoleman/shapefiles_from_mssql/njdep_transect.shp") # made using ogr2ogr
+spdf = as(sldf, "SpatialPointsDataFrame")                          
+njdep.effort = as.data.frame(spdf)
+rm(sldf, spdf)
+# fix formating and rename names that were clipped when creating shapefile
+njdep.effort = njdep.effort %>% 
+  rename(transect_id = transect_i,
+         source_transect_id = source_tra,
+         source_datatset_id = source_da,
+         #transect_t = transect_t,
+         #transect_d = transect_d,
+         #traversal_,
+         transect_width = transect_w,
+         #observers_,
+         seastate_beaufort = seastate_b,
+         wind_dir_tx = wind_dir_t,
+         #whole_tran = whole_tran,
+         #local_tran = local_tran,
+         observer_positiion = obs_positi,
+         longitude = coords.x1,
+         latitude = coords.x2) %>% 
+  group_by(transect_id) %>% 
+  mutate(track_id = seq(1:length(transect_id))) %>% ungroup() %>% 
+  mutate(track_id = paste(transect_id, track_id, sep="_")) %>% 
+  dplyr::select(-who_create,-date_creat,-utm_zone,-who_import,
+                -temp_start,-temp_sta_1,-temp_stop_,-temp_sto_1,
+                -time_from_,-time_fro_1,-date_impor)
 
 # new data 
 db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
