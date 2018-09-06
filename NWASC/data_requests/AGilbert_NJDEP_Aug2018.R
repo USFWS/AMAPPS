@@ -55,25 +55,35 @@ rm(sldf, spdf)
 njdep.effort = njdep.effort %>% 
   rename(transect_id = transect_i,
          source_transect_id = source_tra,
-         source_datatset_id = source_da,
-         #transect_t = transect_t,
-         #transect_d = transect_d,
-         #traversal_,
-         transect_width = transect_w,
-         #observers_,
-         seastate_beaufort = seastate_b,
+         source_datatset_id = source_dat,
+         transect_time_min_nb = transect_t,
+         transect_distance_nb = transect_d,
+         traversal_speed_nb = traversal_,
+         transect_width_nb = transect_w,
+         observers_tx = observers_,
+         seastate_beaufort_nb = seastate_b,
+         wind_speed_tx = wind_speed,
          wind_dir_tx = wind_dir_t,
-         #whole_tran = whole_tran,
-         #local_tran = local_tran,
+         comments_tx = comments_t,
+         conveyance_name_tx = conveyance, 
+         wave_height_tx = wave_heigh,
+         whole_transect = whole_tran,
+         local_transect_id = local_tran,
+         temp_start_lat = temp_start,
+         temp_start_lon = temp_sta_1,
+         temp_stop_lat = temp_stop_,
+         temp_stop_lon = temp_sto_1,
          observer_positiion = obs_positi,
+         local_survey_id = local_surv,
+         local_transect_id2 = local_tr_1,
          longitude = coords.x1,
          latitude = coords.x2) %>% 
   group_by(transect_id) %>% 
   mutate(track_id = seq(1:length(transect_id))) %>% ungroup() %>% 
   mutate(track_id = paste(transect_id, track_id, sep="_")) %>% 
   dplyr::select(-who_create,-date_creat,-utm_zone,-who_import,
-                -temp_start,-temp_sta_1,-temp_stop_,-temp_sto_1,
-                -time_from_,-time_fro_1,-date_impor)
+                -time_from_,-time_fro_1,-date_impor,-seasurface,
+                -survey_typ,-spatial_ty)
 
 # new data 
 db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
