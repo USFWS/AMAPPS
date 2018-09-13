@@ -38,14 +38,18 @@ require(rgdal)
 db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw9mbmsvr008', database='SeabirdCatalog')
 old.obs = dbGetQuery(db,"select geography.Lat as latitude, geography.Long as longitude, *
                      from observation where geography.Lat between 38.93 and 41.36")
-old.effort = dbGetQuery(db,"select [Geometry].STY as latitude, 
-                        [Geometry].STX as longitude, * from transect where [Geometry].STY between 38.93 and 41.36")
-old_effort2 = dbGetQuery(db, "select * from effort")
-old_effort2 = filter(old.effort, transect_id %in% old.obs$transect_id) # need to test differences
-
+#old.effort = dbGetQuery(db,"select [Geometry].STY as latitude, 
+#                        [Geometry].STX as longitude, * from transect where [Geometry].STY between 38.93 and 41.36")
 njdep.obs = dbGetQuery(db,"select geography.Lat as latitude, geography.Long as longitude, *
                      from observation where dataset_id = 91")
 dbDisconnect(db)
+
+njdep.obs = njdep.obs %>% 
+  dplyr::select(-Geometry,-geography,-utm_zone,-time_from_midnight,
+                -date_imported,-who_imported,-temp_lat,-temp_lon)
+coordinates(njdep.obs) = ~longitude + latitude
+proj4string(njdep.obs) = CRS("+init=epsg:4269")
+njdep.obs = as.data.frame(njdep.obs) 
 
 sldf = readOGR("C:/Users/kecoleman/shapefiles_from_mssql/njdep_transect.shp") # made using ogr2ogr
 spdf = as(sldf, "SpatialPointsDataFrame")                          
@@ -84,6 +88,45 @@ njdep.effort = njdep.effort %>%
   dplyr::select(-who_create,-date_creat,-utm_zone,-who_import,
                 -time_from_,-time_fro_1,-date_impor,-seasurface,
                 -survey_typ,-spatial_ty)
+# reformat and select for matching with new data
+njdep.track = njdep.effort %>% 
+  rename(track_dt = start_dt,
+         track_tm = start_tm,
+         comments = comments_tx) %>%
+  select(track_id,transect_id,dataset_id,track_dt,track_tm,comments,latitude,longitude)
+njdep.transect = njdep.effort %>% group_by(transect_id) %>%
+ # arrange(track_id) %>% 
+  summarise(dataset_id = first(dataset_id),
+            source_transect_id = first(source_transect_id),
+            start_dt = first(start_dt),
+            start_lat = first(latitude),
+            start_lon = first(longitude),
+            stop_lat = last(latitude),
+            stop_lon = last(longitude)) %>% 
+  arrange(start_dt)
+
+sldf = readOGR("C:/Users/kecoleman/old_nwasc/nwasc_old_effort_lines.shp") # made using ogr2ogr
+spdf = as(sldf, "SpatialPointsDataFrame")                          
+old.effort.lines = as.data.frame(spdf) #no longer a line df, just used for naming purposes 
+rm(sldf, spdf)
+# spdf = readOGR("C:/Users/kecoleman/old_nwasc/nwasc_old_effort_points.shp") # made using ogr2ogr
+# old.effort.points = as.data.frame(spdf)
+# rm(spdf)
+
+# export njdep
+write.csv(njdep.obs,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/njdep/njdep_obs.csv",row.names = F)
+write.csv(njdep.track,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/njdep/njdep_track.csv",row.names = F)
+write.csv(njdep.transect,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/njdep/njdep_transects.csv",row.names = F)
+# export njdep as spatial 
+coordinates(njdep.obs) = ~longitude + latitude
+proj4string(njdep.obs) = CRS("+init=epsg:4269")
+writeOGR(njdep.obs, dsn = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/njdep", 
+         layer = "njdep.obs", driver = "ESRI Shapefile")
+coordinates(njdep.track) = ~longitude + latitude
+proj4string(njdep.track) = CRS("+init=epsg:4269")
+writeOGR(njdep.track, dsn = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/njdep", 
+         layer = "njdep.track", driver = "ESRI Shapefile")
+
 
 # new data 
 db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
@@ -130,11 +173,19 @@ new.obs = dplyr::rename(new.obs, latitude = temp_lat,
                         observer_position = obs_position,
                         associations_tx = association_tx) %>% 
   mutate(obs_dt = as.Date(obs_dt,format="%m/%d/%Y"),
-         observation_id = observation_id + 804175) %>% rowwise %>% 
+         observation_id = observation_id + 804175,
+         source_dataset_id = as.character(source_dataset_id),
+         source_obs_id = as.character(source_obs_id),
+         visibility_tx = as.character(visibility_tx),
+         wind_speed_tx = as.character(wind_speed_tx),
+         wind_dir_tx = as.character(wind_dir_tx),
+         heading_tx = as.character(heading_tx)) %>% 
+  rowwise %>% 
   mutate(obs_count_general_nb = replace(obs_count_general_nb,obs_count_general_nb==obs_count_intrans_nb,NA))
 
 
 # combine old and new
+old.obs = mutate(old.obs, obs_dt = as.Date(obs_dt))
 all.data = bind_rows(old.obs, new.obs)
 all.transects = bind_rows(old.effort, new.transects)
 
