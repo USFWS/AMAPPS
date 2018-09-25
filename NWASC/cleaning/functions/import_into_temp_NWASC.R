@@ -10,7 +10,7 @@
 # updated Feb. 2017
 # -------------------------- #
 
-import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_camera) {
+#import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_camera) {
   
   # ------------------------ #
   # load packages
@@ -32,9 +32,11 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
   tracks.in.db = sqlQuery(db, paste("select * from track"))
   obs.in.db = sqlQuery(db, paste("select * from observation"))
   camera.in.db = sqlQuery(db, paste("select * from camera_effort"))
+  odbcCloseAll()
   
   db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
   data.in.db = dbGetQuery(db,"select * from dataset")
+  dbDisconnect(db)
   # ------------------------ #
   
   
@@ -138,6 +140,37 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
     dat$obs_count_general_nb[data$offline %in% 0] = NA  
   }
   
+  # if behavior ids/ age ids/ sex ids are not done
+  if(all(is.na(dat$behavior_id))){
+    dat = dat %>% mutate(behavior_id = replace(behavior_id, behavior_tx %in% c("breaching","Surfacing-breaching","Submerged-breaching"),5),                        
+                         behavior_id = replace(behavior_id, behavior_tx %in% "Flying",13),   
+                         behavior_id = replace(behavior_id, behavior_tx %in% c("near surface","significantly submerged","Submerged",
+                                                                               "Submerged-near surface","Submerged-significantly submerged"),23),
+                         behavior_id = replace(behavior_id, behavior_tx %in% c("Surfacing-near surface","Surfacing",        
+                                                                               "Surfacing-significantly submerged"),40),    
+                         behavior_id = replace(behavior_id, behavior_tx %in% "Sitting",35),
+                         behavior_id = replace(behavior_id, is.na(behavior_tx),44))
+    if(!all(is.na(dat$behavior_tx[dat$behavior_id %in% 44]))){cat(sort(unique(dat$behavior_tx[dat$behavior_id %in% 44])))}
+    }
+  if(all(is.na(dat$age_id))){
+    dat = dat %>% mutate(age_id = replace(age_id, animal_age_tx %in% "adult",1),
+                         age_id = replace(age_id, animal_age_tx %in% "juvenile",2),
+                         age_id = replace(age_id, animal_age_tx %in% "mixed",3),
+                         age_id = replace(age_id, animal_age_tx %in% "other",4),
+                         age_id = replace(age_id, animal_age_tx %in% "unknown",5),
+                         age_id = replace(age_id, animal_age_tx %in% "immature",6),
+                         age_id = replace(age_id, animal_age_tx %in% "subadult",7),
+                         age_id = replace(age_id, is.na(animal_age_tx),5))     
+  }
+  if(all(is.na(dat$sex_id))){
+    dat = dat %>% mutate(sex_id = replace(sex_id, animal_sex_tx %in% "female",1),
+                         sex_id = replace(sex_id, animal_sex_tx %in% "male",2),
+                         sex_id = replace(sex_id, animal_sex_tx %in% "mixed",3),
+                         sex_id = replace(sex_id, animal_sex_tx %in% "other",4),
+                         sex_id = replace(sex_id, animal_sex_tx %in% "unknown",5),
+                         sex_id = replace(sex_id, is.na(animal_sex_tx),5))     
+  }
+  
   # classes
   dat = dat %>% mutate(observation_id = as.numeric(observation_id),
                        transect_id = as.numeric(transect_id),
@@ -207,8 +240,8 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
   # the track data should not be in start/stop lat/lon format. There should be a point type with each location
   # only transect information for be in the start/stop format
   
-  if(!missing(data_track)) {
-    dat_track = as.data.frame(matrix(ncol=dim(tracks.in.db)[2], nrow=dim(data_track)[1], data=NA))
+ # if(!missing(data_track)) {
+    dat_track = as.data.frame(matrix(ncol=dim(tracks.in.db)[2], nrow=dim(data_track)[1], data=NA)) 
     colnames(dat_track) = colnames(tracks.in.db)
   
     # in case capitalized 
@@ -225,13 +258,13 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
     data_track=as.data.frame(data_track)
     if(any(colnames(data_track) %in% c("lon", "longitude", "long"))) {dat_track$track_lon = data_track[,which(colnames(data_track) %in% c("lon", "longitude", "long"))]}
     if(any(colnames(data_track) %in% c("lat", "latitude"))) {dat_track$track_lat = data_track[,which(colnames(data_track) %in% c("lat", "latitude"))]}
-    if(any(colnames(data_track) %in% c("type"))) {dat_track$point_type = data_track[,which(colnames(data_track) %in% c("type"))]}
+    if(any(colnames(data_track) %in% c("type","spp"))) {dat_track$point_type = data_track[,which(colnames(data_track) %in% c("type","spp"))]}
     if(any(colnames(data_track) %in% c("beaufort"))) {dat_track$seastate = data_track[,which(colnames(data_track) %in% c("beaufort"))]}
     if(any(colnames(data_track) %in% c("date","start_dt","start_date","gps_date","track_dt"))) {dat_track$track_dt = format(as.Date(data_track[,which(colnames(data_track) %in% c("date","start_dt","start_date","gps_date","track_dt"))]),format='%m/%d/%Y')}
     if(any(colnames(data_track) %in% c("time"))) {dat_track$track_tm = data_track[,which(colnames(data_track) %in% c("time"))]}
     if(any(colnames(data_track) %in% c("transect","transect_id"))) {dat_track$source_transect_id = data_track[,which(colnames(data_track) %in% c("transect","transect_id"))]}
     if(any(colnames(data_track) %in% c("index"))) {dat_track$source_track_id = data_track[,which(colnames(data_track) %in% c("index"))]} 
-    if(any(colnames(data_track) %in% c("sec","secs","seconds"))) {dat_track$seconds_from_midnight_nb = data_track[,which(colnames(data_track) %in% c("sec","secs","seconds"))]}
+    if(any(colnames(data_track) %in% c("sec","secs","seconds")) & !any(colnames(data_track) %in% c("time"))) {dat_track$seconds_from_midnight_nb = data_track[,which(colnames(data_track) %in% c("sec","secs","seconds"))]}
     if(any(colnames(data_track) %in% c("eventdesc"))) {dat_track$comment = data_track[,which(colnames(data_track) %in% c("eventdesc"))]}
     if(all(is.na(dat_track$source_track_id))) {dat_track$source_track_id = 1:dim(data_track)[1]}
     
@@ -255,8 +288,8 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
                                      source_track_id = as.double(source_track_id),
                                      seconds_from_midnight_nb = as.integer(seconds_from_midnight_nb),
                                      datafile = as.character(datafile))
-  }
-  rm(tracks.in.db)
+ # }
+ # rm(tracks.in.db)
   # ------------------------ #
   
   
@@ -264,7 +297,7 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
   # transect
   # ------------------------ #
   # reformat, create, and/or rename
-  if(!missing(data_transect)) {
+  #if(!missing(data_transect)) {
     data_transect = as.data.frame(data_transect)
     dat_transect = as.data.frame(matrix(ncol=dim(transects.in.db)[2], nrow=dim(data_transect)[1], data=NA))
     colnames(dat_transect) = colnames(transects.in.db)
@@ -335,8 +368,9 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
                                                  as.POSIXct(paste(dat_transect$start_dt, dat_transect$start_tm, sep = " "), format = "%m/%d/%Y %H:%M:%S"), 
                                                  units = "mins")
     }
+    dat_transect = dat_transect %>% arrange(start_tm)
     
-  }
+ # }
   
   # if the transect information needs to be pulled from the track files
   # might need to copy this bit and alter it to fit the variables the data has
@@ -346,7 +380,7 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
     # fromat transects from track
     #---------------------------#
     # distance flown per transect is in nautical miles, distance between points in meters 
-    break.at.each.stop = filter(dat_track, point_type %in% c("BEGCNT")) %>%
+    break.at.each.stop = filter(dat_track, point_type %in% c("BEGCNT"), !offline %in% 1) %>%
       group_by(source_transect_id) %>% mutate(start.stop.index = seq(1:n())) %>% ungroup() %>% 
       select(source_transect_id, source_track_id, start.stop.index, track_dt)
     ssi = left_join(dat_track, break.at.each.stop, by="source_track_id") %>% 
@@ -381,10 +415,10 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
                 start_tm = first(track_tm), 
                 end_tm = last(track_tm)) %>%
       as.data.frame() %>% rowwise() %>% 
-      mutate(transect_time_min_nb = difftime(as.POSIXct(paste(end_dt, end_tm, sep = " "), format = "%Y-%m-%d %H:%M:%S"), 
-                                             as.POSIXct(paste(start_dt, start_tm, sep = " "), format = "%Y-%m-%d %H:%M:%S"), 
-     # mutate(transect_time_min_nb = difftime(as.POSIXct(paste(end_dt, end_tm, sep = " "), format = "%m/%d/%Y %H:%M:%S"), 
-     #                                        as.POSIXct(paste(start_dt, start_tm, sep = " "), format = "%m/%d/%Y %H:%M:%S"), 
+      #mutate(transect_time_min_nb = difftime(as.POSIXct(paste(end_dt, end_tm, sep = " "), format = "%Y-%m-%d %H:%M:%S"), 
+      #                                       as.POSIXct(paste(start_dt, start_tm, sep = " "), format = "%Y-%m-%d %H:%M:%S"), 
+      mutate(transect_time_min_nb = difftime(as.POSIXct(paste(end_dt, end_tm, sep = " "), format = "%m/%d/%Y %H:%M:%S"), 
+                                             as.POSIXct(paste(start_dt, start_tm, sep = " "), format = "%m/%d/%Y %H:%M:%S"), 
                                              units = "mins"))   %>%
       as.data.frame %>% arrange(start_dt, source_transect_id)
     #
@@ -473,7 +507,7 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
   # ------------------------ #
   # add transects to other data
   # ------------------------ #
-  if(exists("dat_transect")) {
+#  if(exists("dat_transect")) {
     # format class names
     dat_transect = dat_transect %>% mutate(transect_id = as.numeric(transect_id),
                                          dataset_id = as.numeric(dataset_id),
@@ -520,6 +554,7 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
                                          survey_type = as.character(survey_type),
                                          datafile = as.character(datafile),
                                          altitude_nb_m = as.numeric(altitude_nb_m))
+    dat_transect = dat_transect %>% arrange(start_dt, start_tm)
     
     # ------------------------ #
     # join transect numbers to both track and observations tables based on date
@@ -540,7 +575,7 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
       dat_camera = left_join(dat_camera, select(dat_transect, source_transect_id, transect_id, start_dt), by=c("source_transect_id","start_dt")) %>%
         mutate(transect_id.x = transect_id.y) %>% rename(transect_id = transect_id.x, camera_dt = start_dt) %>% select(-transect_id.y)
     }
-  }
+  #}
   # ------------------------ #
   
   
@@ -548,6 +583,7 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
   # add to NWASC temporary db
   # ------------------------ #
   dat = dat[,colnames(obs.in.db)]
+  
   db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
   sqlSave(db, dat, tablename = "observation", append=TRUE, rownames=FALSE, colnames=FALSE, verbose=FALSE)
   if(exists("dat_track")){sqlSave(db, dat_track, tablename = "track", append=TRUE, rownames=FALSE, colnames=FALSE, verbose=FALSE)}
@@ -558,6 +594,65 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
   
   
   # ------------------------ #
+  # check that all was uploaded
+  # ------------------------ #
+  db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
+  transects.in.db = sqlQuery(db, paste("select * from transect"))
+  tracks.in.db = sqlQuery(db, paste("select * from track"))
+  obs.in.db = sqlQuery(db, paste("select * from observation"))
+  camera.in.db = sqlQuery(db, paste("select * from camera_effort"))
+  
+  import_reports <- function(obs.in.db,transects.in.db,tracks.in.db,camera.in.db) {
+    if(length(obs.in.db$source_dataset_id[obs.in.db$dataset_id %in% id])!=length(dat$source_transect_id)){
+      cat("There was an error in the upload of the observations table")
+    }else print("Successfully uploaded observations: same # of records")
+    if(any(!obs.in.db$transect_id[obs.in.db$dataset_id %in% id] %in% dat$transect_id)){
+      cat("There was an error in the upload of the observations table")
+    }else print("Successfully uploaded observations: same observation ids")
+    #----#
+    
+    #----#
+    if(exists("dat_transect")){
+      if(length(transects.in.db$source_dataset_id[transects.in.db$dataset_id %in% id])!=length(dat_transect$source_transect_id)){
+        print("There was an error in the upload of the transect table")
+      }else print("Successfully uploaded transects: same # of records")
+    }
+    if(exists("dat_transect")){
+      if(any(!transects.in.db$transect_id[transects.in.db$dataset_id %in% id] %in% dat_transect$transect_id)){
+        print("There was an error in the upload of the transect table")
+        }else print("Successfully transect  transect: same transect ids")
+      }
+    #----#
+    
+    #----#
+    if(exists("dat_track")){
+      if(length(tracks.in.db$source_dataset_id[tracks.in.db$dataset_id %in% id])!=length(dat_track$source_transect_id)){
+        print("There was an error in the upload of the track table")
+      }else print("Successfully uploaded tracks: same # of records")
+    }
+    if(exists("dat_track")){
+      if(any(!tracks.in.db$transect_id[tracks.in.db$dataset_id %in% id] %in% dat_tracks$transect_id)){
+        print("There was an error in the upload of the track table")
+        }else print("Successfully uploaded tracks: same track ids")
+    }
+    #----#
+    
+    #----#
+    if(exists("dat_camera")){
+      if(length(camera.in.db$source_dataset_id[camera.in.db$dataset_id %in% id])!=length(dat_camera$source_transect_id)){
+        print("There was an error in the upload of the camera table")
+      }else print("Successfully uploaded camera data: same # of records")
+    }
+  }
+  
+  #import_reports(obs.in.db) 
+  import_reports(obs.in.db,transects.in.db) 
+  #import_reports(obs.in.db,transects.in.db,tracks.in.db) 
+  #import_reports(obs.in.db,transects.in.db,tracks.in.db,camera.in.db) 
+  # ------------------------ #
+        
+  
+  # ------------------------ #
   # export as csv in case we need to rebuild the database
   # ------------------------ #
   dir.out = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/completed/NWASC_dataset_copies/"
@@ -566,4 +661,8 @@ import_into_temp_NWASC <- function(id, data, data_track, data_transect, data_cam
   if(exists("dat_transect")){write.csv(dat_transect, file=paste(dir.out,"transect_", id, ".csv", sep=""), row.names = FALSE)}
   if(exists("dat_camera")){write.csv(dat_camera, file=paste(dir.out,"camera_effort_", id, ".csv", sep=""), row.names = FALSE)}
   # ------------------------ #
-}
+  
+  rm(list=ls())
+  odbcCloseAll()
+  
+#}
