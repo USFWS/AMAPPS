@@ -40,8 +40,8 @@ old.obs = dbGetQuery(db,"select geography.Lat as latitude, geography.Long as lon
                      from observation where geography.Lat between 38.93 and 41.36")
 #old.effort = dbGetQuery(db,"select [Geometry].STY as latitude, 
 #                        [Geometry].STX as longitude, * from transect where [Geometry].STY between 38.93 and 41.36")
-njdep.obs = dbGetQuery(db,"select geography.Lat as latitude, geography.Long as longitude, *
-                     from observation where dataset_id = 91")
+#njdep.obs = dbGetQuery(db,"select geography.Lat as latitude, geography.Long as longitude, *
+#                     from observation where dataset_id = 91")
 dbDisconnect(db)
 
 # njdep.obs = njdep.obs %>% 
@@ -138,17 +138,16 @@ odbcClose(db)
 
 # missing AMAPPS 2017 effort!!! 
 
-# add NYSERDA
 
-# filter data to > share level 3
-if(any(datasets$share_level_id[datasets$dataset_id %in% new.obs$dataset_id] %in% c(1,2))){
-  new.obs$source_dataset_id[datasets$share_level_id[datasets$dataset_id %in% new.obs$dataset_id] %in% c(1,2)]
-} else cat("No limited access datasets in the new data")
-if(any(datasets$share_level_id[datasets$dataset_id %in% old.obs$dataset_id] %in% c(1,2))){
-  cat(paste(unique(old.obs$source_dataset_id[old.obs$dataset_id %in% datasets$dataset_id[datasets$share_level_id %in% c(1,2)]]),
-  unique(old.obs$dataset_id[old.obs$dataset_id %in% datasets$dataset_id[datasets$share_level_id %in% c(1,2)]]),sep=": "))
-} else (cat("No limited access datasets in the old data"))
-# the datasets that came up are from 2004 and 2010, while they are listed at lower share levels enough time has passed to use 
+# # filter data to > share level 3
+# if(any(datasets$share_level_id[datasets$dataset_id %in% new.obs$dataset_id] %in% c(1,2))){
+#   new.obs$source_dataset_id[datasets$share_level_id[datasets$dataset_id %in% new.obs$dataset_id] %in% c(1,2)]
+# } else cat("No limited access datasets in the new data")
+# if(any(datasets$share_level_id[datasets$dataset_id %in% old.obs$dataset_id] %in% c(1,2))){
+#   cat(paste(unique(old.obs$source_dataset_id[old.obs$dataset_id %in% datasets$dataset_id[datasets$share_level_id %in% c(1,2)]]),
+#   unique(old.obs$dataset_id[old.obs$dataset_id %in% datasets$dataset_id[datasets$share_level_id %in% c(1,2)]]),sep=": "))
+# } else (cat("No limited access datasets in the old data"))
+# # the datasets that came up are from 2004 and 2010, while they are listed at lower share levels enough time has passed to use 
 
 
 # format
@@ -181,10 +180,11 @@ new.obs = dplyr::rename(new.obs, latitude = temp_lat,
 old.obs = mutate(old.obs, obs_dt = as.Date(obs_dt))
 all.data = bind_rows(old.obs, new.obs)
 #all.transects = bind_rows(old.effort, new.transects)
-all.data = all.data %>% filter(!dataset_id %in% 395) # remove AMAPPS 2017 for now
+#all.data = all.data %>% filter(!dataset_id %in% 395) # remove AMAPPS 2017 for now
 all.data = all.data %>% dplyr::select(-date_created, -date_imported, -who_created, -who_created_tx, 
                                     -Geometry, -geography, -boem_lease_block_id, -seasurface_tempc_nb, 
-                                    -utm_zone, -temp_lat, -temp_lon, -datafile, -who_imported)
+                                    -utm_zone, -temp_lat, -temp_lon, -datafile, -who_imported,
+                                    -age_id, -sex_id, -behavior_id)
 # -------------- #
 
 
@@ -225,8 +225,13 @@ all.data = all.data %>%
          spp_cd = replace(spp_cd, spp_cd %in% "MOSP", "UNMO"),
          spp_cd = replace(spp_cd, spp_cd %in% "DRSP", "GRDA"),
          spp_cd = replace(spp_cd, spp_cd %in% "SASP", "USAN")) %>%
-  filter(!spp_cd %in% c("TRAN","BEGSEG","Comment","COMMENT","12","1","AWSD"))
+  filter(!spp_cd %in% c("TRAN","BEGSEG","Comment","COMMENT","12","1","AWSD","--"))
+if(any(!all.data$spp_cd %in% spp_list$spp_cd)){unique(all.data$spp_cd[!all.data$spp_cd %in% spp_list$spp_cd])}
 
+# birds only
+all.data = all.data %>% filter(spp_cd %in% spp_list$spp_cd[spp_list$species_type_id %in% c(1,8)])
+
+# basic plot tests
 plot(all.data$obs_dt)
 
 plot(all.data$longitude, all.data$latitude)
@@ -241,7 +246,24 @@ datasets = dbGetQuery(db,"select * from dataset")
 dbDisconnect(db)
 
 #summaries = read_excel("//ifw-hqfs1/MB SeaDuck/seabird_database/documentation/How to and Reference files/NWASC_guidance/dataset_summaries_Aug2018.xlsx")
-datasets = filter(datasets, dataset_id %in% all.data$dataset_id)
+datasets = filter(datasets, dataset_id %in% all.data$dataset_id) %>%
+  mutate(dataset_type_cd = replace(dataset_type_cd, dataset_type_cd %in% "de","derived effort"),
+         dataset_type_cd = replace(dataset_type_cd, dataset_type_cd %in% "og","original general observation"),
+         dataset_type_cd = replace(dataset_type_cd, dataset_type_cd %in% "ot","original transect"),
+         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "a","airplane"),
+         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "b","boat"),
+         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "c","camera"),
+         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "f","fixed ground survey"),
+         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "g","area-wide ground survey"),
+         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "byc","bycatch"),
+         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "cbc","Christmas Bird count"),
+         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "cts","continuous time strip"),
+         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "dth","discrete time horizon"),
+         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "dts","discrete time strip"),
+         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% c("go","go "),"general observation"),
+         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "tss","targeted species survey")) %>%
+  dplyr::select(-responsible_party,-in_database,-metadata,-share_level_id,-platform_name_id)
+  
 #datasets = left_join(datasets, summaries, by = c("dataset_id", "Dataset_id"))
 #njdep.dataset = filter(datasets, dataset_id == 91)
 # -------------- #
@@ -250,12 +272,14 @@ datasets = filter(datasets, dataset_id %in% all.data$dataset_id)
 # -------------- #
 # export 
 # -------------- #
-write.csv(datasets, "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/datasets.csv")
+write.csv(datasets, "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABdatasets.csv")
 write.csv(all.data,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABdata_obs.csv",row.names = F)
-# # export as spatial 
+
+# export as spatial
+all.data = filter(all.data, !is.na(longitude), !is.na(latitude))
 coordinates(all.data) = ~longitude + latitude
 proj4string(all.data) = CRS("+init=epsg:4269")
-writeOGR(all.data, dsn = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/", 
+writeOGR(all.data, dsn = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018",
          layer = "MABdata", driver = "ESRI Shapefile")
-# -------------- #
+# # -------------- #
                 
