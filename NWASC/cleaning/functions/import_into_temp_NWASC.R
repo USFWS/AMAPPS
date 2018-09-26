@@ -151,7 +151,8 @@
                          behavior_id = replace(behavior_id, behavior_tx %in% "Sitting",35),
                          behavior_id = replace(behavior_id, is.na(behavior_tx),44))
     if(!all(is.na(dat$behavior_tx[dat$behavior_id %in% 44]))){cat(sort(unique(dat$behavior_tx[dat$behavior_id %in% 44])))}
-    }
+  }
+  
   if(all(is.na(dat$age_id))){
     dat = dat %>% mutate(age_id = replace(age_id, animal_age_tx %in% "adult",1),
                          age_id = replace(age_id, animal_age_tx %in% "juvenile",2),
@@ -162,6 +163,7 @@
                          age_id = replace(age_id, animal_age_tx %in% "subadult",7),
                          age_id = replace(age_id, is.na(animal_age_tx),5))     
   }
+  
   if(all(is.na(dat$sex_id))){
     dat = dat %>% mutate(sex_id = replace(sex_id, animal_sex_tx %in% "female",1),
                          sex_id = replace(sex_id, animal_sex_tx %in% "male",2),
@@ -620,7 +622,7 @@
     if(exists("dat_transect")){
       if(any(!transects.in.db$transect_id[transects.in.db$dataset_id %in% id] %in% dat_transect$transect_id)){
         print("There was an error in the upload of the transect table")
-        }else print("Successfully transect  transect: same transect ids")
+        }else print("Successfully uploaded transects: same transect ids")
       }
     #----#
     
