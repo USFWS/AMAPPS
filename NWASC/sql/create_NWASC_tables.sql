@@ -129,7 +129,8 @@ INSERT INTO lu_people([user_id], name, affiliation, active_status,work_email_onl
 	(78,'Jo Anna Lutmerding','USFWS','active','jo_lutmerding@fws.gov'),
 	(79,'Kaye London','USFWS','active','kaye_london@fws.gov'),
 	(80,'Andrew Allyn','UMass','active',NULL),
-	(81,'Sarah Yates','USFWS','active','sarah_yates@fws.gov');
+	(81,'Sarah Yates','USFWS','active','sarah_yates@fws.gov'),
+	(82,'Wing Goodale','BRI','active','wing_goodale@briloon.org');
 /* 
 update lu_people
 set name = 'Jo Anna Lutmerding'
@@ -2191,7 +2192,12 @@ INSERT INTO requests(
 	(30,'service',81,'AMAPPS winter 2014 DCCO',CAST('2018-06-14' AS DATE),'filled',CAST('2018-06-14' AS DATE),NULL),
 	(31,'data',60,'update boxplot for shorebird flight heights',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-18' AS DATE),'add n='),
 	(32,'data',62,'copy of the species table',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-15' AS DATE),NULL),
-	(33,'service',65,'check NJDEP data for aerial data', cast('2018-08-27' as date), 'filled', cast('2018-08-28' as date), 'aerial data was not in db');
+	(33,'service',65,'check NJDEP data for aerial data', cast('2018-08-27' as date), 'filled', cast('2018-08-28' as date), 'aerial data was not in db'),
+	(34,'data',3,'NJDEP and all NJ data (38.93N and 41.36N)',cast('2018-08-30' as date),'partially filled',NULL,'sent observations but need to send effort'),
+	(35,'data',82,'flight heights',cast('2018-9-5' as date),'not filled',NULL,NULL),
+	(36,'data',65,'PIPL,ROST,REKN data and datset summaries',cast('2018-10-3' as date),'filled',cast('2018-10-4' as date),NULL),
+	(37,'data',62,'all obs and all effort',cast('2018-10-3' as date),'not filled',NULL,NULL),
+	(38,'data',76,'Check data for new North Atlantic MPA',cast('2018-10-4' as date),'filled',cast('2018-10-4' as date),NULL);
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
@@ -2200,15 +2206,17 @@ INSERT INTO requests(
 	-- 
 
 	update requests 
-	set date_filled = CAST('2017-07-17' AS DATE), 
-	request_status = 'filled'  
-	where request_id = 7
+	--set date_filled = CAST('2017-07-17' AS DATE), 
+	request_status = 'partially filled'  
+	where request_id = 34
 
 	--
 
 	update requests 
-	set additional_notes = 'aerial data was not in db'
-	where request_id = 33
+	set additional_notes = 'sent observations but need to send effort'
+	where request_id = 34
+
+	select * from requests
 */
 
 /*  look up people who need to be contacted for a project */ 
