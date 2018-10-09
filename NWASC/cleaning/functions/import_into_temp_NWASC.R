@@ -268,6 +268,9 @@
     if(any(colnames(data_track) %in% c("index"))) {dat_track$source_track_id = data_track[,which(colnames(data_track) %in% c("index"))]} 
     if(any(colnames(data_track) %in% c("sec","secs","seconds")) & !any(colnames(data_track) %in% c("time"))) {dat_track$seconds_from_midnight_nb = data_track[,which(colnames(data_track) %in% c("sec","secs","seconds"))]}
     if(any(colnames(data_track) %in% c("eventdesc"))) {dat_track$comment = data_track[,which(colnames(data_track) %in% c("eventdesc"))]}
+    if(any(colnames(data_track) %in% c("seat"))) {dat_track$observer_position = data_track[,which(colnames(data_track) %in% c("seat"))]}
+    if(any(colnames(data_track) %in% c("obs"))) {dat_track$observer = data_track[,which(colnames(data_track) %in% c("obs"))]}
+    
     if(all(is.na(dat_track$source_track_id))) {dat_track$source_track_id = 1:dim(data_track)[1]}
     
     dat_track = dat_track %>% mutate(track_id = as.integer(track_id),           
