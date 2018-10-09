@@ -30,25 +30,30 @@ track.final = track %>% arrange(key, ID) %>%
   mutate(sec = as.numeric(as.character(sec)))
 
 break.at.each.stop = filter(track.final, type %in% c("BEGSEG","BEGTRAN","BEGCNT")) %>%
-  group_by(key) %>% mutate(start.stop.index = seq(1:n())) %>% ungroup() %>% 
-  select(key, ID, start.stop.index)
+  group_by(key, transect) %>% mutate(start.stop.index = seq(1:n())) %>% ungroup() %>% 
+  select(key, transect, ID, start.stop.index)
 
-new.key = left_join(track.final, break.at.each.stop, by=c("ID","key")) %>% 
-  arrange(key, ID) %>% 
+new.key = left_join(track.final, break.at.each.stop, by=c("ID","key","transect")) %>% 
+  arrange(key, transect, ID) %>% 
   mutate(start.stop.index = na.locf(start.stop.index), 
-         newkey = paste(key, start.stop.index, sep="_")) %>% ungroup %>% 
+         newkey = paste(key, transect, start.stop.index, sep="_")) %>% ungroup %>% 
   select(-start.stop.index)
 
 # fix breaks
-track2 = track.final 
-keys = unique(new.key$newkey)
-for(a in 1:length(keys)){
-  if(any(new.key$sec[new.key$newkey %in% keys[a]] > new.key$sec[new.key$type %in% "ENDCNT" & new.key$newkey %in% keys[a]])){
-    track2$transect[new.key$newkey %in% keys[a] &  new.key$sec > new.key$sec[new.key$type %in% "ENDCNT" & new.key$newkey %in% keys[a]]] =NA }
-}
+ keys = unique(new.key$newkey)
+ for(a in 1:length(keys)){
+   if(any(new.key$sec[new.key$newkey %in% keys[a]] > new.key$sec[new.key$type %in% "ENDCNT" & 
+                                                                 new.key$newkey %in% keys[a]])){
+     new.key$transect[new.key$newkey %in% keys[a] &  
+                       new.key$sec > new.key$sec[new.key$type %in% "ENDCNT" & 
+                                                   new.key$newkey %in% keys[a]]] =NA }
+ }
+track2 = dplyr::select(new.key,-newkey,-begend)
 
 # grouped by new key to avoid counting time and distance traveled between breaks
-df = new.key %>% group_by(newkey) %>% arrange(ID) %>%
+df = new.key %>% 
+  group_by(newkey) %>% 
+  arrange(ID) %>%
   mutate(lon = lead(Long, default = last(Long), order_by = ID),
          lat = lead(Lat, default = last(Lat), order_by = ID)) %>%
   rowwise() %>% mutate(distance = distVincentySphere(c(Long, Lat), c(lon, lat))) %>%
@@ -74,8 +79,8 @@ df = new.key %>% group_by(newkey) %>% arrange(ID) %>%
   ungroup() %>% as.data.frame %>% arrange(start_dt, transect, seat)
 
 # group by old key
-transectTbl = df %>% group_by(key) %>%  
-  summarise(transect = first(transect),
+transectTbl = df %>% group_by(key, transect) %>%  
+  summarise(#transect = first(transect),
             seat = first(seat),
             obs = first(obs),
             AvgCondition = as.numeric(weighted.mean(AvgCondition, DistFlown_nm, na.rm=TRUE)), 
@@ -139,12 +144,13 @@ write.csv(obsTbl, file = paste(dir.out,"/", yearLabel,"_Observations.csv", sep="
 # -------------------- #
 # TRACK TABLE
 # -------------------- #
-track3 = bind_rows(track2, transit) %>% arrange(key, sec) %>% 
+track3 = bind_rows(track2, transit) %>% 
+  arrange(key, sec) %>% 
   dplyr::select(Lat,Long,transect,year,month,day,seat,obs,condition,
                 offline,WAVfile,sec,GPSerror,type,comment,index,file,
                 crew,dataChange,dataError,original.spp.codes,date,key,
                 ID,bearing,sbearing) %>% 
-  mutate(type = ifelse(is.na(type),"WAYPNT",type),
+  mutate(type = replace(type, is.na(type),"WAYPNT"),
          date = paste(year, month, day, sep="-"))
 
 write.csv(track3, file =paste(dir.out,"/", yearLabel, "_Track.csv", sep=""), row.names=FALSE)
