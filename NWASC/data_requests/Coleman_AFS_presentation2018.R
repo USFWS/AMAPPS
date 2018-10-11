@@ -83,9 +83,10 @@ all.dat = dat %>%
 #all.dat = mutate(all.dat, species_type_id = replace(species_type_id, spp_cd %in% c("BALN","LABA","MYBA"),10))
 
 db <- dbConnect(odbc::odbc(),driver='SQL Server',server='ifw-dbcsqlcl1',database='NWASC')
-stc = dbGetQuery(db, "select * from lu_species_type_id")
+spp = dbGetQuery(db, "select * from lu_species")
+stc = dbGetQuery(db, "select * from lu_species_type")
 odbcClose(db)
-all.dat = all.dat %>%   left_join(., stc, by="species_type_id") 
+all.dat = all.dat %>%  left_join(., spp, by="spp_cd") %>% left_join(., stc, by="species_type_id") 
 
 sum.dat = all.dat %>% 
   #group_by(species_type_id) %>% 
@@ -387,60 +388,87 @@ ggsave(paste(dir.out, "boats.png",sep=""), p)
 # ----- # 
 
 # ----- # 
-sum.birds = filter(all.dat, species_type_id %in% 1) %>% 
-  group_by(common_name) %>% summarise(n=n()) %>%
-  mutate(common_name = replace(common_name, common_name %in% c("Black-tailed Gull","Bonaparte's Gull","Common Black-headed Gull",
-                                                               "Franklin's Gull","Great Black-backed Gull","Herring Gull",
-                                                               "Iceland Gull","Ivory Gull","Kumlien's Gull","Laughing Gull",
-                                                               "Lesser Black-backed Gull","Little Gull","Ring-billed Gull",
-                                                               "Sabine's Gull","Unidentified Large Gull","Unidentified small gull",
-                                                               "Glaucous Gull","Glaucous Gull X Herring Gull (hybrid)",
-                                                               "Thayer's Gull","Unidentified Great Black-backed/Herring Gull",
-                                                               "Unidentified Great or Lesser Black-backed Gull","California Gull",
-                                                               "Unidentified white winged gull (Ross's Gull, Ivory Gull, Iceland Gull, Glaucous-winged Gull and Glaucous Gull)"),
-                               "Gulls"),
-         common_name = replace(common_name, common_name %in% c("Audubon's Shearwater","Cape Verde Shearwater","Greater Shearwater",
-                                                               "Little Shearwater","Manx Shearwater","Sooty Shearwater",
-                                                               "Unidentified Large Shearwater","Unidentified Shearwater",
-                                                               "Unidentified Small Shearwater (Audubon's, Manx, or Little"),
-                               "Shearwaters"),
-         common_name = replace(common_name, common_name %in% c("Arctic Tern","Black Tern","Bridled or Sooty Tern","Bridled Tern",
-                                                               "Caspian Tern","Gull-billed Tern","Least Tern","Little Tern",
-                                                               "Roseate Tern","Royal Tern","Sandwich Tern","Sooty Tern",
-                                                               "Unidentified large Tern","Unidentified Noddy Tern",
-                                                               "Unidentified medium tern","Unidentified small Tern",
-                                                               "Forster's Tern","Unidentified Common or Roseate Tern"),
-                               "Terns"),
-         common_name = replace(common_name, common_name %in% c("Band-rumped Storm-petrel","Black-bellied Storm-petrel",
-                                                               "Black Storm-petrel","European Storm-petrel","Leach's Storm-petrel",
-                                                               "Least Storm-petrel","Swinhoe's Storm-petrel","Tristram's Storm-Petrel",
-                                                               "Unidentified Storm-petrel","White-faced Storm-petrel",
-                                                               "Wilson's Storm-petrel"),
-                               "Storm-petrels"),
-         common_name = replace(common_name, common_name %in% c("Baird's Sandpiper","Least Sandpiper","Pectoral Sandpiper",
-                                                               "Purple Sandpiper","Semipalmated Sandpiper","Solitary Sandpiper",
-                                                               "Spotted Sandpiper","Stilt Sandpiper","Unidentified Sandpiper",
-                                                               "Western Sandpiper"),
-                               "Sandpipers"),
-         common_name = replace(common_name, common_name %in% c("Bermuda Petrel","Black-capped Petrel","Bulwer's Petrel",
-                                                               "Fea's Petrel (aka Cape Verde Petrel)","Herald/Trinidad Petrel",
-                                                               "Unidentified Petrel"),
-                               "Petrels")) %>%
-  group_by(common_name) %>% summarise(n=sum(n)) 
+sum.birds = filter(all.dat, species_type_id %in% 1) %>% select(common_name) %>% 
+  #group_by(common_name) %>% summarise(n=n()) %>%
+  mutate(grouping = sapply(strsplit(sum.birds$common_name, " "), tail, 1),
+         grouping = toupper(grouping),
+         grouping = as.character(grouping),
+         grouping = replace(grouping, grouping %in% "MURRE)","MURRE"),
+         grouping = replace(grouping, grouping %in% "GULL)","GULL"),
+         grouping = replace(grouping, grouping %in% "KNOT)","KNOT"),
+         grouping = replace(grouping, grouping %in% "PETREL)","PETREL"),
+         grouping = replace(grouping, grouping %in% "Glaucous Gull X Herring Gull (hybrid)","GULL"),
+         grouping = replace(grouping, grouping %in% c("PUFFIN/DOVKIE","LITTE","SPP."),"BIRD")) %>% 
+  arrange(grouping) %>% 
+  group_by(grouping) %>% summarise(n=n())
 
-p = ggplot(sum.birds, aes(x = reorder(common_name, n), y = n, 
-                          fill=common_name, col=common_name))+
+p = ggplot(sum.birds, aes(x = reorder(grouping, n), y = n, 
+                          fill=grouping, col=grouping))+
   geom_bar(stat="identity")+
-  geom_text(data=sum.birds,aes(x=reorder(common_name,n),y=n,label=n),hjust=-0.1,size=5)+
+  geom_text(data=sum.birds,aes(x=reorder(grouping,n),y=n,label=n),hjust=-0.1,size=5)+
   theme_bw()+
   coord_flip()+
   theme(legend.position = "none",
-        text = element_text(size=15))+
+        text = element_text(size=10))+
   ylab("Number of Records")+
-  xlab("Species or Grouping")#+ 
-#scale_y_continuous(limits=c(0,18000))
+  xlab("Species or Grouping")+ 
+scale_y_continuous(limits=c(0,130500))
 p
-ggsave(paste(dir.out, "boats.png",sep=""), p)
+ggsave(paste(dir.out, "birdss.png",sep=""), p)
+
+  
+  # mutate(common_name = replace(common_name, common_name %in% c("Black-tailed Gull","Bonaparte's Gull","Common Black-headed Gull",
+  #                                                              "Franklin's Gull","Great Black-backed Gull","Herring Gull",
+  #                                                              "Iceland Gull","Ivory Gull","Kumlien's Gull","Laughing Gull",
+  #                                                              "Lesser Black-backed Gull","Little Gull","Ring-billed Gull",
+  #                                                              "Sabine's Gull","Unidentified Large Gull","Unidentified small gull",
+  #                                                              "Glaucous Gull","Glaucous Gull X Herring Gull (hybrid)",
+  #                                                              "Thayer's Gull","Unidentified Great Black-backed/Herring Gull",
+  #                                                              "Unidentified Great or Lesser Black-backed Gull","California Gull",
+  #                                                              "Unidentified white winged gull (Ross's Gull, Ivory Gull, Iceland Gull, Glaucous-winged Gull and Glaucous Gull)"),
+  #                              "Gulls"),
+  #        common_name = replace(common_name, common_name %in% c("Audubon's Shearwater","Cape Verde Shearwater","Greater Shearwater",
+  #                                                              "Little Shearwater","Manx Shearwater","Sooty Shearwater",
+  #                                                              "Unidentified Large Shearwater","Unidentified Shearwater",
+  #                                                              "Unidentified Small Shearwater (Audubon's, Manx, or Little"),
+  #                              "Shearwaters"),
+  #        common_name = replace(common_name, common_name %in% c("Arctic Tern","Black Tern","Bridled or Sooty Tern","Bridled Tern",
+  #                                                              "Caspian Tern","Gull-billed Tern","Least Tern","Little Tern",
+  #                                                              "Roseate Tern","Royal Tern","Sandwich Tern","Sooty Tern",
+  #                                                              "Unidentified large Tern","Unidentified Noddy Tern",
+  #                                                              "Unidentified medium tern","Unidentified small Tern",
+  #                                                              "Forster's Tern","Unidentified Common or Roseate Tern"),
+  #                              "Terns"),
+  #        common_name = replace(common_name, common_name %in% c("Band-rumped Storm-petrel","Black-bellied Storm-petrel",
+  #                                                              "Black Storm-petrel","European Storm-petrel","Leach's Storm-petrel",
+  #                                                              "Least Storm-petrel","Swinhoe's Storm-petrel","Tristram's Storm-Petrel",
+  #                                                              "Unidentified Storm-petrel","White-faced Storm-petrel",
+  #                                                              "Wilson's Storm-petrel"),
+  #                              "Storm-petrels"),
+  #        common_name = replace(common_name, common_name %in% c("Baird's Sandpiper","Least Sandpiper","Pectoral Sandpiper",
+  #                                                              "Purple Sandpiper","Semipalmated Sandpiper","Solitary Sandpiper",
+  #                                                              "Spotted Sandpiper","Stilt Sandpiper","Unidentified Sandpiper",
+  #                                                              "Western Sandpiper"),
+  #                              "Sandpipers"),
+  #        common_name = replace(common_name, common_name %in% c("Bermuda Petrel","Black-capped Petrel","Bulwer's Petrel",
+  #                                                              "Fea's Petrel (aka Cape Verde Petrel)","Herald/Trinidad Petrel",
+  #                                                              "Unidentified Petrel"),
+  #                              "Petrels")) %>%
+  # group_by(common_name) %>% summarise(n=sum(n)) 
+
+# p = ggplot(sum.birds, aes(x = reorder(common_name, n), y = n, 
+#                           fill=common_name, col=common_name))+
+#   geom_bar(stat="identity")+
+#   geom_text(data=sum.birds,aes(x=reorder(common_name,n),y=n,label=n),hjust=-0.1,size=5)+
+#   theme_bw()+
+#   coord_flip()+
+#   theme(legend.position = "none",
+#         text = element_text(size=15))+
+#   ylab("Number of Records")+
+#   xlab("Species or Grouping")#+ 
+# #scale_y_continuous(limits=c(0,18000))
+# p
+# ggsave(paste(dir.out, "birdss.png",sep=""), p)
 # ----- # 
 
 
