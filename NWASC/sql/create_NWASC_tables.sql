@@ -3,6 +3,7 @@ This script creates the Northwest Atlantic Seabird Catalog Schema
 and populates a few non-spatial tables
 
 created April 2017
+updated Oct. 16, 2018
 by K. Coleman
 
 This script will continue to be updated when adding new datasets to the dataset table
@@ -130,7 +131,8 @@ INSERT INTO lu_people([user_id], name, affiliation, active_status,work_email_onl
 	(79,'Kaye London','USFWS','active','kaye_london@fws.gov'),
 	(80,'Andrew Allyn','UMass','active',NULL),
 	(81,'Sarah Yates','USFWS','active','sarah_yates@fws.gov'),
-	(82,'Wing Goodale','BRI','active','wing_goodale@briloon.org');
+	(82,'Wing Goodale','BRI','active','wing_goodale@briloon.org'),
+	(83,'Nancy Karraker','URI','active','nkarraker@uri.edu');
 /* 
 update lu_people
 set name = 'Jo Anna Lutmerding'
@@ -1370,8 +1372,8 @@ INSERT INTO dataset(
 	(107,NULL,'AvalonSeawatch1993',NULL,NULL,NULL,NULL,NULL,0,'no',NULL,21,NULL,NULL,1,NULL), 					
 	(5,4,'BarHarborWW05','b','cts','ot',NULL,NULL,5,'yes','yes',33,'USFWS',NULL,1,NULL),         		
 	(6,4,'BarHarborWW06','b','cts','ot',NULL,NULL,5,'yes','yes',33,'USFWS',NULL,1,NULL),         		
-	(166,4,'BarHarborWW09','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL), 		
-	(167,4,'BarHarborWW10','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL), 		
+	(166,4,'BarHarborWW09','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL), 		
+	(167,4,'BarHarborWW10','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL), 		
 	(103,NULL,'BluewaterWindDE',NULL,NULL,NULL,NULL,NULL,0,'no',NULL,40,'BOEM',NULL,1,NULL), 					
 	(102,NULL,'BluewaterWindNJ',NULL,NULL,NULL,NULL,NULL,0,'no',NULL,40,'BOEM',NULL,1,NULL), 					
 	(144,5,'BOEMHighDef_NC2011Aerial','a','cts','ot',500,250,5,'yes','no',61,'BOEM,Normandeau',NULL,1,NULL), 
@@ -1478,34 +1480,34 @@ INSERT INTO dataset(
 	(145,16,'BOEMNanoTag_Mass_Aug2013','a','tss','ot',400,200,5,'yes','yes',60,'BOEM,USFWS',110,1,NULL),
 	(176,16,'BOEMNanoTag_Mass_Sept2013a','a','tss','ot',400,200,5,'yes','yes',60,'BOEM,USFWS',110,1,NULL),
 	(177,16,'BOEMNanoTag_Mass_Sept2013b','a','tss','ot',400,200,5,'yes','yes',60,'BOEM,USFWS',110,1,NULL),
-	(178,17,'BOEM_terns_July2013','a','tss','ot',400,200,5,'yes','no',62,'BOEM',100,1,NULL),
-	(179,17,'BOEM_terns_Aug2013','a','tss','ot',400,200,5,'yes','no',62,'BOEM',100,1,NULL),
-	(180,17,'BOEM_terns_Sep2013a','a','tss','ot',400,200,5,'yes','no',62,'BOEM',100,1,NULL),
- 	(181,17,'BOEM_terns_Sep2013b','a','tss','ot',400,200,5,'yes','no',62,'BOEM',100,1,NULL),
-	(95,19,'StellwagenBankNMS_Jun2012','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),	
-	(182,19,'StellwagenBankNMS_Aug2012','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(183,19,'StellwagenBankNMS_Oct2012','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(184,19,'StellwagenBankNMS_Jan2013','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(185,19,'StellwagenBankNMS_Apr2013','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(186,19,'StellwagenBankNMS_Jun2013','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(187,19,'StellwagenBankNMS_Aug2013','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(188,19,'StellwagenBankNMS_Oct2013','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(189,19,'StellwagenBankNMS_Apr2014','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(190,19,'StellwagenBankNMS_Jun2014','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(191,19,'StellwagenBankNMS_Aug2014','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(192,19,'StellwagenBankNMS_Sep2014','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(193,19,'StellwagenBankNMS_Oct2014','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(194,19,'StellwagenBankNMS_Dec2014','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(195,19,'StellwagenBankNMS_Jun2015','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(196,19,'StellwagenBankNMS_Aug2015','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(197,19,'StellwagenBankNMS_Sep2015','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(198,19,'StellwagenBankNMS_Oct2015','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(199,19,'StellwagenBankNMS_Dec2015','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(200,19,'StellwagenBankNMS_Aug2011','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,NULL),
-	(201,19,'StellwagenBankNMS_Sep2011a','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,NULL),--two surveys in Sep.
-	(202,19,'StellwagenBankNMS_Sep2011b','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,NULL),--two surveys in Sep.
-	(203,19,'StellwagenBankNMS_Dec2011','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,NULL),
-	(204,19,'StellwagenBankNMS_Oct2011','b','cts','ot',300,300,99,'no',NULL,9,'NOAA',NULL,1,NULL),
+	(178,17,'BOEM_terns_July2013','a','cts','ot',400,200,5,'yes','no',62,'BOEM',100,1,NULL),
+	(179,17,'BOEM_terns_Aug2013','a','cts','ot',400,200,5,'yes','no',62,'BOEM',100,1,NULL),
+	(180,17,'BOEM_terns_Sep2013a','a','cts','ot',400,200,5,'yes','no',62,'BOEM',100,1,NULL),
+ 	(181,17,'BOEM_terns_Sep2013b','a','cts','ot',400,200,5,'yes','no',62,'BOEM',100,1,NULL),
+	(95,19,'StellwagenBankNMS_Jun2012','b','cts','ot',300,300,0,'no',NULL,9,'NOAA',NULL,1,26),	
+	(182,19,'StellwagenBankNMS_Aug2012','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(183,19,'StellwagenBankNMS_Oct2012','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(184,19,'StellwagenBankNMS_Jan2013','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(185,19,'StellwagenBankNMS_Apr2013','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(186,19,'StellwagenBankNMS_Jun2013','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(187,19,'StellwagenBankNMS_Aug2013','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(188,19,'StellwagenBankNMS_Oct2013','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(189,19,'StellwagenBankNMS_Apr2014','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(190,19,'StellwagenBankNMS_Jun2014','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(191,19,'StellwagenBankNMS_Aug2014','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(192,19,'StellwagenBankNMS_Sep2014','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(193,19,'StellwagenBankNMS_Oct2014','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(194,19,'StellwagenBankNMS_Dec2014','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(195,19,'StellwagenBankNMS_Jun2015','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(196,19,'StellwagenBankNMS_Aug2015','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(197,19,'StellwagenBankNMS_Sep2015','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(198,19,'StellwagenBankNMS_Oct2015','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(199,19,'StellwagenBankNMS_Dec2015','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(200,19,'StellwagenBankNMS_Aug2011','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,NULL),
+	(201,19,'StellwagenBankNMS_Sep2011a','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,NULL),--two surveys in Sep.
+	(202,19,'StellwagenBankNMS_Sep2011b','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,NULL),--two surveys in Sep.
+	(203,19,'StellwagenBankNMS_Dec2011','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,NULL),
+	(204,19,'StellwagenBankNMS_Oct2011','b','cts','ot',300,300,5,'yes',NULL,9,'NOAA',NULL,1,NULL),
 	(175,21,'DeepwaterWindBlockIsland_boat_Nov09a','b','cts','ot',300,300,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',8,1,NULL),
 	(205,21,'DeepwaterWindBlockIsland_boat_Nov09b','b','cts','ot',300,300,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',8,1,NULL),
 	(206,21,'DeepwaterWindBlockIsland_boat_Dec10a','b','cts','ot',300,300,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',8,1,NULL),
@@ -1526,25 +1528,25 @@ INSERT INTO dataset(
  	(221,21,'DeepwaterWindBlockIsland_boat_Aug11b','b','cts','ot',300,300,0,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',8,1,NULL),
  	(222,21,'DeepwaterWindBlockIsland_boat_Sep11a','b','cts','ot',300,300,0,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',8,1,NULL),
 	(223,21,'DeepwaterWindBlockIsland_boat_Sep11b','b','cts','ot',300,300,0,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',8,1,NULL),
-	(224,22,'StellwagenBankNMS_SS_Jun2012','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(225,22,'StellwagenBankNMS_SS_Aug2012','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(226,22,'StellwagenBankNMS_SS_Oct2012','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(227,22,'StellwagenBankNMS_SS_Jan2013','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(228,22,'StellwagenBankNMS_SS_Apr2013','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(229,22,'StellwagenBankNMS_SS_Jun2013','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(230,22,'StellwagenBankNMS_SS_Aug2013','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(231,22,'StellwagenBankNMS_SS_Oct2013','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(232,22,'StellwagenBankNMS_SS_Apr2014','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(233,22,'StellwagenBankNMS_SS_Jun2014','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(234,22,'StellwagenBankNMS_SS_Aug2014','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(235,22,'StellwagenBankNMS_SS_Sep2014','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(236,22,'StellwagenBankNMS_SS_Oct2014','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(237,22,'StellwagenBankNMS_SS_Dec2014','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(238,22,'StellwagenBankNMS_SS_Jun2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(239,22,'StellwagenBankNMS_SS_Aug2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(240,22,'StellwagenBankNMS_SS_Sep2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(241,22,'StellwagenBankNMS_SS_Oct2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
-	(242,22,'StellwagenBankNMS_SS_Dec2015','b','cts','ot',NULL,NULL,99,'no',NULL,9,'NOAA',NULL,1,26),
+	(224,22,'StellwagenBankNMS_SS_Jun2012','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(225,22,'StellwagenBankNMS_SS_Aug2012','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(226,22,'StellwagenBankNMS_SS_Oct2012','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(227,22,'StellwagenBankNMS_SS_Jan2013','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(228,22,'StellwagenBankNMS_SS_Apr2013','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(229,22,'StellwagenBankNMS_SS_Jun2013','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(230,22,'StellwagenBankNMS_SS_Aug2013','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(231,22,'StellwagenBankNMS_SS_Oct2013','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(232,22,'StellwagenBankNMS_SS_Apr2014','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(233,22,'StellwagenBankNMS_SS_Jun2014','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(234,22,'StellwagenBankNMS_SS_Aug2014','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(235,22,'StellwagenBankNMS_SS_Sep2014','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(236,22,'StellwagenBankNMS_SS_Oct2014','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(237,22,'StellwagenBankNMS_SS_Dec2014','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(238,22,'StellwagenBankNMS_SS_Jun2015','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(239,22,'StellwagenBankNMS_SS_Aug2015','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(240,22,'StellwagenBankNMS_SS_Sep2015','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(241,22,'StellwagenBankNMS_SS_Oct2015','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
+	(242,22,'StellwagenBankNMS_SS_Dec2015','b','cts','ot',NULL,NULL,5,'yes',NULL,9,'NOAA',NULL,1,26),
 	(243,21,'DeepwaterWindBlockIsland0910_camera','c','cts','ot',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',53,1,NULL),
 	(244,20,'StellwagenBankNMS_WW_2011-10-22','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1,NULL),
 	(245,20,'StellwagenBankNMS_WW_2012-06-17','b','dts','og',NULL,NULL,9,'no',NULL,9,'NOAA',NULL,1,NULL),
@@ -1698,14 +1700,14 @@ INSERT INTO dataset(
 	(393,10,'EcoMonMay2017_GU1701','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,23),
 	(394,10,'EcoMonJune2017_GU1702','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,23),
 	(395,1,'AMAPPS_FWS_Aerial_Summer2017','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(173,24,'NYSERDA_OPA_Survey1_Summer2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(398,24,'NYSERDA_OPA_Survey2_Fall2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(399,24,'NYSERDA_OPA_Survey3_Winter2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(400,24,'NYSERDA_OPA_Survey4_Spring2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(401,24,'NYSERDA_WEA_Survey1_Summer2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(402,24,'NYSERDA_WEA_Survey2_Fall2016','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(403,24,'NYSERDA_WEA_Survey3_Winter2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(404,24,'NYSERDA_WEA_Survey4_Spring2017','c','cts','ot',NULL,NULL,99,'no','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(173,24,'NYSERDA_OPA_Survey1_Summer2016','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(398,24,'NYSERDA_OPA_Survey2_Fall2016','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(399,24,'NYSERDA_OPA_Survey3_Winter2017','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(400,24,'NYSERDA_OPA_Survey4_Spring2017','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(401,24,'NYSERDA_WEA_Survey1_Summer2016','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(402,24,'NYSERDA_WEA_Survey2_Fall2016','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(403,24,'NYSERDA_WEA_Survey3_Winter2017','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(404,24,'NYSERDA_WEA_Survey4_Spring2017','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(409,2,'AMAPPS_NOAA/NMFS_NEFSCAerial2010','a','cts','ot',NULL,NULL,0,'no',NULL,NULL,'BOEM,USFWS,NOAA,NAVY',NULL,NULL,NULL),
 	(410,2,'AMAPPS_NOAA/NMFS_NEFSCAerial2012','a','cts','ot',NULL,NULL,0,'no',NULL,NULL,'BOEM,USFWS,NOAA,NAVY',NULL,NULL,NULL),
 	(411,2,'AMAPPS_NOAA/NMFS_NEFSC_2017','b','cts','ot',300,300,5,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
@@ -1714,7 +1716,7 @@ INSERT INTO dataset(
     (414,25,'GOMCES 2015','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
     (415,25,'GOMCES 2016','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
 	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','dth','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL),
-	(396,1,'AMAPPS_FWS_Aerial_summer2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
+	(396,1,'AMAPPS_FWS_Aerial_summer2018','a','cts','ot',400,200,99,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
 	(397,1,'AMAPPS_FWS_Aerial_2019','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
 	(417,1,'AMAPPS_FWS_Aerial_fall2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
 	(405,24,'NYSERDA_WEA_Survey5','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
@@ -1748,8 +1750,9 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-dataset_name = 'NYSERDA_OPA_Survey6'
-where dataset_id in (408)
+share_level_id = 9,
+in_database='no'
+where dataset_id in (167,166)
 */
 
 -- select * from dataset order by share_level_id
@@ -2060,7 +2063,6 @@ INSERT INTO progress_table(
 	metadata_acquired, 
 	report_acquired, 
 	additional_info)
-	VALUES
  	(92,7,'PIROP','need to investigate',NULL,'KC',0,0,0,'Apparently already in database but across several other surveys, need to figure out which'),
  	(93,0,'SEANET','need to investigate',NULL,'KC',0,0,0,'Not sure that we actually want this in here'),
 	(96,0,'NantucketShoals1998','need to investigate',NULL,'TW',0,0,0,NULL),
@@ -2069,8 +2071,6 @@ INSERT INTO progress_table(
 	(101,0,'DUMLOnslowBay2007','requested',CAST('2017-10-18' as date),'AW',0,0,0,'data provider on materinty leave, will contact again in a few months'),
 	(106,0,'WaterfowlUSFWS2001','need to investigate',NULL,'MTJ/KC',0,0,0,NULL),
 	(163,0,'RoyalSociety','need to investigate',NULL,'TW',0,0,0,NULL),
-	(166,0,'BarHarborWW09','requested multiple times',CAST('2017-10-17' as date),'KC',0,0,0,NULL),
-	(167,0,'BarHarborWW010','requested multiple times',CAST('2017-10-17' as date),'KC',0,0,0,NULL),
 	(169,99,'BOEMHighDef_NC2011Camera','need to finish QA/QC',NULL,'KC',1,0,1,'There were issues with the gps and time'),
 	(175,9,'DeepwaterWindBlockIsland_boat_Nov09a','QA/QC started',NULL,'KC',1,0,0,NULL),
 	(205,9,'DeepwaterWindBlockIsland_boat_Nov09b','QA/QC started',NULL,'KC',1,0,0,NULL),
@@ -2102,17 +2102,16 @@ INSERT INTO progress_table(
 	(386,0,'EcoMonNov2013','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
 	(383,0,'EcoMonFeb2011','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
 	(384,0,'EcoMonJun2011','need to request',NULL,'TW/KC',0,0,1,'In contact with TW and AW about this'),
-	--(173,0,'NYSERDA_APEM_1','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
-	--(398,0,'NYSERDA_APEM_2','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
-	--(399,0,'NYSERDA_APEM_3','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
-	--(400,0,'NYSERDA_APEM_4','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
-	--(401,0,'NYSERDA_APEM_5','requested again',CAST('2018-05-01' as date),'KC',1,0,1,'working on details with provider'),
 	(243,9,'DeepwaterWindBlockIsland0910_camera','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
     (119,9,'ECSAS','Data downloaded from OBIS, needs effort data',NULL,'KC',1,1,0,'Arliss has full dataset'),
 	(413,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),
 	(414,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),	
-	(415,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL);
-	--(416,9,'BIWF_onshore_sea_watch_avian_surveys','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
+	(415,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),
+	--( ,9,'BIWF_onshore_sea_watch_avian_surveys','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
+	(166,9,'BarHarborWW09','needs QA/QC',NULL,'KC',1,0,0,NULL),
+	(167,9,'BarHarborWW010','needs QA/QC',NULL,'KC',1,0,0,NULL),
+	(416,99,'AMAPPS_summer2018','QA/QC started',cast('2018-10-16' as date),'KC',1,0,0,NULL)
+
 
 --  dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
 --  data_acquired, metadata_acquired, report_acquired, additional_info)
@@ -2127,7 +2126,7 @@ INSERT INTO progress_table(
 /*
 -- remove dataset that was uploaded
 delete from progress_table
-where dataset_id in (173,398,399,400,401,416)
+where dataset_id in (166,167)
 */
 
 
@@ -2176,7 +2175,7 @@ INSERT INTO requests(
 	(14,'data',59,'official survey name for each dataset listed in the source_dataset_id column', CAST('2017-09-8' AS DATE), 'filled', CAST('2017-09-11' AS DATE), NULL),
 	(15,'service',74,'summary of species and surveys within the new seamount & canyon marine national monuments - request from refuges, Caleb relayed', CAST('2017-11-20' AS DATE), 'filled', CAST('2017-11-29' AS DATE), NULL),
 	(16,'service',75,'NWASC boundaries', CAST('2017-11-20' AS DATE), 'filled', CAST('2017-11-29' AS DATE), 'Meghan is looking to create a polygon for pulling AKN data for ECOS for Atlantic birds'),
-	(17,'service', 76 ,'Bug data summary for a RI reporter', CAST('2017-12-20' AS DATE),'not filled', NULL, NULL),
+	(17,'service', 76 ,'Bug data summary for a RI reporter', CAST('2017-12-20' AS DATE),'filled',CAST('2017-12-20' AS DATE), NULL),
 	(18,'data',3,'all tern data', CAST('2017-12-04' AS DATE),'filled', CAST('2017-12-08' AS DATE), NULL),
 	(19,'data',77,'all landbird data', CAST('2018-01-08' AS DATE),'filled', CAST('2018-01-08' AS DATE), NULL),
 	(20,'data',3,'all RISAMP boat data', CAST('2018-01-10' AS DATE),'filled', CAST('2018-01-10' AS DATE), NULL),
@@ -2187,17 +2186,18 @@ INSERT INTO requests(
 	(25,'data',76,'all listed species for ES presentation',CAST('2018-02-22' AS DATE),'not filled',NULL,NULL),
 	(26,'data',60,'flight heights for shorebirds',CAST('2018-04-12' AS DATE),'filled',CAST('2018-04-13' AS DATE),NULL),
 	(27,'data',60,'make boxplot for shorebird flight heights',CAST('2018-04-12' AS DATE),'filled',CAST('2018-04-13' AS DATE),NULL),
-	(28,'data',65,'all effort data',CAST('2018-04-30' AS DATE),'not filled',NULL,NULL),
+	(28,'data',65,'all effort data',CAST('2018-04-30' AS DATE),'filled',cast('2018-10-10' as date),NULL),
 	(29,'data',77,'redo landbird obs, add dataset info',CAST('2018-05-10' AS DATE),'not filled',NULL,NULL),
 	(30,'service',81,'AMAPPS winter 2014 DCCO',CAST('2018-06-14' AS DATE),'filled',CAST('2018-06-14' AS DATE),NULL),
 	(31,'data',60,'update boxplot for shorebird flight heights',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-18' AS DATE),'add n='),
 	(32,'data',62,'copy of the species table',CAST('2018-06-15' AS DATE),'filled',CAST('2018-06-15' AS DATE),NULL),
 	(33,'service',65,'check NJDEP data for aerial data', cast('2018-08-27' as date), 'filled', cast('2018-08-28' as date), 'aerial data was not in db'),
-	(34,'data',3,'NJDEP and all NJ data (38.93N and 41.36N)',cast('2018-08-30' as date),'partially filled',NULL,'sent observations but need to send effort'),
-	(35,'data',82,'flight heights',cast('2018-9-5' as date),'not filled',NULL,NULL),
+	(34,'data',3,'NJDEP and all NJ data (38.93N and 41.36N)',cast('2018-08-30' as date),'filled',cast('2018-10-15' as date),NULL),
+	(35,'data',82,'flight heights',cast('2018-9-5' as date),'filled',cast('2018-10-15' as date),NULL),
 	(36,'data',65,'PIPL,ROST,REKN data and datset summaries',cast('2018-10-3' as date),'filled',cast('2018-10-4' as date),NULL),
-	(37,'data',62,'all obs and all effort',cast('2018-10-3' as date),'not filled',NULL,NULL),
-	(38,'data',76,'Check data for new North Atlantic MPA',cast('2018-10-4' as date),'filled',cast('2018-10-4' as date),NULL);
+	(37,'data',62,'all obs and all effort',cast('2018-10-3' as date),'filled',cast('2018-10-10' as date),NULL),
+	(38,'data',76,'Check data for new North Atlantic MPA',cast('2018-10-4' as date),'filled',cast('2018-10-4' as date),NULL),
+	(39,'data',83,'all turtle data with effort',CAST('2018-09-13' AS DATE),'not filled',NULL,'wait to confirm DOEBRI can be shared');
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
@@ -2206,17 +2206,15 @@ INSERT INTO requests(
 	-- 
 
 	update requests 
-	--set date_filled = CAST('2017-07-17' AS DATE), 
-	request_status = 'partially filled'  
-	where request_id = 34
+	set date_filled = CAST('2018-09-13' AS DATE) 
+	request_status = 'filled'  
+	where request_id = 39
 
 	--
 
 	update requests 
-	set additional_notes = 'sent observations but need to send effort'
+	set additional_notes = NULL
 	where request_id = 34
-
-	select * from requests
 */
 
 /*  look up people who need to be contacted for a project */ 
