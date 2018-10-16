@@ -13,6 +13,7 @@ library(RODBC)
 library(sp)
 library(dplyr)
 require(ggplot2)
+library(readxl)
 # -------------- #
 
 
@@ -37,7 +38,7 @@ obs = obs %>% mutate(observation_id = observation_id + 804175) %>%
 
 # combine old and new
 # creat month column
-obs = bind_rows(old_obs,obs)
+dat = bind_rows(old_obs,obs)
 
 # ------------ # 
 # effort
@@ -65,6 +66,23 @@ source("//ifw-hqfs1/MB SeaDuck/seabird_database/Rfunctions/transformDatasets.R")
 datasets=transformDataset(datasets)
 datasets$platform_name_id[datasets$platform_name_id %in% 26]='R/V Auk'
 #datasets$survey_method_cd[datasets$dataset_id %in% c(178,179,181)]="continuous time strip" #need to fix
+
+summaries = read_excel("//ifw-hqfs1/MB SeaDuck/seabird_database/documentation/How to and Reference files/NWASC_guidance/dataset_summaries_Aug2018.xlsx")
+summaries = summaries[,1:5] %>% rename(dataset_id = Dataset_id)
+datasets = left_join(datasets, summaries, by = c("dataset_id","source_dataset_id")) %>% 
+  dplyr::select(-dataset_summary,-dataset_quality,-dataset_processing)
+
+db <- dbConnect(odbc::odbc(),driver='SQL Server',server='ifw-dbcsqlcl1',database='NWASC')
+ll = dbGetQuery(db, "select * from links_and_literature")
+odbcClose(db)
+datasets = left_join(datasets, ll, by = "dataset_id") %>% 
+  dplyr::select(-id, -data_url.x, -report.x, -data_citation.x, -publications.x, -publication_url.x, -publication_DOI.x) %>%
+  rename(data_url = data_url.y,
+         report = report.y,
+         data_citation = data_citation.y,
+         publications = publications.y,
+         publication_url = publication_url.y,
+         publication_DOI = publication_DOI.y)
 
 # export
 write.csv(datasets,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/NKarraker_turtles_Sep2018/datasets.csv",row.names = F)
