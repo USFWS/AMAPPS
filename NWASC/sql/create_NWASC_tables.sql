@@ -2197,7 +2197,10 @@ INSERT INTO requests(
 	(36,'data',65,'PIPL,ROST,REKN data and datset summaries',cast('2018-10-3' as date),'filled',cast('2018-10-4' as date),NULL),
 	(37,'data',62,'all obs and all effort',cast('2018-10-3' as date),'filled',cast('2018-10-10' as date),NULL),
 	(38,'data',76,'Check data for new North Atlantic MPA',cast('2018-10-4' as date),'filled',cast('2018-10-4' as date),NULL),
-	(39,'data',83,'all turtle data with effort',CAST('2018-09-13' AS DATE),'not filled',NULL,'wait to confirm DOEBRI can be shared');
+	(39,'data',83,'all turtle data with effort',CAST('2018-09-13' AS DATE),'not filled',NULL,'wait to confirm DOEBRI can be shared'),
+	(40,'service',62,'Check db for AMAPPS Winter 2014 effort',cast('2018-10-22' as date),'filled',cast('2018-10-22' as date),'it was there'),
+	(41,'service',62,'Check db for AMAPPS Spring 2012 for missing data',cast('2018-10-22' as date),'filled',cast('2018-10-22' as date),'it was there'),
+	(42,'service',62,'write sample script for segmentation for one dataset',cast('2018-10-22' as date),'not filled',NULL,NULL);
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
