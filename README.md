@@ -8,7 +8,8 @@ Read Me for AMAPPS data management
 Created: Nov. 2015 by K. Coleman       
 Last edited: Oct. 2018 by K. Coleman 
 
-1) Understanding the data
+--------------------------------------------------------
+**1) Understanding the data**
 --------------------------------------------------------
 [id2]: https://my.usgs.gov/confluence/display/mbmdl/Data+lifecycle+development+for+Migratory+Bird+surveys+Home  
 **For USFWS MB personel, in seabird_database/documentation Read:**
@@ -25,14 +26,16 @@ Last edited: Oct. 2018 by K. Coleman
 
 
 
-2) Where to obtain survey data for processing 
+--------------------------------------------------------
+**2) Where to obtain survey data for processing** 
 --------------------------------------------------------
 [id3]: https://connect.doi.gov/fws/Portal/acjv/seabird/SitePages/Home.aspx
 [id4]: https://myaccount.fws.gov/
 - AMAPPS data can be found on the [SharePoint site][id3]. You will need premission to log onto this site. Download all of the processed observation and track files and save them in the Survey_Data/AMAPPS/AMAPPS_year_mo folder. Hint: the user name is IFW\shortname, if you don't capitalize the IFW it won't work. You can check your shortname in [myaccount.fws.gov][id4]. 
 
 
-3) Quality Control / Data Processing in R and GIS 
+--------------------------------------------------------
+**3) Quality Control / Data Processing in R and GIS** 
 --------------------------------------------------------
 *This section describes how to QA/QC the data using R, ArcMap, and Python within ArcMap. You will run "part1", check the shapefiles in ArcMap, save those files, then run "part2" of the scripts.*
 
@@ -148,7 +151,8 @@ c) Part2
 - Crew Summary
 
 
-4) Entering the data in AMAPPS atlantic seabirds SQL Server database (formerly the Access "Atlantic_Coast_Surveys" database)  
+--------------------------------------------------------
+**4) Entering the data in AMAPPS atlantic seabirds SQL Server database (formerly the Access "Atlantic_Coast_Surveys" database)**
 --------------------------------------------------------
 **Process:**  
 - The AMAPPS database houses all of the AMAPPS data but excludes nonbirds (except for boats). Nonbird and offline data are saved seperately or in the Misc_observations table of the database. The database includes tables for  "Crew_Information", "Observations", "Survey_Information", "Tracks", and "Transect_Information". 
@@ -159,11 +163,11 @@ c) Part2
 To access the atlantic seabirds SQL Server database [follow the directions listed here]
 (https://my.usgs.gov/confluence/display/mbmdl/Accessing+the+data).  You will need permission to access the database directly.    
 
-5) Reformating and entering the data in the NWASC Database 
+--------------------------------------------------------
+**5) Reformating and entering the data in the NWASC Database** 
 --------------------------------------------------------
 **Process:**  
 - All offline, bird, and nonbird data are entered into the NWASC.   
-- Segmentation of the data for NOAA happens once the data is in the NWASC on all of the NWASC data at the same time (not by dataset).
 
 **If you are also managing the NWASC, see NWASC folder to continue**
 
