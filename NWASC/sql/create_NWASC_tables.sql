@@ -1386,25 +1386,25 @@ INSERT INTO dataset(
 	(10,6,'CDASMidAtlantic','a','cts','ot',120,60,5,'yes','yes',15,NULL,NULL,1,NULL),
 	(21,7,'CSAP','b','dts','ot',300,300,5,'yes','yes',31,'Manomet',NULL,1,NULL),
 	(97,NULL,'DEandChesBaysUSFWS1990',NULL,NULL,NULL,NULL,NULL,6,'no',NULL,15,'USFWS',NULL,1,NULL), 		 					
-	(115,8,'DOEBRIAerial2012','c','cts','ot',200,50,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),--check on share levels
-	(148,8,'DOEBRIAerial2013','c','cts','ot ',200,50,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),--check on share levels
-	(168,8,'DOEBRIAerial2014','c','cts','ot',200,50,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),--check on share levels
-	(157,9,'DOEBRIBoatApr2014','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(114,9,'DOEBRIBoatApril2012','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(124,9,'DOEBRIBoatAug2012','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(152,9,'DOEBRIBoatAug2013','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(125,9,'DOEBRIBoatDec2012','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(155,9,'DOEBRIBoatDec2013','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(126,9,'DOEBRIBoatJan2013','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(156,9,'DOEBRIBoatJan2014','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(127,9,'DOEBRIBoatJune2012','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(151,9,'DOEBRIBoatJune2013','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(128,9,'DOEBRIBoatMar2013','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(150,9,'DOEBRIBoatMay2013','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(130,9,'DOEBRIBoatNov2012','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(154,9,'DOEBRIBoatOct2013','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(129,9,'DOEBRIBoatSep2012','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
-	(153,9,'DOEBRIBoatSep2013','b','cts','ot',300,300,1,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(115,8,'DOEBRIAerial2012','c','cts','ot',200,50,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),--check on share levels
+	(148,8,'DOEBRIAerial2013','c','cts','ot ',200,50,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),--check on share levels
+	(168,8,'DOEBRIAerial2014','c','cts','ot',200,50,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),--check on share levels
+	(157,9,'DOEBRIBoatApr2014','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(114,9,'DOEBRIBoatApril2012','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(124,9,'DOEBRIBoatAug2012','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(152,9,'DOEBRIBoatAug2013','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(125,9,'DOEBRIBoatDec2012','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(155,9,'DOEBRIBoatDec2013','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(126,9,'DOEBRIBoatJan2013','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(156,9,'DOEBRIBoatJan2014','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(127,9,'DOEBRIBoatJune2012','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(151,9,'DOEBRIBoatJune2013','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(128,9,'DOEBRIBoatMar2013','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(150,9,'DOEBRIBoatMay2013','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(130,9,'DOEBRIBoatNov2012','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(154,9,'DOEBRIBoatOct2013','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(129,9,'DOEBRIBoatSep2012','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
+	(153,9,'DOEBRIBoatSep2013','b','cts','ot',300,300,5,'yes','yes',3,'DOE,BRI,BOEM',NULL,1,NULL),
 	(134,NULL,'DominionVirginia_VOWTAP','b','cts','ot',300,300,5,'yes','yes',65,'BOEM,Dominion,TetraTech',NULL,1,NULL),
 	(101,NULL,'DUMLOnslowBay2007',NULL,NULL,NULL,NULL,NULL,0,'no',NULL,36,'Duke, University of NC',NULL,1,NULL),					
 	(77,10,'EcoMonAug08','b','cts','ot',300,300,5,'yes','yes',11,'NOAA',NULL,1,NULL),
@@ -1737,7 +1737,7 @@ INSERT INTO dataset(
 	(429,24,'NYSERDA_OPA_Survey12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(430,26,'NJDEP_aerial2008','a','cts','de',2000,1000,99,'no',NULL,56,'NJDEP,BOEM',110,1,NULL);
 
-
+-- 	(BOEM terns) -- two additional datasets, emailed Pam 10/24/18
 --  (4XX,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 --  (4XX,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 --	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2018','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
@@ -1750,9 +1750,9 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-share_level_id = 9,
-in_database='no'
-where dataset_id in (167,166)
+share_level_id = 5
+where dataset_id in (115,148,168,157,114,124,152,125,155,126,156,127,151,128,150,130,154,129,153)
+	
 */
 
 -- select * from dataset order by share_level_id
@@ -2197,10 +2197,11 @@ INSERT INTO requests(
 	(36,'data',65,'PIPL,ROST,REKN data and datset summaries',cast('2018-10-3' as date),'filled',cast('2018-10-4' as date),NULL),
 	(37,'data',62,'all obs and all effort',cast('2018-10-3' as date),'filled',cast('2018-10-10' as date),NULL),
 	(38,'data',76,'Check data for new North Atlantic MPA',cast('2018-10-4' as date),'filled',cast('2018-10-4' as date),NULL),
-	(39,'data',83,'all turtle data with effort',CAST('2018-09-13' AS DATE),'not filled',NULL,'wait to confirm DOEBRI can be shared'),
+	(39,'data',83,'all turtle data with effort',CAST('2018-09-13' AS DATE),'filled',cast('2018-10-16' as date),'wait to confirm DOEBRI can be shared'),
 	(40,'service',62,'Check db for AMAPPS Winter 2014 effort',cast('2018-10-22' as date),'filled',cast('2018-10-22' as date),'it was there'),
 	(41,'service',62,'Check db for AMAPPS Spring 2012 for missing data',cast('2018-10-22' as date),'filled',cast('2018-10-22' as date),'it was there'),
-	(42,'service',62,'write sample script for segmentation for one dataset',cast('2018-10-22' as date),'not filled',NULL,NULL);
+	(42,'service',62,'write sample script for segmentation for one dataset',cast('2018-10-22' as date),'not filled',NULL,NULL),
+	(43,'data',3,'expand to all data between 38.45N and 41.36N',cast('2018-10-24' as date),'filled',cast('2018-10-24' as date),NULL);
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
@@ -2209,7 +2210,7 @@ INSERT INTO requests(
 	-- 
 
 	update requests 
-	set date_filled = CAST('2018-09-13' AS DATE) 
+	set date_filled = cast('2018-10-16' as date),
 	request_status = 'filled'  
 	where request_id = 39
 
