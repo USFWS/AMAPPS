@@ -37,7 +37,8 @@ require(rgdal)
 # old data
 db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw9mbmsvr008', database='SeabirdCatalog')
 old.obs = dbGetQuery(db,"select geography.Lat as latitude, geography.Long as longitude, *
-                     from observation where geography.Lat between 38.93 and 41.36")
+                     from observation where geography.Lat between 38.45 and 41.36")
+
 #old.effort = dbGetQuery(db,"select [Geometry].STY as latitude, 
 #                        [Geometry].STX as longitude, * from transect where [Geometry].STY between 38.93 and 41.36")
 #njdep.obs = dbGetQuery(db,"select geography.Lat as latitude, geography.Long as longitude, *
@@ -130,13 +131,11 @@ dbDisconnect(db)
 
 # new data 
 db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
-new.obs <- sqlQuery(db, "select * from observation where temp_lat between 38.93 and 41.36")
-new.tracks <- sqlQuery(db, "select * from track where track_lat between 38.93 and 41.36")
+new.obs <- sqlQuery(db, "select * from observation where temp_lat between 38.45 and 41.36")
+#new.tracks <- sqlQuery(db, "select * from track where track_lat between 38.45 and 41.36")
 new.transects <- sqlFetch(db, "transect")
 new.transects = filter(new.transects, transect_id %in% new.tracks$transect_id)
 odbcClose(db)
-
-# missing AMAPPS 2017 effort!!! 
 
 
 # # filter data to > share level 3
@@ -185,6 +184,7 @@ all.data = all.data %>% dplyr::select(-date_created, -date_imported, -who_create
                                     -Geometry, -geography, -boem_lease_block_id, -seasurface_tempc_nb, 
                                     -utm_zone, -temp_lat, -temp_lon, -datafile, -who_imported,
                                     -age_id, -sex_id, -behavior_id)
+rm(old.obs, new.obs)
 # -------------- #
 
 
@@ -195,7 +195,8 @@ all.data = all.data %>% dplyr::select(-date_created, -date_imported, -who_create
 db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
 spp_list = dbGetQuery(db,"select * from lu_species")
 dbDisconnect(db)
-
+spp_list = select(spp_list, -order, -family, -subfamily)
+  
 if(any(!all.data$spp_cd %in% spp_list$spp_cd)){unique(all.data$spp_cd[!all.data$spp_cd %in% spp_list$spp_cd])}
 all.data = all.data %>% 
   mutate(spp_cd = replace(spp_cd, spp_cd %in% c("UNPL","PEEP"), "SHOR"),
@@ -227,6 +228,7 @@ all.data = all.data %>%
          spp_cd = replace(spp_cd, spp_cd %in% "SASP", "USAN")) %>%
   filter(!spp_cd %in% c("TRAN","BEGSEG","Comment","COMMENT","12","1","AWSD","--"))
 if(any(!all.data$spp_cd %in% spp_list$spp_cd)){unique(all.data$spp_cd[!all.data$spp_cd %in% spp_list$spp_cd])}
+rm(spp_list)
 
 # birds only
 all.data = all.data %>% filter(spp_cd %in% spp_list$spp_cd[spp_list$species_type_id %in% c(1,8)])
@@ -237,49 +239,72 @@ plot(all.data$obs_dt)
 plot(all.data$longitude, all.data$latitude)
 # -------------- #
 
+# -------------- #
+# effort
+# -------------- #
+db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
+effort = dbGetQuery(db,"select * from all_effort where latitude between 38.45 and 41.36")
+dbDisconnect(db)
 
 # -------------- #
+# transects
+# -------------- #
+nt1 = filter(new.transects, transect_id %in% all.data$transect_id)
+nt2 = filter(new.transects, transect_id %in% effort$transect_id)
+nt = rbind(nt1,nt2) 
+nt = nt[!duplicated(nt),]
+rm(nt1,nt2,new.transects)
+# -------------- #
+
 # -------------- #
 # pull up data summaries and join by dataset id
 db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
 datasets = dbGetQuery(db,"select * from dataset")
+ll = dbGetQuery(db,"select * from links_and_literature")
 dbDisconnect(db)
 
-#summaries = read_excel("//ifw-hqfs1/MB SeaDuck/seabird_database/documentation/How to and Reference files/NWASC_guidance/dataset_summaries_Aug2018.xlsx")
-datasets = filter(datasets, dataset_id %in% all.data$dataset_id) %>%
-  mutate(dataset_type_cd = replace(dataset_type_cd, dataset_type_cd %in% "de","derived effort"),
-         dataset_type_cd = replace(dataset_type_cd, dataset_type_cd %in% "og","original general observation"),
-         dataset_type_cd = replace(dataset_type_cd, dataset_type_cd %in% "ot","original transect"),
-         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "a","airplane"),
-         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "b","boat"),
-         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "c","camera"),
-         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "f","fixed ground survey"),
-         survey_type_cd = replace(survey_type_cd, survey_type_cd %in% "g","area-wide ground survey"),
-         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "byc","bycatch"),
-         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "cbc","Christmas Bird count"),
-         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "cts","continuous time strip"),
-         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "dth","discrete time horizon"),
-         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "dts","discrete time strip"),
-         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% c("go","go "),"general observation"),
-         survey_method_cd = replace(survey_method_cd, survey_method_cd %in% "tss","targeted species survey")) %>%
-  dplyr::select(-responsible_party,-in_database,-metadata,-share_level_id,-platform_name_id)
-  
-#datasets = left_join(datasets, summaries, by = c("dataset_id", "Dataset_id"))
+summaries = read_excel("//ifw-hqfs1/MB SeaDuck/seabird_database/documentation/How to and Reference files/NWASC_guidance/dataset_summaries_Aug2018.xlsx")
+summaries = summaries[,1:5] %>% rename(dataset_id = Dataset_id)
+names(summaries) = tolower(names(summaries))
+
+source("//ifw-hqfs1/MB SeaDuck/seabird_database/Rfunctions/transformDatasets.R")
+datasets = transformDataset(datasets)
+
+datasets = left_join(datasets, summaries, by = "dataset_id") %>% 
+  filter(dataset_id %in% unique(c(effort$dataset_id, all.data$dataset_id, nt$dataset_id))) %>% 
+  dplyr::select(-source_dataset_id,-data_url, -report, -data_citation, -publications, -publication_url, 
+                -publication_DOI, -dataset_summary.x, -dataset_quality.x, -dataset_processing.x) %>% 
+  rename(dataset_summary = dataset_summary.y, 
+          dataset_quality = dataset_quality.y, 
+          dataset_processing = dataset_processing.y) %>% 
+  left_join(., select(ll,-id), by = "dataset_id")
 #njdep.dataset = filter(datasets, dataset_id == 91)
+
+rm(ll,db, summaries)
 # -------------- #
 
 
 # -------------- #
 # export 
 # -------------- #
-write.csv(datasets, "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABdatasets.csv")
+write.csv(datasets, "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABdatasets.csv",row.names = F)
 write.csv(all.data,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABdata_obs.csv",row.names = F)
+write.csv(effort,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABdata_effort.csv",row.names = F)
+write.csv(spp_list,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABspecies.csv",row.names = F)
 
 # export as spatial
 all.data = filter(all.data, !is.na(longitude), !is.na(latitude))
 coordinates(all.data) = ~longitude + latitude
 proj4string(all.data) = CRS("+init=epsg:4269")
 writeOGR(all.data, dsn = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018",
-         layer = "MABdata", driver = "ESRI Shapefile")
+         layer = "MABobs", driver = "ESRI Shapefile")
+
+
+effort = filter(effort, !is.na(longitude), !is.na(latitude))
+coordinates(effort) = ~longitude + latitude
+proj4string(effort) = CRS("+init=epsg:4269")
+writeOGR(effort, dsn = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018",
+         layer = "MABeffort", driver = "ESRI Shapefile")
 # # -------------- #
+
                 
