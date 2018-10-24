@@ -86,12 +86,6 @@ x = obs$type[tmp][!obs$type[tmp] %in% c("BEGCNT","ENDCNT","COMMENT","COCH")]
 message("Found ", length(x), " entries with non-matching AOU codes")
 unique(x); rm(x)
 
-# obs$type[obs$type %in% "TRAWL" & obs$comment %in% c("lobster boat","400, lobster boat",
-#                                                     "300,lobster boat",
-#                                                     "600, lobster boat no birds following",
-#                                                     "lobster boat no birds following",
-#                                                     "lobster boat with 3 HEGU fowing")] = "BOLO"
-
 obs$type[obs$type %in% "BIRD"] = "UNBI"
 obs$type[obs$type %in% "DOLP"] = "UNDO"    
 obs$type[obs$type %in% "HEGU"] = "HERG"      
@@ -141,4 +135,163 @@ if(length(x)>0){message("Found ", length(x), " entries with non-matching AOU cod
   }else(message("All species codes have been corrected"))
 # ##--------------------------##
 # 
+# 
+# ##--------------------------##
+# # fix transects errors
+# ##--------------------------##
+t = 293100
+s = "lf"
+ggplot(obs[obs$transect %in% t & obs$seat %in% s,], aes(long, lat))+geom_point()
+
+ggplot(track[track$transect %in% t & track$seat %in% s,], aes(long, lat))+geom_point()
+
+# Transects	BegFreq	EndFreq	Observer
+# 0	26	24	tpw
+# 293100	2	1	jsw
+
+
+# 295600	2	1	jsw
+# 302600	3	2	jsw
+# 324100	1	3	jsw
+# 325600	1	2	jsw
+# 332600	1	2	jsw
+# 335100	5	6	jsw
+# 352100	3	2	jsw
+# 352101	2	1	jsw
+# 352600	1	2	sde
+# 362100	1	2	sde
+# 391100	4	2	sde
+# 412100	2	1	sde
+# 415101	2	1	mdk
+# 420600	2	1	mdk
+# 440100	6	5	mdk
+# 440600	14	15	mdk
+# 441600	17	18	mdk
+# 442100	4	5	mdk
+# 442101	3	4	mdk
+# 443600	17	16	mdk
+
+# #390600
+# obs$dataChange[obs$transect %in% 393600 & obs$day %in% 26] = "Changed TRANSECT from 393600"
+# obs$transect[obs$transect %in% 393600 & obs$day %in% 26] = 390600
+#   
+# # MDK had no BEGSEG for 444100
+# obs$type[obs$transect %in% 444100 & obs$obs %in% "tpw" & obs$type %in% "BEGCNT" & obs$sec %in% 31483.70]="BEGSEG"
+# to.add = obs[obs$transect %in% 444100 & obs$obs %in% "tpw" & obs$type %in% "BEGSEG",]
+# to.add$obs = "mdk"
+# to.add$comment = "added from tpw's record"
+# to.add$index = NA
+# to.add$seat = "lf"
+# obs = rbind(obs, to.add)
+# 
+# ## descriptive plots
+# #ggplot(filter(obs,obs %in% "mdk"), aes(long,lat,col=transect))+geom_point()
+# 
+# #ggplot(filter(obs,obs %in% "mdk", type %in% c("BEGCNT","ENDCNT","BEGSEG","ENDSEG")), 
+# #       aes(long,lat,col=transect))+geom_point()+geom_text(aes(label=transect),hjust=0, vjust=0)
+# 
+# #ggplot(filter(obs,obs %in% "mdk", type %in% c("BEGCNT","ENDCNT","BEGSEG","ENDSEG")), 
+# #       aes(long,lat,col=type))+geom_point()+geom_text(aes(label=transect),hjust=0, vjust=0)
+# 
+# ##--------------------------##
+# 
+# 
+# ##--------------------------##
+# # fix errors
+# ##--------------------------##
+# 
+# # ---------- #  
+# # counts
+# # ---------- # 
+obs$comment[obs$count %in% c("2to3")] = "2to3"
+obs$count[obs$count %in% c("2to3")] = NA
+
+obs$comment[obs$count %in% c("3to2")] = "3to2"
+obs$count[obs$count %in% c("3to2")] = NA
+
+obs$count[obs$count %in% c("0")] = NA
+
+obs$comment[obs$count %in% c("2.0.f")] = "2.0.f"
+obs$behavior[obs$count %in% c("2.0.f")] = "f"
+obs$count[obs$count %in% c("2.0.f")] = 2
+
+obs$behavior[obs$count %in% c("1.0")] = "f"
+obs$count[obs$count %in% c("1.0")] = 1   
+
+obs$comment[obs$count %in% c("2.2.f.adult")] = "2.2.f.adult"
+obs$behavior[obs$count %in% c("2.2.f.adult")] = "f"
+obs$age[obs$count %in% c("2.2.f.adult")] = "adult"
+#obs$band[obs$count %in% c("2.2.f.adult")] = 2
+obs$count[obs$count %in% c("2.2.f.adult")] = 2 #check what second 2 and 0s above mean for tim white, band?
+
+obs$count[obs$count %in% c("4COCH3")] = NA
+
+# ## investigate high counts
+obs[as.numeric(obs$count) > 100 & !obs$type %in% c("BEGSEG","ENDSEG","BEGCNT","ENDCNT","COCH"),]
+
+## boat counts
+obs[as.numeric(obs$count) > 2 & obs$type %in% c("BOAT","BOTD","BOFI"),]
+# # ---------- # 
+# 
+# # ---------- # 
+# # dates
+# # ---------- # 
+# # mdk uses 5 instead of 8
+# obs$month[obs$obs %in% "mdk"] = 8
+# obs = mutate(obs, date = as.Date(paste(month, day, year, sep="/"),format="%m/%d/%Y"),
+#              month = as.numeric(month), day = as.numeric(day), year = as.numeric(year))
+# 
+# # jfv says it's the 30th when it was flown on the 26th
+# obs$comment[obs$obs %in% "jfv" & obs$day %in% 30] = paste(obs$comment[obs$obs %in% "jfv" & obs$day %in% 30],
+#                                                           "DAY changed from 30", sep = "; ")
+# obs$day[obs$obs %in% "jfv" & obs$day %in% 30] = 26
+# # ---------- # 
+# 
+# 
+# # ---------- # 
+# # distance
+# # ---------- # 
+# # change meters to nm
+# obs$distance.to.obs[obs$obs %in% c("tpw","mdk")] = obs$distance.to.obs[obs$obs %in% c("tpw","mdk")] * 0.000539957
+# # ---------- # 
+# 
+# 
+# # ---------- # 
+# # condition
+# # ---------- # 
+# to.add = obs[obs$transect %in% 350100 & obs$sec %in% 39841.16,]
+# obs$count[obs$transect %in% 350100 & obs$sec %in% 39841.16]=4
+# to.add = mutate(to.add,
+#                 condition = 3,
+#                 index=index+0.1,
+#                 dataChange = "Added COCH based on other COCH")
+# obs = rbind(obs,to.add)
+# rm(to.add)
+# # ---------- # 
+# 
+# 
+# # ---------- # 
+# # offline
+# # ---------- # 
+# obs$offline[is.na(obs$transect) & 
+#               obs$comment %in% c("counting on transit leg","counting on transit transect","transit transect") & 
+#               obs$offline %in% 0] = 1
+# 
+# # fix offline for tpw
+# obs$type[obs$obs %in% 'tpw' & obs$transect %in% 0 & obs$type %in% c('BEGCNT','ENDCNT')] = 'COMMENT'
+# obs$transect[obs$obs %in% 'tpw' & obs$transect %in% 0] = NA
+# obs$offline[obs$obs %in% 'tpw' & is.na(obs$transect)] = 1
+# 
+# # there are others who listed offline BEG and END records which screw up some things later on
+# obs$type[obs$offline %in% 1 & obs$type %in% c('BEGCNT','ENDCNT')] = 'COMMENT'
+# 
+# #
+# obs$dataChange[obs$day %in% 20 & obs$obs %in% 'tpw' & obs$sec %in% c(40287.65,40287.65,40327.38,40480.69,40535.10)]= paste(obs$dataChange[obs$day %in% 20 & obs$obs %in% 'tpw' & obs$sec %in% c(40287.65,40287.65,40327.38,40480.69,40535.10)],
+#                                                                                                                            " changed to offline", sep = "; ")
+# obs$transect[obs$day %in% 20 & obs$obs %in% 'tpw' & obs$sec %in% c(40287.65,40287.65,40327.38,40480.69,40535.10)]=NA
+# obs$offline[obs$day %in% 20 & obs$obs %in% 'tpw' & obs$sec %in% c(40287.65,40287.65,40327.38,40480.69,40535.10)]=1
+# # ---------- #
+# 
+# message("Fixed other errors")
+# ##--------------------------##
 # 
