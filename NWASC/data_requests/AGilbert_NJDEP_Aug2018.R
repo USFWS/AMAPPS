@@ -291,6 +291,7 @@ write.csv(datasets, "//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_
 write.csv(all.data,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABdata_obs.csv",row.names = F)
 write.csv(effort,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABdata_effort.csv",row.names = F)
 write.csv(spp_list,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/MABspecies.csv",row.names = F)
+write.csv(nt,"//ifw-hqfs1/MB SeaDuck/seabird_database/data_sent/AGilbert_NJDEP_Aug2018/newTransects.csv",row.names = F)
 
 # export as spatial
 all.data = filter(all.data, !is.na(longitude), !is.na(latitude))
