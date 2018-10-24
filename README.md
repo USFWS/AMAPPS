@@ -154,14 +154,14 @@ c) Part2
 --------------------------------------------------------
 **4) Entering the data in AMAPPS atlantic seabirds SQL Server database (formerly the Access "Atlantic_Coast_Surveys" database)**
 --------------------------------------------------------
+[id5]: https://my.usgs.gov/confluence/display/mbmdl/Accessing+the+data
 **Process:**  
 - The AMAPPS database houses all of the AMAPPS data but excludes nonbirds (except for boats). Nonbird and offline data are saved seperately or in the Misc_observations table of the database. The database includes tables for  "Crew_Information", "Observations", "Survey_Information", "Tracks", and "Transect_Information". 
 
 **Scripts needed:**  
 -- formerly Add2Database2.R (formats the data to go into each table and adds the data to the access "Atlantic_Coast_Surveys" database), a new script is being written to enter the data into SQL Server     
 
-To access the atlantic seabirds SQL Server database [follow the directions listed here]
-(https://my.usgs.gov/confluence/display/mbmdl/Accessing+the+data).  You will need permission to access the database directly.    
+To access the atlantic seabirds SQL Server database [follow the directions listed here][id5].  You will need permission to access the database directly.    
 
 --------------------------------------------------------
 **5) Reformating and entering the data in the NWASC Database** 
@@ -169,7 +169,8 @@ To access the atlantic seabirds SQL Server database [follow the directions liste
 **Process:**  
 - All offline, bird, and nonbird data are entered into the NWASC.   
 
-**If you are also managing the NWASC, see NWASC folder to continue**
+**If you are also managing the NWASC, see NWASC folder to continue**  
 
+--------------------------------------------------------  
 >*Disclaimer:*  
 >The United States Fish and Wildlife Service (FWS) GitHub project code is provided on an "as is" basis and the user assumes responsibility for its use. FWS has relinquished control of the information and no longer has responsibility to protect the integrity, confidentiality, or availability of the information. Any reference to specific commercial products, processes, or services by service mark, trademark, manufacturer, or otherwise, does not constitute or imply their endorsement, recommendation or favoring by FWS. The FWS seal and logo shall not be used in any manner to imply endorsement of any commercial product or activity by FWS or the United States Government. 
