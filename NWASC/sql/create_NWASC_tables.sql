@@ -1212,7 +1212,9 @@ INSERT INTO lu_parent_project(
 	(13,'Massachusetts CEC',NULL,NULL),
 	(14,'PIROP',NULL,NULL),
 	(15,'ECSAS',NULL,NULL),
-	(16,'BOEM NanoTag Massachusetts 2013',NULL,NULL),
+	(16,'BOEM NanoTag','Aerial survey conduced by FWS, funded by BOEM, from 2013 to 2015. This is a targeted species survey that 
+		was conducted while tracking tagged terns. The effort expanded to between Cape Cod and Long Island for the 2014
+		and 2015 surveys, but was only in Massachusettes for the 2013 surveys',NULL),
 	(17,'BOEM Terns 2013',NULL,'https://www.boem.gov/2014-665/'),
 	(18,'EcoMon/HerringAcoutic combo',NULL,NULL),
 	(19,'StellwagenBankNMS standardized transects',NULL,NULL),
@@ -1269,8 +1271,11 @@ INSERT INTO lu_parent_project(
 /*  update lu_parent_project table */
 /*  update lu_parent_project
 	set
-	project_name = 'AMAPPS NOAA'
-	where project_id = 2
+	project_name = 'BOEM NanoTag',
+	project_ds = 'Aerial survey conduced by FWS, funded by BOEM, from 2013 to 2015. This is a targeted species survey that 
+		was conducted while tracking tagged terns. The effort expanded to between Cape Cod and Long Island for the 2014
+		and 2015 surveys, but was only in Massachusettes for the 2013 surveys'
+	where project_id = 16
 */
 
 -- select * from lu_parent_project
@@ -1735,9 +1740,10 @@ INSERT INTO dataset(
 	(427,24,'NYSERDA_OPA_Survey11','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(428,24,'NYSERDA_WEA_Survey12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(429,24,'NYSERDA_OPA_Survey12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(430,26,'NJDEP_aerial2008','a','cts','de',2000,1000,99,'no',NULL,56,'NJDEP,BOEM',110,1,NULL);
+	(430,26,'NJDEP_aerial2008','a','cts','de',2000,1000,99,'no',NULL,56,'NJDEP,BOEM',110,1,NULL),
+	(431,16,'BOEMNanoTag_2014','a','tss','ot',400,200,0,'no','yes',60,'BOEM,USFWS',110,1,NULL),
+	(432,16,'BOEMNanoTag_2015','a','tss','ot',400,200,0,'no','yes',60,'BOEM,USFWS',110,1,NULL);
 
--- 	(BOEM terns) -- two additional datasets, emailed Pam 10/24/18
 --  (4XX,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 --  (4XX,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 --	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2018','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
@@ -2063,6 +2069,7 @@ INSERT INTO progress_table(
 	metadata_acquired, 
 	report_acquired, 
 	additional_info)
+	VALUES
  	(92,7,'PIROP','need to investigate',NULL,'KC',0,0,0,'Apparently already in database but across several other surveys, need to figure out which'),
  	(93,0,'SEANET','need to investigate',NULL,'KC',0,0,0,'Not sure that we actually want this in here'),
 	(96,0,'NantucketShoals1998','need to investigate',NULL,'TW',0,0,0,NULL),
@@ -2110,8 +2117,9 @@ INSERT INTO progress_table(
 	--( ,9,'BIWF_onshore_sea_watch_avian_surveys','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
 	(166,9,'BarHarborWW09','needs QA/QC',NULL,'KC',1,0,0,NULL),
 	(167,9,'BarHarborWW010','needs QA/QC',NULL,'KC',1,0,0,NULL),
-	(416,99,'AMAPPS_summer2018','QA/QC started',cast('2018-10-16' as date),'KC',1,0,0,NULL)
-
+	(416,99,'AMAPPS_summer2018','QA/QC started',cast('2018-10-16' as date),'KC',1,0,0,NULL),
+	(431,0,'BOEMNanoTag_2014','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL),
+	(432,0,'BOEMNanoTag_2015','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL);
 
 --  dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
 --  data_acquired, metadata_acquired, report_acquired, additional_info)
