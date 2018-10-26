@@ -150,59 +150,30 @@ ggplot(track[track$transect %in% t & track$seat %in% s,], aes(long, lat))+geom_p
 # 293100	2	1	jsw
 
 
-# 295600	2	1	jsw
-# 302600	3	2	jsw
-# 324100	1	3	jsw
-# 325600	1	2	jsw
-# 332600	1	2	jsw
-# 335100	5	6	jsw
-# 352100	3	2	jsw
-# 352101	2	1	jsw
-# 352600	1	2	sde
-# 362100	1	2	sde
-# 391100	4	2	sde
-# 412100	2	1	sde
-# 415101	2	1	mdk
-# 420600	2	1	mdk
-# 440100	6	5	mdk
-# 440600	14	15	mdk
-# 441600	17	18	mdk
-# 442100	4	5	mdk
-# 442101	3	4	mdk
-# 443600	17	16	mdk
+# 302600	3	2	jsw # duplicated Begin record
+x = obs[obs$obs %in% "jsw" & obs$transect %in% 302600,]
 
-# #390600
-# obs$dataChange[obs$transect %in% 393600 & obs$day %in% 26] = "Changed TRANSECT from 393600"
-# obs$transect[obs$transect %in% 393600 & obs$day %in% 26] = 390600
-#   
-# # MDK had no BEGSEG for 444100
-# obs$type[obs$transect %in% 444100 & obs$obs %in% "tpw" & obs$type %in% "BEGCNT" & obs$sec %in% 31483.70]="BEGSEG"
-# to.add = obs[obs$transect %in% 444100 & obs$obs %in% "tpw" & obs$type %in% "BEGSEG",]
-# to.add$obs = "mdk"
-# to.add$comment = "added from tpw's record"
-# to.add$index = NA
-# to.add$seat = "lf"
-# obs = rbind(obs, to.add)
-# 
-# ## descriptive plots
-# #ggplot(filter(obs,obs %in% "mdk"), aes(long,lat,col=transect))+geom_point()
-# 
-# #ggplot(filter(obs,obs %in% "mdk", type %in% c("BEGCNT","ENDCNT","BEGSEG","ENDSEG")), 
-# #       aes(long,lat,col=transect))+geom_point()+geom_text(aes(label=transect),hjust=0, vjust=0)
-# 
-# #ggplot(filter(obs,obs %in% "mdk", type %in% c("BEGCNT","ENDCNT","BEGSEG","ENDSEG")), 
-# #       aes(long,lat,col=type))+geom_point()+geom_text(aes(label=transect),hjust=0, vjust=0)
-# 
-# ##--------------------------##
-# 
-# 
-# ##--------------------------##
-# # fix errors
-# ##--------------------------##
-# 
-# # ---------- #  
-# # counts
-# # ---------- # 
+# 335100	5	6	jsw # duplicate end records
+#x = obs[obs$obs %in% "jsw" & obs$transect %in% 335100,]
+
+# 352600	1	2	sde #missing BEG
+#x = obs[obs$obs %in% "sde" & obs$transect %in% 352600,]
+
+# 412100	2	1	sde #missing END
+#x = obs[obs$obs %in% "sde" & obs$transect %in% 412100,]
+
+# 415101	2	1	mdk #missing END
+#x = obs[obs$obs %in% "mdk" & obs$transect %in% 415101,]
+##--------------------------##
+
+
+##--------------------------##
+# fix errors
+##--------------------------##
+
+# ---------- #
+# counts
+# ---------- #
 obs$comment[obs$count %in% c("2to3")] = "2to3"
 obs$count[obs$count %in% c("2to3")] = NA
 
@@ -227,46 +198,60 @@ obs$count[obs$count %in% c("2.2.f.adult")] = 2 #check what second 2 and 0s above
 obs$count[obs$count %in% c("4COCH3")] = NA
 
 # ## investigate high counts
-obs[as.numeric(obs$count) > 100 & !obs$type %in% c("BEGSEG","ENDSEG","BEGCNT","ENDCNT","COCH"),]
+#obs[as.numeric(obs$count) > 100 & !obs$type %in% c("BEGSEG","ENDSEG","BEGCNT","ENDCNT","COCH"),]
+obs$count[obs$type %in% "TURT" & obs$count %in% 302100] = NA # ask jep to check WAVfiles
+obs$count[obs$type %in% "UNRA" & obs$count %in% 293100] = NA # ask jep to check WAVfiles
 
 ## boat counts
-obs[as.numeric(obs$count) > 2 & obs$type %in% c("BOAT","BOTD","BOFI"),]
-# # ---------- # 
-# 
-# # ---------- # 
-# # dates
-# # ---------- # 
-# # mdk uses 5 instead of 8
-# obs$month[obs$obs %in% "mdk"] = 8
-# obs = mutate(obs, date = as.Date(paste(month, day, year, sep="/"),format="%m/%d/%Y"),
-#              month = as.numeric(month), day = as.numeric(day), year = as.numeric(year))
-# 
-# # jfv says it's the 30th when it was flown on the 26th
-# obs$comment[obs$obs %in% "jfv" & obs$day %in% 30] = paste(obs$comment[obs$obs %in% "jfv" & obs$day %in% 30],
-#                                                           "DAY changed from 30", sep = "; ")
-# obs$day[obs$obs %in% "jfv" & obs$day %in% 30] = 26
-# # ---------- # 
-# 
-# 
-# # ---------- # 
-# # distance
-# # ---------- # 
-# # change meters to nm
-# obs$distance.to.obs[obs$obs %in% c("tpw","mdk")] = obs$distance.to.obs[obs$obs %in% c("tpw","mdk")] * 0.000539957
-# # ---------- # 
-# 
-# 
+obs$count = as.numeric(obs$count)
+#obs[obs$count > 2 & obs$type %in% c("BOAT","BOTD","BOFI"),]
+
+obs$distance_from_observer[obs$count > 10 & obs$type %in% c("BOAT","BOTD","BOFI")] = (obs$count[obs$count > 10 & obs$type %in% c("BOAT","BOTD","BOFI")]*0.000539957)
+obs$count[obs$count > 10 & obs$type %in% c("BOAT","BOTD","BOFI")] = NA
+obs$distance_from_observer[obs$type %in% c("BOAT","BOTD","BOFI") & obs$comment %in% c(".5",".75","1","1.15","1.25","1.5","2")] = 
+  obs$comment[obs$type %in% c("BOAT","BOTD","BOFI") & obs$comment %in% c(".5",".75","1","1.15","1.25","1.5","2")]
+obs$distance_from_observer[obs$comment %in% c("100","100 m recreational fishing boats","100,fishing trawler",
+                                              "100,recreational fishing boat")] = 100*0.000539957
+obs$distance_from_observer[obs$comment %in% c("1000","1000, no birds following", 
+                                              "1000, recreational fishing boat","1000,freighter",
+                                              "1000,recreational fishing boat")] = 1000*0.000539957
+obs$distance_from_observer[obs$comment %in% c("1200","1200,sailboat")] = 1200*0.000539957
+obs$distance_from_observer[obs$comment %in% c("1500","1500,2nd beach pumping freighter",
+                                              "1500,barg","1500,recreational fishing boat")] = 1500*0.000539957
+obs$distance_from_observer[obs$comment %in% c("200","200,diving boat","200,floating barge","200,jet ski",
+                                              "200,recreational fishing boat")] = 200*0.000539957
+obs$distance_from_observer[obs$comment %in% c("2000","2000, coast guard cutter","2000,freighter")] = 2000*0.000539957
+obs$distance_from_observer[obs$comment %in% c("300","300,fishing trawler","300,jet ski","300,recreational fishing boat")] = 300*0.000539957
+obs$distance_from_observer[obs$comment %in% c("500","500,beach pumping freighter","500,fishing trawler",
+                                              "500,recreational fishing boat")] = 500*0.000539957
+obs$distance_from_observer[obs$comment %in% c("700","700,fishing trawler")] = 700*0.000539957
+obs$distance_from_observer[obs$comment %in% c("800","800, recreational fishing boat","800,recreational fishing boat","800,sail boat")] = 800*0.000539957                         
+obs$distance_from_observer[obs$comment %in% c("900","900,trawler")] = 900*0.000539957
+obs$distance_from_observer[obs$comment %in% c("400","600","25","50")] = as.numeric(obs$comment[obs$comment %in% c("400","600","25","50")])*0.000539957
+obs$distance_from_observer[obs$comment %in% "1nm"] = 1
+
+# "175 herrign gulls following"                                                                                
+# "30 herring gull follwoing lobster boat"                                              
+# "birds following"                       
+# "coast guard cutter"                     
+# "coast guard rigid inflatable"           
+# "lobster boats"                         
+# "no birds"                               
+# "recreational fishing boat"             
+# ---------- #
+
+
+# ---------- #
+# dates
+# ---------- #
+obs$day[obs$file %in% "//ifw-hqfs1/MB SeaDuck/AMAPPS/raw_data/AMAPPS_2018_08/Crew4446/Crew4446lf_08212018_birds.txt"] = 21
+# ---------- #
+
+
 # # ---------- # 
 # # condition
 # # ---------- # 
-# to.add = obs[obs$transect %in% 350100 & obs$sec %in% 39841.16,]
-# obs$count[obs$transect %in% 350100 & obs$sec %in% 39841.16]=4
-# to.add = mutate(to.add,
-#                 condition = 3,
-#                 index=index+0.1,
-#                 dataChange = "Added COCH based on other COCH")
-# obs = rbind(obs,to.add)
-# rm(to.add)
+obs$condition[obs$obs %in% "jep" & obs$transect %in% 350100 & obs$sec %in% c(55812.1,55950.3,55960.65,55960.65,55965.66)]=3
 # # ---------- # 
 # 
 # 
