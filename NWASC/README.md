@@ -13,7 +13,7 @@ Seabird Compendium), which characterizes the survey effort and bird observations
 that have been collected across space and time. As of May 2017, the database 
 contains over 200 datasets from 1906-2016. While our primary objective is to aggregate seabird data, 
 these data additionally include marine mammal, sea turtle, fish, bat, bug, boat, marine debris, and other incidental observations 
-(see our [species codes here](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Species_Codes.rmd)). 
+(see our [species codes here](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Species_Codes.rm)). 
 
 An archive of the scientific data is available at the National 
 Oceanographic and Atmospheric Administration (NOAA) [National Oceanographic Data Center (NODC)](https://www.nodc.noaa.gov/cgi-bin/OAS/prd/accession/0115356). 
@@ -21,11 +21,11 @@ The data archived at NODC is comprised of roughly 50 datasets from 1938-2013 wit
 subset of the main database, excluding datasets from surveys where the scientific design was not specifically 
 designed to sample marine birds. These data will be archived on a yearly basis. 
 
-For all other data requests, please see our [data use agreement](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Data%20use%20agreement%20for%20NWASC.rmd).  
+For all other data requests, please see our [data use agreement](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Data%20use%20agreement%20for%20NWASC.rm).  
 
 If you would like to submit data to the NWASC, please see our
-[submission guidelines](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Submission%20Guidelines%20for%20NWASC.rmd) and
-[data sharing agreement](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Data%20sharing%20agreement%20for%20NWASC.rmd).
+[submission guidelines](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Submission%20Guidelines%20for%20NWASC.rm) and
+[data sharing agreement](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Data%20sharing%20agreement%20for%20NWASC.rm).
 
 **For more information here are some helpful references about these data**  
 - O'Connell, A., Gardner, B., Gilbert, A., and Laurent, K. 2009. [Compendium of Avian Occurrence Information for the Continental Shelf Waters along the Atlantic Coast of the United States. Final Report](https://www.nodc.noaa.gov/archive/arc0070/0115356/1.1/data/0-data/SeabirdDatabaseFinalReport.pdf) to USFWS. USGS, Patuxent Wildlife Research Center.  
