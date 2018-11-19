@@ -13,7 +13,7 @@
    + vii.	Please list the survey method: Christmas bird count, bycatch, continuous time strip, discrete time horizon, discrete time strip, general observation, or targeted species survey.   
    + viii.	Please indicate whether the survey was derived effort, an original general observation, or original transect.  
   
-2)	If species codes were used, please include documentation describing the codes. For example, a separate column or spreadsheet defining that COTE means common tern.  A list of our [species codes can be found on our GitHub webpage](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Species_Codes.rmd). We do accept observations for other marine fauna and boats. ITIS codes are preferred.   
+2)	If species codes were used, please include documentation describing the codes. For example, a separate column or spreadsheet defining that COTE means common tern.  A list of our [species codes can be found on our GitHub webpage](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Species_Codes.md). We do accept observations for other marine fauna and boats. ITIS codes are preferred.   
   
 3)	The observation data should be accompanied by a transect design and, if available, an effort file. Effort files are usually the locations where the survey actually took place since sometimes an observation might not exactly be on the transect line or there might be a break in effort when an observer is not observing on a transect line. The effort helps clarify if there were no birds were seen in an area verses if the observer was not observing for a segment on a transect line.   
 + a.	Please provide this information in WGS84 datum or provide information on projection. Coordinates would be in decimal degrees (not UTMs)  
@@ -60,7 +60,7 @@ field name | desciption
 ----------|----------   
 source_transect_id (text)| If the dataset is based on a transect design, each observation should correspond to a unique transect name or number  
 original_species_tx (text)| How you defined the species in your survey (common name, scientific name, code, ITIS number)  
-spp_cd (text)| [four letter codes used in the seabird catalog](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Species_Codes.rmd). If these are supplied but not checked against those used in the NWASC they should be accompanied by a secondary table descibing their meaning. 
+spp_cd (text)| [four letter codes used in the seabird catalog](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Species_Codes.md). If these are supplied but not checked against those used in the NWASC they should be accompanied by a secondary table descibing their meaning. 
 obs_count_intrans_nb (number)| the number of individuals seen for a single species on a transect line at a given location 
 obs_cound_general_nb (number)| the number of individuals seen off transect at a given location, such as in transit or outside of the survey width defined in guidelines. Offline observations are not needed but we do accept them.  
 Latitude (number)| spatial location in decimal degrees (e.g. 33.51708) in WGS84 (if not, the projection needs to be defined)   
