@@ -5,10 +5,10 @@ Northwest Atlantic Seabird Catalog Species Codes
 Species codes are listed in alphabetical order and grouped by species type. Generally codes are generated using the first two letters of the first word and first two letters of the second word, however not all codes fit this format. Be aware that some of the unidentified codes do not start with "UN" (e.g. JUNC = Unidentified Junco).  
 
   
-Birds  
+Marine Birds  
 ===
-**Species Code**|**Grouping**|**Common Name**|**Scientific Name**|**ITIS Code**
-:-----:|:-----:|:-----:|:-----:|:-----:
+**Species Code**|**Grouping**|**Common Name**|**Genus**|**Species**|**ITIS Code**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 ABDH|Anas rubripes x platy.|American Black Duck X Mallard Hybrid|Anas|--|--
 ABDU|--|American Black Duck|Anas|rubripes|175068
 AMBI|--|American Bittern|Botaurus|lentiginosus|174856
@@ -310,8 +310,8 @@ YNAL|--|Yellow-nosed Albatross|Thalassarche|chlororhynchos|554452
   
 Landbirds
 ===
-**Species Code**|**Grouping**|**Common Name**|**Scientific Name**|**ITIS Code**
-:-----:|:-----:|:-----:|:-----:|:-----:
+**Species Code**|**Grouping**|**Common Name**|**Genus**|**Species**|**ITIS Code**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 AMCR|--|American Crow|Corvus|brachyrhynchos|179731
 AMGO|--|American Goldfinch|Carduelis|tristis|179236
 AMKE|--|American Kestrel|Falco|sparverius|175622
@@ -519,8 +519,8 @@ YWAR|--|Yellow Warbler|Dendroica|petechia|178878
   
 Marine Mammals 
 ===
-**Species Code**|**Grouping**|**Common Name**|**Scientific Name**|**ITIS Code**
-:-----:|:-----:|:-----:|:-----:|:-----:
+**Species Code**|**Grouping**|**Common Name**|**Genus**|**Species**|**ITIS Code**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 ASDO|--|Atlantic Spotted Dolphin|Stenella|frontalis|552460
 BBWH|--|Blainville's Beaked Whale|Mesoplodon|densirstris|--
 BESE|--|Bearded Seal|Erignathus|barbatus|180655
@@ -591,8 +591,8 @@ WSDO|--|Atlantic White-sided Dolphin|Lagenorhynchus|acutus|180443
 
 Fish
 ===
-**Species Code**|**Grouping**|**Common Name**|**Scientific Name**|**ITIS Code**
-:-----:|:-----:|:-----:|:-----:|:-----:
+**Species Code**|**Grouping**|**Common Name**|**Genus**|**Species**|**ITIS Code**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 ALTU|--|Albacore Tuna|Thunnus|alalunga|172419
 BAIT|--|bait ball|--|--|--
 BASH|--|Basking Shark|Cetorhinus|maximus|159907
@@ -655,8 +655,8 @@ YETU|--|Yellowfin Tuna|Thunnus|albacares|172423
 
 Sea Turtles  
 ===
-**Species Code**|**Grouping**|**Common Name**|**Scientific Name**|**ITIS Code**
-:-----:|:-----:|:-----:|:-----:|:-----:
+**Species Code**|**Grouping**|**Common Name**|**Genus**|**Species**|**ITIS Code**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 GRTU|--|Green Turtle|Chelonia|mydas|173833
 HATU|--|Hawksbill Turtle|Eretmochelys|imbricata|173837
 KRST|--|Kemp's Ridley Sea Turtle|Lepidochelys|kempii|551770
@@ -670,8 +670,8 @@ UNCH|Cheloniidae spp.|Unidentified Cheloniidae species (Green Sea Turtle, Hawksb
   
 Bugs   
 ===
-**Species Code**|**Grouping**|**Common Name**|**Scientific Name**|**ITIS Code**
-:-----:|:-----:|:-----:|:-----:|:-----:
+**Species Code**|**Grouping**|**Common Name**|**Genus**|**Species**|**ITIS Code**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 BDDR|--|Blue Dasher Dragonfly|Pachydiplax|longipennis|101799
 BSTB|--|Black Swallowtail Butterfly|Papilio|polyxenes|188543
 BUMB|--|Unidentified Bee|--|--|--
@@ -693,8 +693,8 @@ WAGL|--|Wandering Glider|Pantala|flavescens|101801
 
 Boats
 ===
-**Species Code**|**Grouping**|**Common Name**|**Scientific Name**|**ITIS Code**
-:-----:|:-----:|:-----:|:-----:|:-----:
+**Species Code**|**Grouping**|**Common Name**|**Genus**|**Species**|**ITIS Code**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 BOAC|--|Boat-Aircraft carrier|--|--|--
 BOAT|--|Boat-Unidentified|--|--|--
 BOBA|--|Boat-Barge/barge and tug|--|--|--
@@ -725,8 +725,8 @@ BOYA|--|Boat-Yacht|--|--|--
 
 Other   
 ===
-**Species Code**|**Grouping**|**Common Name**|**Scientific Name**|**ITIS Code**
-:-----:|:-----:|:-----:|:-----:|:-----:
+**Species Code**|**Grouping**|**Common Name**|**Genus**|**Species**|**ITIS Code**
+:-----:|:-----:|:-----:|:-----:|:-----:|:-----:
 ALGA|--|Algal bloom|--|--|--
 ANTE|--|Antennae|--|--|--
 BALN|--|balloon|--|--|--
