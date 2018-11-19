@@ -36,9 +36,9 @@ However I also understand that all data may be requested via FOIA request, and t
 manager will readily comply with such requests. Knowing this, I understand that I may hold truly 
 sensitive data out of the repository.  
 
-Please also be aware of the [Data Use Agreement](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Data%20use%20agreement%20for%20NWASC.rmd) 
+Please also be aware of the [Data Use Agreement](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Data%20use%20agreement%20for%20NWASC.md) 
 and 
-[Submission Guidelines](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Submission%20Guidelines%20for%20NWASC.rmd) for data contributors.  Please also be aware of the [FWS Scientific Integrity Policy](https://www.fws.gov/science/pdf/ScientificIntegrityFWSCode212fw7.pdf). 
+[Submission Guidelines](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Submission%20Guidelines%20for%20NWASC.md) for data contributors.  Please also be aware of the [FWS Scientific Integrity Policy](https://www.fws.gov/science/pdf/ScientificIntegrityFWSCode212fw7.pdf). 
 
 If you agree to these terms please sign and return to the data manager (kaycee_coleman@fws.gov) or 
 [fill out the form online](https://docs.google.com/forms/d/e/1FAIpQLSeG_kyZ3gkd60R5dwxUuyE2Cx8XySfS-XuJbAlo6eLRNgOURg/viewform?usp=sf_link):  
