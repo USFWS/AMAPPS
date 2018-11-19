@@ -17,7 +17,7 @@ Catalog (NWASC), formerly the Atlantic Offshore Seabird Compendium.
 **Procedures**:  Individuals and agencies have put forth a substantial 
 effort to document which seabird surveys have occurred in the Northwest Atlantic, 
 and have requested data from data providers to add to the catalog. This effort is 
-ongoing. We created a [data submission guidance document](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Submission%20Guidelines%20for%20NWASC.rmd) 
+ongoing. We created a [data submission guidance document](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Submission%20Guidelines%20for%20NWASC.md) 
 to streamline import but 
 still conduct basic quality control and formatting of the data for import.   
 
@@ -61,7 +61,7 @@ Sussman, A. and US DOI; US Geological Survey (2014). Atlantic Offshore Seabird D
 [Data Provider]. [Dataset name]. Accessed through US Department of Interior, Northwest Atlantic Seabird Catalog, 
 Version [version number]. [Access date]  
 
-Please also be aware of the [Data Sharing agreement](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Data%20sharing%20agreement%20for%20NWASC.rmd) 
+Please also be aware of the [Data Sharing agreement](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Data%20sharing%20agreement%20for%20NWASC.md) 
 for data contributors.  Also please be aware of the [FWS Science Integrity Policy](https://www.fws.gov/science/pdf/ScientificIntegrityFWSCode212fw7.pdf).
 
 If you agree to these terms please sign and return to the data manager (kaycee_coleman@fws.gov) or 
