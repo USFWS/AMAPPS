@@ -132,7 +132,8 @@ INSERT INTO lu_people([user_id], name, affiliation, active_status,work_email_onl
 	(80,'Andrew Allyn','UMass','active',NULL),
 	(81,'Sarah Yates','USFWS','active','sarah_yates@fws.gov'),
 	(82,'Wing Goodale','BRI','active','wing_goodale@briloon.org'),
-	(83,'Nancy Karraker','URI','active','nkarraker@uri.edu');
+	(83,'Nancy Karraker','URI','active','nkarraker@uri.edu'),
+	(84,'Melissa Grader','USFWS','active','melissa_grader@fws.gov');
 /* 
 update lu_people
 set name = 'Jo Anna Lutmerding'
@@ -1264,7 +1265,7 @@ INSERT INTO lu_parent_project(
 		(R. G. Ford Inc., Portland, OR), such that each sighting had a specific time and location stamp. Each sighting 
 		record also included observation variables (e.g., glare, visibility, wave height, weather).',
 		'https://gomces.wordpress.com/'),
-	(26, 'NJDEP baseline studies','','https://www.nj.gov/dep/gis/digidownload/metadata/windpower/fauna.htm ; https://www.nj.gov/dep/gis/windpower.html');
+	(26, 'NJDEP baseline studies',NULL,'https://www.nj.gov/dep/gis/digidownload/metadata/windpower/fauna.htm ; https://www.nj.gov/dep/gis/windpower.html');
 
 --	project_id, project_name, project_ds, project_url
 
@@ -1333,7 +1334,7 @@ INSERT INTO dataset(
 	share_level_id, in_database, pooled_observations, responsible_party,
 	sponsors,planned_speed_knots, version_nb, platform_name_id)--,
 --dataset_summary, dataset_quality, dataset_processing)
-	VALUES
+	VALUES 
  	(141,1,'AMAPPS_FWS_Aerial_Fall2012','a','cts','ot',400,200,5,'yes','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
  	(142,1,'AMAPPS_FWS_Aerial_Fall2013','a','cts','ot',400,200,5,'yes','no',64,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
  	(164,1,'AMAPPS_FWS_Aerial_Fall2014','a','cts','ot',400,200,5,'yes','no',64,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
@@ -1759,10 +1760,15 @@ set
 share_level_id = 5
 where dataset_id in (115,148,168,157,114,124,152,125,155,126,156,127,151,128,150,130,154,129,153)
 	
+--
+update dataset
+set
+parent_project = 26
+where dataset_id = 91
 */
 
 -- select * from dataset order by share_level_id
--- select * from dataset where parent_project = 24
+-- select * from dataset order by parent_project 
 
 -- adding summary data 
 update dataset
@@ -2007,7 +2013,15 @@ INSERT INTO links_and_literature(
 	(51,116,NULL,'https://www.nefsc.noaa.gov/psb/AMAPPS/docs/NMFS_AMAPPS_2013_annual_report_FINAL3.pdf',NULL,NULL,NULL,NULL),
 	(52,409,NULL,'https://www.nefsc.noaa.gov/psb/AMAPPS/docs/Final_2010AnnualReportAMAPPS_19Apr2011.pdf',NULL,NULL,NULL,NULL),
 	(53,410,NULL,'https://www.nefsc.noaa.gov/psb/AMAPPS/docs/NMFS_AMAPPS_2012_annual_report_FINAL.pdf',NULL,NULL,NULL,NULL),
-	(54,430,'https://www.nj.gov/dep/gis/digidownload/metadata/windpower/fauna.htm','https://www.nj.gov/dep/dsr/ocean-wind/vol2-chapter%203.pdf',NULL,NULL,NULL,NULL);
+	(54,430,'https://remote.normandeau.com/login.php','https://www.nj.gov/dep/gis/digidownload/metadata/windpower/fauna.htm','https://www.nj.gov/dep/dsr/ocean-wind/vol2-chapter%203.pdf',NULL,NULL,NULL,NULL),
+	(55,407,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA%20Fall%202017%20-%20Survey%20Summary%20Report.pdf',NULL,NULL,NULL,NULL),
+	(56,408,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA%20Fall%202017%20-%20Survey%20Summary%20Report.pdf',NULL,NULL,NULL,NULL),
+	(57,418,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA_Winter_2017-2018_Survey_Summary_Report.pdf',NULL,NULL,NULL,NULL),
+	(58,419,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA_Winter_2017-2018_Survey_Summary_Report.pdf',NULL,NULL,NULL,NULL),
+	(59,420,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA_Spring_2018_Survey_Summary_Report_JRW.pdf',NULL,NULL,NULL,NULL),
+	(60,421,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA_Spring_2018_Survey_Summary_Report_JRW.pdf',NULL,NULL,NULL,NULL),
+	(61,422,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA_Summer_2018_Survey_Summary_Report.pdf',NULL,NULL,NULL,NULL),
+	(62,423,'https://remote.normandeau.com/login.php','https://remote.normandeau.com/docs/NYSERDA_Summer_2018_Survey_Summary_Report.pdf',NULL,NULL,NULL,NULL);
 
 --  (54,4__,NULL,'https://www.researchgate.net/publication/324274508_THE_GULF_OF_MAINE_COASTAL_ECOSYSTEM_SURVEY_PROJECT_END_REPORT',NULL,NULL,NULL,'10.13140/RG.2.2.14932.71045')
 --  (id, dataset_id, data_url, report, data_citation, publications, publication_url, publication_DOI)
@@ -2209,7 +2223,8 @@ INSERT INTO requests(
 	(40,'service',62,'Check db for AMAPPS Winter 2014 effort',cast('2018-10-22' as date),'filled',cast('2018-10-22' as date),'it was there'),
 	(41,'service',62,'Check db for AMAPPS Spring 2012 for missing data',cast('2018-10-22' as date),'filled',cast('2018-10-22' as date),'it was there'),
 	(42,'service',62,'write sample script for segmentation for one dataset',cast('2018-10-22' as date),'not filled',NULL,NULL),
-	(43,'data',3,'expand to all data between 38.45N and 41.36N',cast('2018-10-24' as date),'filled',cast('2018-10-24' as date),NULL);
+	(43,'data',3,'expand to all data between 38.45N and 41.36N',cast('2018-10-24' as date),'filled',cast('2018-10-24' as date),NULL),
+	(44,'data',84,'all waterfowl in a 1.5km radius around 41.735597, -70.612283',cast('2018-11-29' as date),'not filled',NULL,NULL);
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
