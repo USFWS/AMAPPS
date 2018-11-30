@@ -14,6 +14,7 @@ require(odbc)
 require(ggmap)
 require(lubridate)
 library(readr)
+library(readxl)
 # ------------------ # 
 
 # ------------- #
@@ -50,6 +51,7 @@ ggmap(cc) + coord_fixed(1.3) +
 # ------------------ #
 db <- dbConnect(odbc::odbc(),driver='SQL Server',server='ifw-dbcsqlcl1',database='NWASC')
 datasets = dbGetQuery(db, "select * from dataset")
+lit = dbGetQuery(db, "select * from links_and_literature")
 spp = dbGetQuery(db, "select * from lu_species")
 #obs = dbGetQuery(db, "select * from observations")
 dbDisconnect(db)
@@ -83,8 +85,21 @@ ggmap(cc) + coord_fixed(1.3) +
 # filter out share level 1
 
 # filter datasets
-cc.datasets = filter(datasets, dataset_id %in% cc.data$dataset_id)
+cc.datasets = filter(datasets, dataset_id %in% cc.data$dataset_id, !share_level_id %in% 1)
+cc.data = filter(cc.data, dataset_id %in% cc.datasets$dataset_id)
 
+# transform datasets
+source("Z://seabird_database/Rfunctions/transformDatasets.R")
+summaries = read_excel("Z:/seabird_database/documentation/How to and Reference files/NWASC_guidance/dataset_summaries_Aug2018.xlsx")
+summaries = summaries[,1:5] %>% dplyr::select(-source_dataset_id) 
+names(summaries) = tolower(names(summaries))
+
+cc.datasets = transformDataset(cc.datasets) %>% 
+  dplyr::select(-data_url, -report, -data_citation, -publications, -publication_url, -publication_DOI, -id,
+                -dataset_summary, -dataset_processing, -dataset_quality) %>%
+  left_join(., lit, by="dataset_id") %>% 
+  left_join(., summaries, by="dataset_id")
+  
 # export
 write.csv(cc.data,"Z:/seabird_database/data_sent/MGrader_CC_Canal_Nov2018/observations.csv")
 write.csv(cc.datasets,"Z:/seabird_database/data_sent/MGrader_CC_Canal_Nov2018/datasets.csv")
