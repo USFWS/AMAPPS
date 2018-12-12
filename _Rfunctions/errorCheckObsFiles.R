@@ -80,18 +80,20 @@ errorCheckObsFiles <- function(dat, dir.out, error.flag = FALSE) {
   if(sum(tmp)>0){dat[tmp,]}
   dat$dataError[tmp] <- paste(dat$dataError[tmp], "; Incorrectly coded CONDITION", 
                               sep = "")
-  # COUNT==CONDITION
-  tmp <- dat$type == "COCH" & dat$condition %in% c("1", "2", "3", "4", "5") & 
-    dat$condition != dat$count
-  message("Found ", sum(tmp[tmp %in% TRUE]), " additional errors in CONDITION column where CONDITION != COUNT.")
-  if(sum(tmp[tmp %in% TRUE])>0){dat[tmp,]}
-  dat$dataError[tmp %in% TRUE] <- paste(dat$dataError[tmp %in% TRUE], "; CONDITION != COUNT", sep = "")
- 
-  # ARE THERE TWO COCHs (What the condition was and what it became - this is the protocol)
-  tmp <- dat %>% filter(type %in% 'COCH',!is.na(transect)) %>% group_by(obs,transect) %>% 
-    summarise(n = n()) %>% filter(n %% 2 != 0)
-  message("Found ", dim(tmp)[1], " additional errors in CONDITION column where there are an odd number of COCHs.")
-  if(dim(tmp)[1]>0){print(tmp)}
+  
+ # these are no longer relevant for 2018 surveys since we changed protocol, but may be relevant again if we switch back
+  # # COUNT==CONDITION
+  # tmp <- dat$type == "COCH" & dat$condition %in% c("1", "2", "3", "4", "5") & 
+  #   dat$condition != dat$count
+  # message("Found ", sum(tmp[tmp %in% TRUE]), " additional errors in CONDITION column where CONDITION != COUNT.")
+  # if(sum(tmp[tmp %in% TRUE])>0){dat[tmp,]}
+  # dat$dataError[tmp %in% TRUE] <- paste(dat$dataError[tmp %in% TRUE], "; CONDITION != COUNT", sep = "")
+   
+  # # ARE THERE TWO COCHs (What the condition was and what it became - this is the protocol)
+  # tmp <- dat %>% filter(type %in% 'COCH',!is.na(transect)) %>% group_by(obs,transect) %>% 
+  #   summarise(n = n()) %>% filter(n %% 2 != 0)
+  # message("Found ", dim(tmp)[1], " additional errors in CONDITION column where there are an odd number of COCHs.")
+  # if(dim(tmp)[1]>0){print(tmp)}
 
   # CONDITION CODE IS ONLY LISTED WHEN THERE WAS AN ACTUAL CHANGE
   tmp <- dat[c(which(dat$type %in% 'COCH'),
