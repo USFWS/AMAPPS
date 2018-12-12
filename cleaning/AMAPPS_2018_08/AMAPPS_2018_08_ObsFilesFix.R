@@ -107,9 +107,9 @@ obs$type[obs$type %in% "BBGU"] = "UBBG"
 obs$type[obs$type %in% "EIDE"] = "UNEI"     
 obs$type[obs$type %in% "GEAR"] = "FIGE"     
 obs$type[obs$type %in% "PORP"] = "UNPO" #unid porpoise     
-#obs$type[obs$type %in% "PUSP"] = ""     
+obs$type[obs$type %in% "PUSP"] = "PUSA" # purple sandpiper
 obs$type[obs$type %in% "RIST"] = "KRST" #Ridley sea turtle
-obs$type[obs$type %in% "UNMG"] = "UNGU" #checking medium gull?    
+obs$type[obs$type %in% "UNMG"] = "UNGU" #checking medium gull
 obs$type[obs$type %in% "UNSD"] = "SPDO" 
 
 obs$type[obs$comment == "rockweed line"]="RCKW"
@@ -151,19 +151,45 @@ ggplot(track[track$transect %in% t & track$seat %in% s,], aes(long, lat))+geom_p
 
 
 # 302600	3	2	jsw # duplicated Begin record
-x = obs[obs$obs %in% "jsw" & obs$transect %in% 302600,]
+#x = obs[obs$obs %in% "jsw" & obs$transect %in% 302600,]
+obs$type[obs$obs %in% "jsw" & obs$transect %in% 302600 & obs$type %in% "BEGCNT"][2] = "remove"
 
 # 335100	5	6	jsw # duplicate end records
 #x = obs[obs$obs %in% "jsw" & obs$transect %in% 335100,]
+obs$type[obs$obs %in% "jsw" & obs$transect %in% 335100 & obs$type %in% "ENDCNT"][2] = "remove"
 
 # 352600	1	2	sde #missing BEG
 #x = obs[obs$obs %in% "sde" & obs$transect %in% 352600,]
+to.add = obs[obs$obs %in% "njk" & obs$transect %in% 352600 & obs$type %in% "BEGCNT",]
+to.add = mutate(to.add, 
+                obs = "sde",
+                seat = "lf",
+                dataChange = "ADDED BEGCNT; copied from njk")
+obs = rbind(obs, to.add)
+rm(to.add)
 
 # 412100	2	1	sde #missing END
 #x = obs[obs$obs %in% "sde" & obs$transect %in% 412100,]
+to.add = obs[obs$obs %in% "njk" & obs$transect %in% 412100 & obs$type %in% "ENDCNT",]
+to.add = mutate(to.add, 
+                obs = "sde",
+                seat = "lf",
+                dataChange = "ADDED ENDCNT; copied from njk")
+obs = rbind(obs, to.add)
+rm(to.add)
 
 # 415101	2	1	mdk #missing END
 #x = obs[obs$obs %in% "mdk" & obs$transect %in% 415101,]
+to.add = obs[obs$obs %in% "tpw" & obs$transect %in% 415101 & obs$type %in% "ENDCNT",]
+to.add = mutate(to.add, 
+                obs = "mdk",
+                seat = "lf",
+                dataChange = "ADDED ENDCNT; copied from tpw")
+obs = rbind(obs, to.add)
+rm(to.add)
+
+# filter out "remove" types
+obs = filter(obs, !type %in% "remove")
 ##--------------------------##
 
 
@@ -251,6 +277,10 @@ obs$day[obs$file %in% "//ifw-hqfs1/MB SeaDuck/AMAPPS/raw_data/AMAPPS_2018_08/Cre
 # # ---------- # 
 # # condition
 # # ---------- # 
+
+# condition = n; file: /ifw-hqfs1/MB SeaDuck/AMAPPS/raw_data/AMAPPS_2018_08/Crew4446/Crew4446rf_08212018_birds.txt
+obs$condition[obs$condition %in% "n"] = 4
+
 obs$condition[obs$obs %in% "jep" & obs$transect %in% 350100 & obs$sec %in% c(55812.1,55950.3,55960.65,55960.65,55965.66)]=3
 # # ---------- # 
 # 
