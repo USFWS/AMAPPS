@@ -46,10 +46,10 @@ Last edited: Oct. 2018 by K. Coleman
 - If the raw data were emailed to you and not put on SharePoint, then upload these data to SharePoint  
 
 **Step 2:**
-- Open *AMAPPS/code/clearning_raw_data/processSurveyData_part1.R* in R. This will load packages, functions, clean the data, and generate temporary shapefiles.  
+- Open *AMAPPS/code/cleaning_raw_data/processSurveyData_part1.R* in R. This will load packages, functions, clean the data, and generate temporary shapefiles.  Run this file by each step. 
 - Correct paths for *surveyFolder* and *yearLabel* and go through this script one step at a time. 
 - Steps 1+2 in *processSurveyData_part1* upload the data into R, if you have errors here it is most likely due to naming
-- Step 3 in *processSurveyData_part1* checks for common errors and corrects them. This is also where you need to create *AMAPPS_year_month_ObsFilesFix.R* to fix errors. In step 4, *errorCheckObsFiles* will list more errors for you to investigate. The code used to fix these errors goes into *AMAPPS_year_month_ObsFilesFix.R*. All of the errors reported in *errorCheckObsFiles* need to be fixed before moving onto step 5. This is the most time consuming part of the script, and thus why the fix is run in step 3 and more errors reported in step 4. You will most likely rerun this multiple days.   
+- Step 3 in *processSurveyData_part1* checks for common errors and corrects them. This is also where you need to create *AMAPPS_year_month_ObsFilesFix.R* to fix errors. In step 4, *errorCheckObsFiles* will list more errors for you to investigate. The code used to fix these errors goes into *AMAPPS_year_month_ObsFilesFix.R*. All of the errors reported in *errorCheckObsFiles* need to be fixed before moving onto step 5. This is the most time consuming part of the script, and thus why the fix is run in step 3 and more errors reported in step 4. You will most likely rerun this multiple times/days.   
 - *WARNING*: The "py.exe" will be dependent on your ArcGIS version (e.g. 10.3) and you might also have installer issues (64 bit vs. 32 bit) -- to test this you can go into the python window in ArcGIS and type *import sys* -> hit enter -> then type *print(sys.version)*. You might also need to check your Rstudio version (Tools-Options). Issues like this might also occur with the 'RODBC' package, odbcDriverConnect function.
 
     *Within processSurveyData_part1.R*:   
