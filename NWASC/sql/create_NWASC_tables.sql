@@ -1335,7 +1335,7 @@ INSERT INTO dataset(
 	sponsors,planned_speed_knots, version_nb, platform_name_id)--,
 --dataset_summary, dataset_quality, dataset_processing)
 	VALUES 
- 	(141,1,'AMAPPS_FWS_Aerial_Fall2012','a','cts','ot',400,200,5,'yes','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
+	(141,1,'AMAPPS_FWS_Aerial_Fall2012','a','cts','ot',400,200,5,'yes','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
  	(142,1,'AMAPPS_FWS_Aerial_Fall2013','a','cts','ot',400,200,5,'yes','no',64,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
  	(164,1,'AMAPPS_FWS_Aerial_Fall2014','a','cts','ot',400,200,5,'yes','no',64,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
  	(118,1,'AMAPPS_FWS_Aerial_Preliminary_Summer2010','a','cts','ot',400,200,5,'yes','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
@@ -1743,7 +1743,8 @@ INSERT INTO dataset(
 	(429,24,'NYSERDA_OPA_Survey12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(430,26,'NJDEP_aerial2008','a','cts','de',2000,1000,99,'no',NULL,56,'NJDEP,BOEM',110,1,NULL),
 	(431,16,'BOEMNanoTag_2014','a','tss','ot',400,200,0,'no','yes',60,'BOEM,USFWS',110,1,NULL),
-	(432,16,'BOEMNanoTag_2015','a','tss','ot',400,200,0,'no','yes',60,'BOEM,USFWS',110,1,NULL);
+	(432,16,'BOEMNanoTag_2015','a','tss','ot',400,200,0,'no','yes',60,'BOEM,USFWS',110,1,NULL),
+	(433,10,'EcoMon_Nov2018_HS1801','b','cts','ot',300,300,9,'no',NULL,16,'NOAA',NULL,1,23);
 
 --  (4XX,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 --  (4XX,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
@@ -2131,10 +2132,12 @@ INSERT INTO progress_table(
 	--( ,9,'BIWF_onshore_sea_watch_avian_surveys','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
 	(166,9,'BarHarborWW09','needs QA/QC',NULL,'KC',1,0,0,NULL),
 	(167,9,'BarHarborWW010','needs QA/QC',NULL,'KC',1,0,0,NULL),
-	(416,99,'AMAPPS_summer2018','QA/QC started',cast('2018-10-16' as date),'KC',1,0,0,NULL),
 	(431,0,'BOEMNanoTag_2014','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL),
-	(432,0,'BOEMNanoTag_2015','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL);
-
+	(432,0,'BOEMNanoTag_2015','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL),
+	(433,9,'EcoMon_Nov2018_HS1801','received',cast('2018-12-18' as date),'KC',1,1,1,'need effort table'),
+	(396,9,'AMAPPS_FWS_Aerial_summer2018','QA/QC started',cast('2018-12-18' as date),'KC',1,1,0,NULL),
+	(417,9,'AMAPPS_FWS_Aerial_fall2018','QA/QC started',cast('2018-12-18' as date),'KC',1,1,0,NULL);
+	
 --  dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
 --  data_acquired, metadata_acquired, report_acquired, additional_info)
 
@@ -2148,9 +2151,8 @@ INSERT INTO progress_table(
 /*
 -- remove dataset that was uploaded
 delete from progress_table
-where dataset_id in (166,167)
+where dataset_id in (416)
 */
-
 
 /* select progress table script template */ 
 --  select * from progress_table order by dataset_name
@@ -2224,7 +2226,8 @@ INSERT INTO requests(
 	(41,'service',62,'Check db for AMAPPS Spring 2012 for missing data',cast('2018-10-22' as date),'filled',cast('2018-10-22' as date),'it was there'),
 	(42,'service',62,'write sample script for segmentation for one dataset',cast('2018-10-22' as date),'not filled',NULL,NULL),
 	(43,'data',3,'expand to all data between 38.45N and 41.36N',cast('2018-10-24' as date),'filled',cast('2018-10-24' as date),NULL),
-	(44,'data',84,'all waterfowl in a 1.5km radius around 41.735597, -70.612283',cast('2018-11-29' as date),'not filled',NULL,NULL);
+	(44,'data',84,'all waterfowl in a 1.5km radius around 41.735597, -70.612283',cast('2018-11-29' as date),'filled',cast('2018-11-30' as date),NULL),
+	(45,'data',3,'All DE (37.3-39.3 N) and DOE Mid-Atlantic hidef aerial and boat survey data',cast('2018-12-10' as date),'filled',cast('2018-10-18' as date),NULL);
 
 -- example: (id, type, person, description, CAST('req. date' AS DATE), status, CAST('date filled' AS DATE), notes);
 /*  update data_requests script template */  	
@@ -2233,9 +2236,9 @@ INSERT INTO requests(
 	-- 
 
 	update requests 
-	set date_filled = cast('2018-10-16' as date),
+	set date_filled = cast('2018-11-30' as date),
 	request_status = 'filled'  
-	where request_id = 39
+	where request_id = 44
 
 	--
 
