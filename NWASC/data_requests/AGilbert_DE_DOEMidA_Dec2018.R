@@ -26,7 +26,7 @@ lit = dbGetQuery(db, "select * from links_and_literature")
 spp = dbGetQuery(db, "select * from lu_species")
 #obs = dbGetQuery(db, "select * from observations")
 DE_effort = dbGetQuery(db, "select * from all_effort where latitude >= 37.3 and latitude <= 39.3")
-midA_effort = dbGetQuery(db, "select * from all_effort where dataset_id %in% (114,115,124,125,126,127,128,129,130,148,150,151,152,153,154,155,156,157,168)")
+midA_effort = dbGetQuery(db, "select * from all_effort where dataset_id in ('114','115','124','125','126','127','128','129','130','148','150','151','152','153','154','155','156','157','168')")
 dbDisconnect(db)
 
 # obs data (temp)
@@ -56,10 +56,15 @@ datasets = transformDataset(datasets) %>%
   left_join(., lit, by="dataset_id") %>% 
   left_join(., summaries, by="dataset_id")
 
+obs_bb = left_join(obs_bb, dplyr::select(spp, spp_cd, common_name, genus, species, ITIS_id), by="spp_cd")
+obs_doe_midA = left_join(obs_doe_midA, dplyr::select(spp, spp_cd, common_name, genus, species, ITIS_id), by="spp_cd")
+
 # export
 write.csv(obs_doe_midA,"Z:/seabird_database/data_sent/AGilbert_DE_DOEMidA_Dec2018/DOE_MidA_hidef_observations.csv")
 write.csv(obs_bb,"Z:/seabird_database/data_sent/AGilbert_DE_DOEMidA_Dec2018/DE_observations.csv")
 write.csv(datasets,"Z:/seabird_database/data_sent/AGilbert_DE_DOEMidA_Dec2018/datasets.csv")
+write.csv(DE_effort,"Z:/seabird_database/data_sent/AGilbert_DE_DOEMidA_Dec2018/DE_effort.csv")
+write.csv(midA_effort,"Z:/seabird_database/data_sent/AGilbert_DE_DOEMidA_Dec2018/DOE_MidA_hidef_effort.csv")
 # ------------- #
 
 
