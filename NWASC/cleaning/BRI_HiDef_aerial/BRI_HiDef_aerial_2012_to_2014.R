@@ -18,19 +18,19 @@ require(dplyr)
 # --------------- #
 # SET INPUT/OUTPUT DIRECTORY PATHS
 # --------------- #
-dir <- "//IFW9mbm-fs1/SeaDuck/seabird_database/datasets_received"
+dir <- "Z://seabird_database/datasets_received"
 setwd(dir)
 surveyFolder = "BRI_DOE_HiDef"
 yearLabel = "BRI_DOE_HiDef_2012_to_2014"
 
-dbpath <- "//IFW9mbm-fs1/SeaDuck/NewCodeFromJeff_20150720/DataBase"
+#dbpath <- "//IFW9mbm-fs1/SeaDuck/NewCodeFromJeff_20150720/DataBase"
 dir.in <- paste(dir, surveyFolder, sep = "/") 
 dir.out <- paste(gsub("datasets_received", paste("data_import/in_progress", surveyFolder, yearLabel, sep="/"), dir), sep = "/") 
-speciesPath <- "//IFW9mbm-fs1/SeaDuck/NewCodeFromJeff_20150720/Jeff_Working_Folder/DataProcessing/"
+#speciesPath <- "//IFW9mbm-fs1/SeaDuck/NewCodeFromJeff_20150720/Jeff_Working_Folder/DataProcessing/"
 
 # SOURCE R FUNCTIONS
-source(file.path("//IFW9mbm-fs1/SeaDuck/NewCodeFromJeff_20150720/Jeff_Working_Folder/_Rfunctions/sourceDir.R"))
-sourceDir(file.path("//IFW9mbm-fs1/SeaDuck/NewCodeFromJeff_20150720/Jeff_Working_Folder/_Rfunctions"))
+#source(file.path("//IFW9mbm-fs1/SeaDuck/NewCodeFromJeff_20150720/Jeff_Working_Folder/_Rfunctions/sourceDir.R"))
+#sourceDir(file.path("//IFW9mbm-fs1/SeaDuck/NewCodeFromJeff_20150720/Jeff_Working_Folder/_Rfunctions"))
 # --------------- #
 
 
