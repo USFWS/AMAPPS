@@ -53,10 +53,16 @@ errorCheckObsFiles <- function(dat, dir.out, error.flag = FALSE) {
   seat <- substr(matrix(unlist(strsplit(basename(dat$file), "_")), nrow = nrow(dat), byrow = TRUE)[, 1], 
                  nchar(matrix(unlist(strsplit(basename(dat$file), "_")), nrow = nrow(dat), byrow = TRUE)[, 1]) - 1, 
                  nchar(matrix(unlist(strsplit(basename(dat$file), "_")), nrow = nrow(dat), byrow = TRUE)[, 1]))
-  tmp <- !dat$seat %in% c("lf", "rf", "lr", "rr") #| (dat$seat != seat & !grepl("SEAT", dat$dataChange))
-  message("Found ", sum(tmp), " errors in SEAT column.")
+  tmp <- !dat$seat %in% c("lf", "rf", "lr", "rr") 
+  message("Found ", sum(tmp), " errors in SEAT column (not lf, rf, lr, or rr).")
   if(sum(tmp)>0){dat[tmp]}
   dat$dataError[tmp] <- paste(dat$dataError[tmp], "; Incorrectly coded SEAT", sep = "")
+  
+  
+  tmp <- dat$seat == seat
+  message("Found ", sum(tmp==FALSE), " errors in SEAT column (seat in file name != seat in seat column).")
+  if(sum(tmp==FALSE)>0){dat$obs[tmp==FALSE]}
+  dat$dataError[tmp==FALSE] <- paste(dat$dataError[tmp==FALSE], "; Incorrectly coded SEAT", sep = "")
   # ---------------#
   
   # ---------------#
