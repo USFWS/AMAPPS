@@ -15,7 +15,7 @@
 # 302100	P	Ended early due to lightning storm													
 # 
 # # crew4126
-# 352600		16 Aug pilot forgot to record start count, use observer's recording			
+############ 352600		16 Aug pilot forgot to record start count, use observer's recording			
 # 353600		16 Aug stopped count over land			
 # 354100		16 Aug stopped count over land			
 # 354600		17 Aug stopped count over land			
@@ -32,10 +32,10 @@
 # 380600		19 Aug 2 times stopped count over land			
 # 375600		19 Aug 4 times stopped count over land			
 # 375100		19 Aug stopped count over land			
-# 380601		19 Aug circled to look at shark, no distance lost			
-# 391100		20 Aug observer had land on his side so has a stop count, but pilot did not have land so no stop count recorded			
-# 395100		21 Aug circled to look at dolphins, no distance lost			
-# 402100		21 Aug circled to look at whale, no distance lost			
+######### 380601		19 Aug circled to look at shark, no distance lost			
+######### 391100		20 Aug observer had land on his side so has a stop count, but pilot did not have land so no stop count recorded			
+######### 395100		21 Aug circled to look at dolphins, no distance lost			
+######### 402100		21 Aug circled to look at whale, no distance lost			
 # 402600		21 Aug stopped count over land			
 # 404100		22 Aug stopped count over land			
 # 410101		22 Aug 2 times stopped count over land			
@@ -57,7 +57,7 @@
 # 412601-02	M	not enough time on aircraft to complete before inspection (informed BOEM before survey), may try to return later in early sept						
 # 412101-02	M	not enough time on aircraft to complete before inspection (informed BOEM before survey), may try to return later in early sept						
 # 411601-02	M	not enough time on aircraft to complete before inspection (informed BOEM before survey), may try to return later in early sept						
-# Note there are number ENDCNT/BEGCNTs in database due to passing over land areas or areas of fog.								
+######### Note there are number ENDCNT/BEGCNTs in database due to passing over land areas or areas of fog.								
 # 
 # MOMO	Mola Mola Ocean Sunfish	
 # NOGAa	NOGA adult	
@@ -78,6 +78,7 @@ obs$type = as.vector(obs$type) # not sure why this is coming in as a matrix - ne
 obs$original.spp.codes = obs$type
 
 db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
+if(!exists("db")){db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw9mbmsvr008', database='SeabirdCatalog')}
 spplist = dbGetQuery(db,"select * from lu_species")
 dbDisconnect(db)
 
@@ -139,11 +140,11 @@ if(length(x)>0){message("Found ", length(x), " entries with non-matching AOU cod
 # ##--------------------------##
 # # fix transects errors
 # ##--------------------------##
-t = 293100
-s = "lf"
-ggplot(obs[obs$transect %in% t & obs$seat %in% s,], aes(long, lat))+geom_point()
-
-ggplot(track[track$transect %in% t & track$seat %in% s,], aes(long, lat))+geom_point()
+# t = 293100
+# s = "lf"
+# ggplot(obs[obs$transect %in% t & obs$seat %in% s,], aes(long, lat))+geom_point()
+# 
+# ggplot(track[track$transect %in% t & track$seat %in% s,], aes(long, lat))+geom_point()
 
 # Transects	BegFreq	EndFreq	Observer
 # 0	26	24	tpw
@@ -201,12 +202,9 @@ obs = filter(obs, !type %in% "remove")
 # counts
 # ---------- #
 obs$comment[obs$count %in% c("2to3")] = "2to3"
-obs$count[obs$count %in% c("2to3")] = NA
-
 obs$comment[obs$count %in% c("3to2")] = "3to2"
-obs$count[obs$count %in% c("3to2")] = NA
+obs$count[obs$count %in% c("3to2","2to3","0","4COCH3")] = NA
 
-obs$count[obs$count %in% c("0")] = NA
 
 obs$comment[obs$count %in% c("2.0.f")] = "2.0.f"
 obs$behavior[obs$count %in% c("2.0.f")] = "f"
@@ -220,8 +218,6 @@ obs$behavior[obs$count %in% c("2.2.f.adult")] = "f"
 obs$age[obs$count %in% c("2.2.f.adult")] = "adult"
 #obs$band[obs$count %in% c("2.2.f.adult")] = 2
 obs$count[obs$count %in% c("2.2.f.adult")] = 2 #check what second 2 and 0s above mean for tim white, band?
-
-obs$count[obs$count %in% c("4COCH3")] = NA
 
 # ## investigate high counts
 #obs[as.numeric(obs$count) > 100 & !obs$type %in% c("BEGSEG","ENDSEG","BEGCNT","ENDCNT","COCH"),]
@@ -284,6 +280,12 @@ obs$condition[obs$condition %in% "n"] = 4
 obs$condition[obs$obs %in% "jep" & obs$transect %in% 350100 & obs$sec %in% c(55812.1,55950.3,55960.65,55960.65,55965.66)]=3
 # # ---------- # 
 # 
+# 
+# # ---------- # 
+# # seat
+# # ---------- # 
+obs$seat[obs$obs %in% "jep"]="rf" # error in file Crew3521rf_08162018_birds.txt
+# # ---------- # 
 # 
 # # ---------- # 
 # # offline
