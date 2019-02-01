@@ -78,7 +78,7 @@ obs$type = as.vector(obs$type) # not sure why this is coming in as a matrix - ne
 obs$original.spp.codes = obs$type
 
 db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
-if(!exists("db")){db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw9mbmsvr008', database='SeabirdCatalog')}
+#if(!exists("db")){db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw9mbmsvr008', database='SeabirdCatalog')}
 spplist = dbGetQuery(db,"select * from lu_species")
 dbDisconnect(db)
 
@@ -312,3 +312,9 @@ obs$seat[obs$obs %in% "jep"]="rf" # error in file Crew3521rf_08162018_birds.txt
 # message("Fixed other errors")
 # ##--------------------------##
 # 
+
+# taking out tpw transect 0 beg/end counts early to avoid problems later
+# this causes issues when filling in the transect #s during quality control
+obs$type[obs$transect %in% 0 & obs$type %in% c("BEGCNT","ENDCNT")] = "COMMENT"
+obs$offline[obs$transect %in% 0] = 1
+
