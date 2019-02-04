@@ -1,19 +1,19 @@
 obstrack$transect[obstrack$transect %in% 0] = NA
 
 
-#------------#
-# test plot
-#------------#
-s = "rf"
-t = 295600
-x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
-y = filter(x,type %in% c("BEGCNT","ENDCNT"))
-ggplot()+
-  geom_line(data = design[design$latidext %in% t,], aes(x=long, y=lat), col="grey",lwd=2) +
-  geom_point(data = x,aes(x = long, y = lat, col = as.character(transect))) + theme_bw()+
-  geom_point(data = filter(x, type %in% "BEGCNT"), aes(x=long, y=lat), col="green", pch = 24, size = 3) +
-  geom_point(data = filter(x, type %in% "ENDCNT"), aes(x=long, y=lat), col="red", pch = 25, size = 3)
-#------------#
+# #------------#
+# # test plot
+# #------------#
+# s = "rf"
+# t = 295600
+# x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+# y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+# ggplot()+
+#   geom_line(data = design[design$latidext %in% t,], aes(x=long, y=lat), col="grey",lwd=2) +
+#   geom_point(data = x,aes(x = long, y = lat, col = as.character(transect))) + theme_bw()+
+#   geom_point(data = filter(x, type %in% "BEGCNT"), aes(x=long, y=lat), col="green", pch = 24, size = 3) +
+#   geom_point(data = filter(x, type %in% "ENDCNT"), aes(x=long, y=lat), col="red", pch = 25, size = 3)
+# #------------#
 
 
 #------------#
@@ -22,7 +22,9 @@ ggplot()+
 
 # Crew3521_lf_2018_8_22 302100       3
 # dup. END
-obstrack$type[obstrack$type %in% "ENDCNT" & obstrack$transect %in% 302100 & obstrack$seat %in% "lf"][2] = "delete"
+obstrack$type[obstrack$type %in% "ENDCNT" & 
+                obstrack$transect %in% 302100 & 
+                obstrack$seat %in% "lf"][2] = "delete"
 
 # Crew3521_rf_2018_8_16 350600       5
 # Changed TRANSECT from 352101 (doesn't make sense with this transect either)
@@ -81,15 +83,21 @@ obstrack$type[obstrack$transect %in% 440600 & obstrack$seat %in% "rf" & obstrack
 
 # Crew4446_rf_2018_8_17 441600      19
 # offline, extra end after end point
-obstrack$type[obstrack$transect %in%  441600 & obstrack$seat %in% "rf" & obstrack$sec > 37892.39] = "delete"
+obstrack$type[obstrack$transect %in%  441600 & 
+                obstrack$seat %in% "rf" & 
+                obstrack$sec > 37892.39] = "delete"
 
 # Crew4446_rf_2018_8_17 442100       5
 # offline, extra end after end point
-obstrack$type[obstrack$transect %in%  441600 & obstrack$seat %in% "rf" & obstrack$sec > 33620.83] = "delete"
+obstrack$type[obstrack$transect %in%  442100 & 
+                obstrack$seat %in% "rf" & 
+                obstrack$sec > 33620.83] = "delete"
 
 #Crew4446_rf_2018_8_16 443600      19
 # duplicate beg
-obstrack$type[obstrack$transect %in% 443600 & obstrack$seat %in% "rf" & obstrack$sec %in% 50308.7][2] = "delete"
+obstrack$type[obstrack$transect %in% 443600 & 
+                obstrack$seat %in% "rf" & 
+                obstrack$sec %in% 50308.7][2] = "delete"
 # cut offline points
 obstrack$transect[obstrack$transect %in% 443600 & obstrack$seat %in% "rf" & obstrack$lat<44] = NA
 
@@ -102,4 +110,25 @@ obstrack$type[obstrack$key %in% "Crew4446_rf_2018_8_17" & obstrack$sec >57972.25
 # remove delete records
 obstrack = filter(obstrack, !type %in% "delete")
 
+cat("********* transect BEG/END errors have been fixed *********")
+
+
+#----------------- #
+# other errors
+#----------------- #
+
+# 442601 rf mislabed below 44 degrees
+obstrack$transect[obstrack$transect %in% 442601 & obstrack$seat %in% "rf" & obstrack$lat < 44]=NA
+
+# 442602 rf mislabed below 44 degrees
+obstrack$transect[obstrack$transect %in% 442602 & obstrack$seat %in% "rf" & obstrack$lat < 44]=NA
+
+# 443600 rf mislabed below 44 degrees
+obstrack$transect[obstrack$transect %in% 443600 & obstrack$seat %in% "rf" & obstrack$lat < 44]=NA
+
+# 444100 rf mislabed below 44 degrees
+obstrack$transect[obstrack$transect %in% 444100 & obstrack$seat %in% "rf" & obstrack$lat < 44]=NA
+
+# 444600 rf mislabed below 44 degrees
+obstrack$transect[obstrack$transect %in% 444600 & obstrack$seat %in% "rf" & obstrack$lat < 44.2]=NA
 
