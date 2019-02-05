@@ -108,8 +108,29 @@ obs$type[obs$type %in% "CAGO"] = "CANG"
 obs$type[obs$type %in% "DUCK"] = "UNDU"
 obs$type[obs$type %in% "DWSC"] = "DASC"   
 obs$type[obs$type %in% "ABCU"] = "ABDU"
+obs$type[obs$type %in% "BOATS"] = "BOAT"
+obs$type[obs$type %in% "GEAR" & obs$comment %in% "fishing net"] = "FIGE"
+obs$type[obs$type %in% "GEAR" & !obs$comment %in% "fishing net"] = "FGUN"
+obs$type[obs$type %in% "GREA"] = "GREG"
+
+obs$type[obs$type %in% "DOCO" & obs$count %in% 1000] = "UNDU" # listening to WAVfile this was miscoded
+obs$type[obs$type %in% "DOCO"] = "DCCO"
+
 
 #"MIXD"   
+# "50%HERG; 20%RBGU; 30%GBBG" 
+# "50%HERG;50%LAGU"           
+# "S 75%BLSC;25%SUSC"        
+# "100BLSC;3WWSC"             
+# "50%GBBG; 50%HERG"; "50%GBBG;50%HERG"          
+# "75%BOGU; 25%HERG"          
+# "75%LAGUE;25%BOGU"         
+# "50%HERG;50%LAGU"; "50%HERG;50%LAGU"           
+# "50% BLSC;50% SUSC"   
+obs = fixMixed(obs)
+
+obs$type[obs$type %in% "MIXD"] = ""
+     
 
 
 tmp = obs$type != obs$original.spp.codes
