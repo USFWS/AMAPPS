@@ -1,5 +1,5 @@
 # ----------------------- #
-# fix Mixed ("MIXD" codes using the comments
+# fix Mixed "MIXD" codes using the comments
 # in order for this to work the observers have to follow protocol
 # if the format is not the same as instructed 
 # (number using a % listed before the code and separated by a ';')
