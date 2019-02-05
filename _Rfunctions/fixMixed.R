@@ -28,13 +28,13 @@ fixMixed <- function(data) {
     }
     if(any(is.na(output$count) | is.na(output$type))){
       output = filter(output,!is.na(count), !is.na(type))
-      message("There were some MIXD codes that were not formated properly and will have to be done manually")
+      cat("There were some MIXD codes that were not formated properly and will have to be done manually\n")
     }
   }
     
     data = filter(data, !data$type %in% "MIXD") # delete the row with 'MIXD' which is why we redine 'a' each time
     data = rbind(data, output)
-    message("MIXED row separated and the original row was deleted")
+    cat("MIXED row separated and the original row was deleted")
     return(data)
   }
 
