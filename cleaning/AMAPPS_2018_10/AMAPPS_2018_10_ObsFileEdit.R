@@ -127,10 +127,16 @@ obs$type[obs$type %in% "DOCO"] = "DCCO"
 # "75%LAGUE;25%BOGU"         
 # "50%HERG;50%LAGU"; "50%HERG;50%LAGU"           
 # "50% BLSC;50% SUSC"   
-obs = fixMixed(obs)
 
-obs$type[obs$type %in% "MIXD"] = ""
-     
+# fix those formatted incorrectly
+to.add1 = obs[obs$type %in% "MIXD" & obs$comment %in% "100BLSC;3WWSC",]
+to.add2 = obs[obs$type %in% "MIXD" & obs$comment %in% "100BLSC;3WWSC",]
+to.add1 = mutate(to.add1, type = "BLSC", count = 100, dataChange = "type changed from MIXD")
+to.add2 = mutate(to.add1, type = "WWSC", count = 3, dataChange = "type changed from MIXD")
+obs = rbind(obs, to.add1, to.add2)
+  
+# fix those formatted correctly
+obs = fixMixed(obs)
 
 
 tmp = obs$type != obs$original.spp.codes
