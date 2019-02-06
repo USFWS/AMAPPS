@@ -34,7 +34,7 @@ fixMixed <- function(data) {
     
     data = filter(data, !data$type %in% "MIXD") # delete the row with 'MIXD' which is why we redine 'a' each time
     data = rbind(data, output)
-    cat("MIXED row separated and the original row was deleted")
+    cat("MIXED row separated and the original row was deleted\n")
     return(data)
   }
 
