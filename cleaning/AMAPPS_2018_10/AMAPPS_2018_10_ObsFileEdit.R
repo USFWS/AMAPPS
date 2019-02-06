@@ -138,6 +138,8 @@ obs = rbind(obs, to.add1, to.add2)
 # fix those formatted correctly
 obs = fixMixed(obs)
 
+# species erorr from mixed
+obs$type[obs$type %in% "LAGUE"] = "LAGU"
 
 tmp = obs$type != obs$original.spp.codes
 obs$dataChange[tmp] = paste(obs$dataChange[tmp], "; changed TYPE from ", obs$original.spp.codes[tmp], sep = "")
@@ -156,22 +158,81 @@ if(length(x)>0){message("Found ", length(x), " entries with non-matching AOU cod
 # ##--------------------------##
 # # fix transects errors
 # ##--------------------------##
+o = "sfy"
+t = "1"
+x = obs[obs$transect %in% t & obs$obs %in% o,]
+  
+# Transects      BegFreq EndFreq Observer
+# 265    ------     103     102      sfy
+# no transect #s but some counts at for transects
+obs$transect[obs$obs %in% "sfy" & obs$type %in% c("BEGCNT","ENDCNT")] = obs$count[obs$obs %in% "sfy" & obs$type %in% c("BEGCNT","ENDCNT")]
+
+# 82     300100       3       1      jsw
+obs$type[obs$obs %in% "jsw" & obs$transect %in% 300100 & obs$sec %in% 45968.50] = "ENDCNT"
+
+# 51     313100       1       3      jsw
+# looks fine, not sure why this came up?
+# error is with jep
+obs$type[obs$obs %in% "jep" & obs$transect %in% 313100 & obs$sec %in% 37703.60] = "BEGCNT"
+
+# retry
+checkBegEnd(obs)
+# Transects BegFreq EndFreq Observer
+# 266         1       1       0      sfy
+# one BEG, no other comments so changing the '1' back to NA
+# also changing all "" to NA
+obs$transect[obs$obs %in% "sfy" & obs$transect %in% c("","1")] = NA
 ##--------------------------##
 
-
-##--------------------------##
-# fix errors
-##--------------------------##
 
 # ---------- #
-# counts
+# counts/ behavior/ band
 # ---------- #
+# "0.5"
+# "1.0.5"   
+# "1.2.F"
+# "2.2.S"
+# ""
+
+# behavior
+obs$behavior[obs$count %in% c("1.2.F")] = "F"
+obs$behavior[obs$count %in% c("2.2.S")] = "S"
+
+# band
+obs$band[obs$count %in% c("1.2.F","2.2.S")] = "2"
+
+# count
+obs$count[obs$count %in% c("1.2.F")] = 1
+obs$count[obs$count %in% c("2.2.S")] = 2
+
+# boat counts
+obs$dataChange[obs$count %in% c("0.5","1.0.5")] = paste(obs$dataChange[obs$count %in% c("0.5","1.0.5")],
+                                                        "; changed dsitance based on comment",
+                                                        sep="")
+obs$distance.to.obs[obs$count %in% c("0.5","1.0.5")] = 0.5
+
+obs$dataChange[obs$type %in% c("BOTD","BOAT") & obs$count %in% ""] = paste(obs$dataChange[obs$type %in% c("BOTD","BOAT") & obs$count %in% ""],
+                                                                           "; changed count from ''; count is estimated",
+                                                                           sep="")
+obs$count[obs$type %in% c("BOTD","BOAT") & obs$count %in% ""] = 1
+
+# correct boat codes
+obs$type[obs$type %in% "BOAT" & obs$comment %in% "trawler"] = "BOTD"  
+obs$type[obs$type %in% "BOAT" & obs$comment %in% "fishing boat"] = "BOFI"  
+       
+# add distance based on comments
+obs$distance.to.obs[obs$type %in% "BOTD" & obs$comment %in% "; distance: 1/4mi"] =  (1/4)*0.868976
+obs$distance.to.obs[obs$type %in% "BOTD" & obs$comment %in% "; distance: 1/10mi"] = (1/10)*0.868976
+obs$distance.to.obs[obs$type %in% "BOTD" & obs$comment %in% "; distance: 1/2mi"] =  (1/2)*0.868976
+obs$distance.to.obs[obs$type %in% "BOTD" & obs$comment %in% "; distance: 1/8mi"] =  (1/8)*0.868976
+obs$distance.to.obs[obs$type %in% "BOTD" & obs$comment %in% "; distance: 1mi"] = 0.868976
 # ---------- #
 
 
 # ---------- #
 # dates
 # ---------- #
+# date errors were in naming - fixed file name errors
 # ---------- #
 
 
