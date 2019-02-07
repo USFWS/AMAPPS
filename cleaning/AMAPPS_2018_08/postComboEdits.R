@@ -232,3 +232,88 @@ x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
 y = filter(x,type %in% c("BEGCNT","ENDCNT"))
 testplot(t,s,x,y)
 # rf missing for 351101 - was not in transit or original files 
+
+# ----------------- #
+# errors in tranist ?
+# test plot
+#------------#
+obstrack$offline = as.numeric(obstrack$offline)
+
+s = "rf"
+t = 352600
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# these are not offline points -> changing to offline=0 and removing from transit, putting in obstrack
+o$offline = 0 # dataChange already said that offline was changed from 1 to 0 but it wasn't changed, odd
+obstrack = bind_rows(obstrack, o)
+
+s = "rf"
+t = 352601
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# these are not offline points -> changing to offline=0 and removing from transit, putting in obstrack
+o$offline = 0 # dataChange already said that offline was changed from 1 to 0 but it wasn't changed, odd
+obstrack = bind_rows(obstrack, o)
+
+s = "rf"
+t = 353100
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# these are not offline points -> changing to offline=0 and removing from transit, putting in obstrack
+o$offline = 0 # dataChange already said that offline was changed from 1 to 0 but it wasn't changed, odd
+obstrack = bind_rows(obstrack, o)
+
+s = "rf"
+t = 353101
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# these are not offline points -> changing to offline=0 and removing from transit, putting in obstrack
+o$offline = 0 # dataChange already said that offline was changed from 1 to 0 but it wasn't changed, odd
+obstrack = bind_rows(obstrack, o)
+
+s = "rf"
+t = 353600
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# these are not offline points -> changing to offline=0 and removing from transit, putting in obstrack
+o$offline = 0 # dataChange already said that offline was changed from 1 to 0 but it wasn't changed, odd
+obstrack = bind_rows(obstrack, o)
+# also changing offline effort transect to NA
+s1 = y$sec[2]
+s2 = y$sec[3]
+obstrack$transect[obstrack$seat %in% s & obstrack$transect %in% t & obstrack$sec > s1 & obstrack$sec < s2] = NA
+obstrack$offline[obstrack$seat %in% s & obstrack$transect %in% t & obstrack$sec> s1 & obstrack$sec < s2] = 1
+
+s = "rf"
+t = 353601
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# these are not offline points -> changing to offline=0 and removing from transit, putting in obstrack
+o$offline = 0 # dataChange already said that offline was changed from 1 to 0 but it wasn't changed, odd
+obstrack = bind_rows(obstrack, o)
+
+s = "rf"
+t = 354100
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# these are not offline points -> changing to offline=0 and removing from transit, putting in obstrack
+o$offline = 0 # dataChange already said that offline was changed from 1 to 0 but it wasn't changed, odd
+obstrack = bind_rows(obstrack, o)
+
+
+# remove points that were added back into obstrack from transit
+transit = filter(transit, !transect %in% c(352600, 352601, 353100, 353101, 353600, 353601, 354100))
