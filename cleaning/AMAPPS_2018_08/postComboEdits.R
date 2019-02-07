@@ -314,6 +314,36 @@ testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
 o$offline = 0 # dataChange already said that offline was changed from 1 to 0 but it wasn't changed, odd
 obstrack = bind_rows(obstrack, o)
 
+s = "lf"
+t = 364601
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# this is correct - remove transect in filter below
+
+s = "rf"
+t = 440100
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# not offline and duplicated BEG for some reason
+o$offline = 0 
+obstrack = bind_rows(obstrack, o)
+obstrack$type[obstrack$transect %in% t & obstrack$seat %in% s & obstrack$sec %in% 42367.95][2] = "delete"
+obstrack = filter(obstrack, !type %in% "delete")
+
+s = "rf"
+t = 440600
+x = filter(obstrack, seat %in% s, transect %in% t) %>% arrange(sec)
+y = filter(x,type %in% c("BEGCNT","ENDCNT"))
+o = transit[transit$transect %in% t & transit$seat %in% s,]
+testplot(t,s,x,y)+geom_point(data = o, aes(long, lat),col="blue")
+# not offline 
+o$offline = 0 
+obstrack = bind_rows(obstrack, o)
 
 # remove points that were added back into obstrack from transit
-transit = filter(transit, !transect %in% c(352600, 352601, 353100, 353101, 353600, 353601, 354100))
+transit = filter(transit, !transect %in% c(352600, 352601, 353100, 353101, 353600, 353601, 354100)) %>% 
+  mutate(transect = ifelse(transect %in% c(0, 364601), NA, transect))
