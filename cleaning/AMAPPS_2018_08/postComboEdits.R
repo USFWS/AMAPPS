@@ -347,3 +347,5 @@ obstrack = bind_rows(obstrack, o)
 # remove points that were added back into obstrack from transit
 transit = filter(transit, !transect %in% c(352600, 352601, 353100, 353101, 353600, 353601, 354100)) %>% 
   mutate(transect = ifelse(transect %in% c(0, 364601), NA, transect))
+transit = bind_rows(transit, obstrack[is.na(obstrack$transect),])
+obstrack = filter(obstrack, !is.na(transect))
