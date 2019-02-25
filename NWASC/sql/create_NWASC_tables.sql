@@ -1757,19 +1757,19 @@ INSERT INTO dataset(
 	(434,4,'BarHarborWW_06162009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(435,4,'BarHarborWW_06172009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(436,4,'BarHarborWW_06302009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
-	(437,4,'BarHarborWW_07012009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(438,4,'BarHarborWW_07022009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(439,4,'BarHarborWW_07052009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(440,4,'BarHarborWW_07062009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(441,4,'BarHarborWW_07092009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(442,4,'BarHarborWW_07102009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(443,4,'BarHarborWW_07132009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(444,4,'BarHarborWW_07142009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(445,4,'BarHarborWW_07152009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(446,4,'BarHarborWW_07192009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(447,4,'BarHarborWW_07202009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(448,4,'BarHarborWW_07252009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(449,4,'BarHarborWW_07312009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(437,4,'BarHarborWW_07012009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(438,4,'BarHarborWW_07022009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(439,4,'BarHarborWW_07052009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(440,4,'BarHarborWW_07062009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(441,4,'BarHarborWW_07092009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(442,4,'BarHarborWW_07102009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(443,4,'BarHarborWW_07132009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(444,4,'BarHarborWW_07142009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(445,4,'BarHarborWW_07152009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(446,4,'BarHarborWW_07192009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(447,4,'BarHarborWW_07202009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(448,4,'BarHarborWW_07252009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(449,4,'BarHarborWW_07312009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
 	(450,4,'BarHarborWW_08012009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(451,4,'BarHarborWW_08022009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(452,4,'BarHarborWW_08062009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
@@ -1796,7 +1796,7 @@ INSERT INTO dataset(
 	(473,4,'BarHarborWW_10092009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(474,4,'BarHarborWW_10102009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(475,4,'BarHarborWW_10112009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
-	(476,4,'BarHarborWW_0611210','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(476,4,'BarHarborWW_06112010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(477,4,'BarHarborWW_06122010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(478,4,'BarHarborWW_06182010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(479,4,'BarHarborWW_06192010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
@@ -1840,11 +1840,11 @@ INSERT INTO dataset(
 	(517,4,'BarHarborWW_09242010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(518,4,'BarHarborWW_09252010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(519,4,'BarHarborWW_10032010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
-	(520,4,'BarHarborWW_10082010','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(521,4,'BarHarborWW_10102010','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),	
-	(522,4,'BarHarborWW_10112010','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
-	(523,4,'BarHarborWW_10122010','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL);
-
+	(520,4,'BarHarborWW_10082010','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(521,4,'BarHarborWW_10102010','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),	
+	(522,4,'BarHarborWW_10112010','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(523,4,'BarHarborWW_10122010','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL);
+	
 
 --  (5XX,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 --  (5XX,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
@@ -1857,8 +1857,8 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-share_level_id = 5
-where dataset_id in (115,148,168,157,114,124,152,125,155,126,156,127,151,128,150,130,154,129,153)
+dataset_name = 'BarHarborWW_06112010'
+where dataset_id = 476
 	
 --
 update dataset
@@ -2233,23 +2233,23 @@ INSERT INTO progress_table(
 	(431,0,'BOEMNanoTag_2014','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL),
 	(432,0,'BOEMNanoTag_2015','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL),
 	(433,9,'EcoMon_Nov2018_HS1801','received',cast('2018-12-18' as date),'KC',1,1,1,'need effort table'),
-	(437,9,'BarHarborWW_07012009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(438,9,'BarHarborWW_07022009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(439,9,'BarHarborWW_07052009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(440,9,'BarHarborWW_07062009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(441,9,'BarHarborWW_07092009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(442,9,'BarHarborWW_07102009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(443,9,'BarHarborWW_07132009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(444,9,'BarHarborWW_07142009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(445,9,'BarHarborWW_07152009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(446,9,'BarHarborWW_07192009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(447,9,'BarHarborWW_07202009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(448,9,'BarHarborWW_07252009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(449,9,'BarHarborWW_07312009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(520,9,'BarHarborWW_10082010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(521,9,'BarHarborWW_10102010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),	
-	(522,9,'BarHarborWW_10112010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(523,9,'BarHarborWW_10122010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL);
+	(437,0,'BarHarborWW_07012009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(438,0,'BarHarborWW_07022009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(439,0,'BarHarborWW_07052009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(440,0,'BarHarborWW_07062009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(441,0,'BarHarborWW_07092009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(442,0,'BarHarborWW_07102009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(443,0,'BarHarborWW_07132009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(444,0,'BarHarborWW_07142009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(445,0,'BarHarborWW_07152009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(446,0,'BarHarborWW_07192009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(447,0,'BarHarborWW_07202009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(448,0,'BarHarborWW_07252009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(449,0,'BarHarborWW_07312009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(520,0,'BarHarborWW_10082010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(521,0,'BarHarborWW_10102010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),	
+	(522,0,'BarHarborWW_10112010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(523,0,'BarHarborWW_10122010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL);
 
 --  dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
 --  data_acquired, metadata_acquired, report_acquired, additional_info)
