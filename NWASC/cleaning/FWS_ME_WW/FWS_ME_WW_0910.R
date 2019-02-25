@@ -11,6 +11,7 @@
 require(dplyr) # %>% 
 library(readxl)
 require(odbc)
+require(ggplot2)
 #---------------------#
 
 
@@ -18,7 +19,7 @@ require(odbc)
 # set paths
 #---------------------#
 dir.in <- "//ifw-hqfs1/MB SeaDuck/seabird_database/datasets_received/FWS/LindaWelch/"
-dir.out <-"//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/FWS_ME_0910" 
+dir.out = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/FWS_ME_0910"
 #---------------------#
 
 
@@ -137,7 +138,7 @@ data$species[data$species %in% c("CurrentRp","CurrentrP")] = "OCFR"
 data$species[data$species %in% "ENDTRS"] = "ENDCNT"          
 data$species[data$species %in% "GrayS"] = "GRSE"           
 data$species[data$species %in% "Seaweed"] = "MACR"         
-data$species[data$species %in% "UNSB"] = "SHOR"            
+data$species[data$species %in% c("UNSB","UNPL")] = "SHOR"            
 data$species[data$species %in% "DWSC"] = "DASC"           
 data$species[data$species %in% "RedAlgae"] = "ALGA"        
 data$species[data$species %in% "Tuna"] = "TUNA"            
@@ -152,27 +153,27 @@ data$species[data$species %in% "Fish"] = "FISH"
 data$species[data$species %in% "DRAGONFLY"] = "DRAG"       
 data$species[data$species %in% "GEESE"] = "UGOO"           
 data$species[data$species %in% "Trawl"] = "BOTD"           
-data$species[data$species %in% "GOLD"] = "AMGO"            
+data$species[data$species %in% "GOLD"] = "AMGO" # goldfinch            
 data$species[data$species %in% "Shark"] = "SHAR"           
 data$species[data$species %in% "UNFALCON"] = "FALC"        
 data$species[data$species %in% "CAGO"] = "CANG"           
 data$species[data$species %in% "CEWA"] = "CEDW"           
 data$species[data$species %in% "Moth"] = "UNMO"            
-data$species[data$species %in% "YSFL"] = "NOFL"     
+data$species[data$species %in% "YSFL"] = "NOFL" # yellow-shafted flicker, northern flicker    
 data$species[data$original.spp.codes %in% "AMBlDuCK"] = "ABDU"
 data$species[data$species %in% "HBWH"] = "HUWH"           
-data$species[data$species %in% "YEWA"] = "YWAR"  
+data$species[data$species %in% "YEWA"] = "YWAR" # yellow warbler 
 data$species[data$species %in% "BASW"] = "BARS" 
+data$species[data$species %in% "UNHA"] = "HAWK" # unidentified hawk           
+data$species[data$species %in% "RIDU"] = "RNDU" # ringneck duck?          
+data$species[data$species %in% "SPSP"] = "SPSA" # spotted sandpiper                   
+data$species[data$species %in% "SPPL"] = "SEPL" # semipalmated plover 
 
+# need to add code
+# "WCPE" white chinned petrel 
+
+# filter odd rows out (NAs and extra headers)
 data = data %>% filter(!species %in% c(NA, "species"))
-
-data$species[data$species %in% c("UNHA","WCPE","RIDU","UNPL","SPPL","SPSP")] = "UNKN"     
-#data$species[data$species %in% "UNHA"] = ""            
-#data$species[data$species %in% "WCPE"] = ""           
-#data$species[data$species %in% "RIDU"] = ""           
-#data$species[data$species %in% "UNPL"] = ""           
-#data$species[data$species %in% "SPSP"] = ""           
-#data$species[data$species %in% "SPPL"] = ""            
 #---------------------#
 
 
@@ -208,17 +209,17 @@ for (a in 1:length(key.list)) {
       x = y[y$transect %in% yy$transect[b],] %>% arrange(seconds_from_midnight, time)
       xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
       
-      ggplot(x, aes(long, lat, col = as.character(transect)))+ geom_point() + 
-        geom_point(data = xx[xx$species %in% "BEGCNT",],aes(long, lat), size = 3, col="darkgreen",pch=6)+
-        geom_point(data = xx[xx$species %in% "ENDCNT",],aes(long, lat), size = 3, col="red",pch=7)+
-        theme_bw()
+      # ggplot(x, aes(long, lat, col = as.character(transect)))+ geom_point() + 
+      #   geom_point(data = xx[xx$species %in% "BEGCNT",],aes(long, lat), size = 3, col="darkgreen",pch=6)+
+      #   geom_point(data = xx[xx$species %in% "ENDCNT",],aes(long, lat), size = 3, col="red",pch=7)+
+      #   theme_bw()
       
       # edits based on observations above
       if(all(!xx$species %in% "BEGCNT" & dim(xx)[1] %in% 1)){
         to.add = x[1,]
         to.add = mutate(to.add, 
                         species = "BEGCNT", 
-                        comment = "ADDED BEGCNT since one was missing",
+                        comments = "ADDED BEGCNT since one was missing",
                         index = index-0.1)
         data = rbind(data, to.add)
         cat("Added BEGCNT to transect\n")
@@ -229,7 +230,7 @@ for (a in 1:length(key.list)) {
         to.add = x[dim(x)[1],]
         to.add = mutate(to.add, 
                         species = "ENDCNT", 
-                        comment = "ADDED ENDCNT since one was missing",
+                        comments = "ADDED ENDCNT since one was missing",
                         index = index+0.1)
         data = rbind(data, to.add)
         cat("Added ENDCNT to transect\n")
@@ -239,7 +240,7 @@ for (a in 1:length(key.list)) {
         to.add = x[which(x$species %in% "BEGCNT")[2]-1,]
         to.add = mutate(to.add, 
                         species = "ENDCNT", 
-                        comment = "ADDED ENDCNT since one was missing",
+                        comments = "ADDED ENDCNT since one was missing",
                         index = index-0,1)
         data = rbind(data, to.add)
         cat("Added ENDCNT to transect\n")
@@ -250,7 +251,7 @@ for (a in 1:length(key.list)) {
         to.add = x[which(x$species %in% "ENDCNT")[1]+1,]
         to.add = mutate(to.add, 
                         species = "BEGCNT", 
-                        comment = "ADDED BEGCNT since one was missing",
+                        comments = "ADDED BEGCNT since one was missing",
                         index = index-0.1)
         data = rbind(data, to.add)
         cat("Added BEGCNT to transect\n")
@@ -260,7 +261,7 @@ for (a in 1:length(key.list)) {
         to.add = x[1,]
         to.add = mutate(to.add, 
                         species = "BEGCNT", 
-                        comment = "ADDED BEGCNT since one was missing",
+                        comments = "ADDED BEGCNT since one was missing",
                         index = index-0.1)
         data = rbind(data, to.add)
         cat("Added BEGCNT to transect\n")
@@ -274,11 +275,112 @@ for (a in 1:length(key.list)) {
 # one transect with >4 beg/ends
 data$species[data$key %in% "Jun09_2009-06-30_FV_NA" & data$transect %in% 2 & data$species %in% "BEGCNT"][3]="delete"
 data = filter(data, !species %in% "delete")
+
+# double check 
+data %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% 
+  group_by(transect) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+
+# ungroup
+data = as.data.frame(data)
+
+# add original transect column with trip + transect
+data = mutate(data, source_transect = paste("trip_", trip, "_transect_", transect, sep=""))
+#---------------------#
+
+
+#---------------------#
+# add seat
+#---------------------#
+data = mutate(data, seat = NA,
+              seat = sapply(strsplit(boat, "-"), tail, 1),
+              seat = ifelse(seat %in% c("STAR", "STARB"), "starboard", seat),
+              seat = ifelse(seat %in% c("na","0","FV"), NA, seat),
+              seat = tolower(seat))
+
+# add observer id if sorting by observer instead of seat
+data = mutate(data, obs = seat)
+#---------------------#
+
+
+#---------------------#
+# address long/long errors
+#---------------------#
+data = mutate(data, 
+              lat = ifelse(lat %in% "0", NA, lat), 
+              long = ifelse(long %in% "0", NA, long))
+#---------------------#
+
+
+#---------------------#
+# fix boats
+#---------------------#
+data = mutate(data, 
+              species = ifelse(species %in% "BOAT" & comments %in% c("LOBSTER NO BIRD","LOBSTER BOAT",
+                                                                     "LOBSTERS NO BIRDS","LOBSTER BEYOND 300",
+                                                                     "LOBSTER NO BIRDS","LOBSTER"), 
+                               "BOLO", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("ACADIAN","ACADIAN NO BIRDS","ACAT"), 
+                               "BOWW", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("BH FERRY","BH FERRY NO BIRDS"), 
+                               "BOFE", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("CLAM DRAGGERS",
+                                                                     "CLAM DRAGGERS NO BIRDS","CLAM TRAWLERS",
+                                                                     "CRAB TRAWLER NO BIRDS","TRAWL NO BIRDS" ,
+                                                                     "TRAWLER NO BIRDS"), 
+                               "BOTD", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("COAST GUARD","COASTGUARD NO BIRDS"), 
+                               "BOCG", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("CRUISE SHIP","SM CRUISE SHIP NO BIRDS",
+                                                                     "NATURE CRUISE NO BIRDS"), 
+                               "BOCR", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("FISHING","FISHING BOAT NO BIRDS",
+                                                                     "FISHING NO BIRDS","TUNA",                                            
+                                                                     "TUNA BOAT NO BIRDS",                              
+                                                                     "TUNA FISHING",                                    
+                                                                     "TUNA FISHING NO BIRDS",                           
+                                                                     "TUNABOAT NO BIRDS"), 
+                               "BOFI", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("GREAT EASTERN TANKER"), 
+                               "BOTA", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("LG PURSE SEINER FAR AWAY 150FT 'WESTERN VENTURE'",
+                                                                     "PURSE NO BIRDS","PURSE SEINER"), 
+                               "BOPS", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("SAIL","SAILBOAT","SAILBOAT NO BIRD",                                
+                                                                     "SAILBOAT NO BIRDS","SAILBOATS"), 
+                               "BOSA", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("YACHT"), 
+                               "BOYA", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("PLEASURE NO BIRDS"), 
+                               "BOPL", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("KAYAKERS","KAYAKS","KAYAKS NO BIRDS"), 
+                               "BOKA", species))
+#---------------------#
+
+
+#---------------------#
+# summarise effort
+#---------------------#
+# since no offline data, can just grab first and last in group for BEG/END
+effort = (date, seat, trip, transect)
 #---------------------#
 
 
 #---------------------#
 # export
 #---------------------#
+# assign dataset id + name
+data = mutate(data, dataset_name = paste("BarHarborWW", 
+                                         format(as.Date(date, format = "%Y-%m-%d"), "%m%d%Y"),
+                                         sep="_"))
+
+db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
+datalist = dbGetQuery(db,"select * from dataset")
+dbDisconnect(db)
+
+data = left_join(data, select(datalist, dataset_name, dataset_id), by = "dataset_name")
+
+# export
+data = select(data, -'1', -unknown_time, -trip, -transect, -type, -boat, -key)
+  
 write.csv(data, file = paste(dir.out, "data.csv", sep="/"), row.names=FALSE)
 #---------------------#
