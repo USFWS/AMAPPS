@@ -706,6 +706,7 @@ BOCR|--|Boat-Cruise|--|--|--
 BOCS|--|Boat-Container ship|--|--|--
 BOFE|--|Boat-Ferry|--|--|--
 BOFI|--|Boat-Fishing|--|--|--
+BOKA|--|Boat-Kayak|--|--|--
 BOLO|--|Boat-Lobster|--|--|--
 BOME|--|Boat-Merchant|--|--|--
 BONA|--|Boat-Navy|--|--|--
