@@ -280,6 +280,7 @@ USAN|Scolopacidae spp.|Unidentified Sandpiper|--|--|176568
 USSB|--|Unidentified small shorebird|--|--|--
 VIRA|--|Virginia Rail|Rallus|limicola|176221
 WBSP|--|White-bellied Storm-petrel|Fregetta|grallaria|174656
+WCPE|--|White-chinned Petrel|Procellaria|aequinoctialis|174610
 WCTE|--|White-cheeked Tern|Sterna|repressa|176914
 WEGU|--|Western Gull|Larus|occidentalis|176817
 WESA|--|Western Sandpiper|Calidris|mauri|176668
