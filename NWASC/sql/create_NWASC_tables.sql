@@ -3,7 +3,7 @@ This script creates the Northwest Atlantic Seabird Catalog Schema
 and populates a few non-spatial tables
 
 created April 2017
-updated Oct. 16, 2018
+updated Feb. 25, 2019
 by K. Coleman
 
 This script will continue to be updated when adding new datasets to the dataset table
@@ -211,7 +211,7 @@ GO
 
 INSERT INTO lu_species(
 	species_type_id,spp_cd,	common_name, [group], genus, species, ITIS_id, [changes])
-	VALUES
+	VALUES 	
 	(1,'ABDH','American Black Duck X Mallard Hybrid','Anas rubripes x platy.','Anas', NULL, NULL, NULL),
 	(1,'ABDU','American Black Duck', NULL,'Anas','rubripes',175068, NULL),
 	(1,'AMBI','American Bittern',NULL,'Botaurus','lentiginosus',174856, NULL),
@@ -483,6 +483,7 @@ INSERT INTO lu_species(
 	(1,'USSB','Unidentified small shorebird',NULL,NULL,NULL,NULL,NULL),
 	(1,'VIRA','Virginia Rail',NULL,'Rallus','limicola',176221,NULL),
 	(1,'WBSP','White-bellied Storm-petrel',NULL,'Fregetta','grallaria',174656,NULL),
+	(1,'WCPE','White-chinned Petrel',NULL,'Procellaria', 'aequinoctialis', 174610, NULL),
 	(1,'WCTE','White-cheeked Tern',NULL,'Sterna','repressa',176914,NULL),
 	(1,'WEGU','Western Gull',NULL,'Larus','occidentalis',176817,NULL),
 	(1,'WESA','Western Sandpiper',NULL,'Calidris','mauri',176668,NULL),
@@ -819,7 +820,7 @@ INSERT INTO lu_species(
 	(8,'NHOW','Northern Hawk Owl',NULL,'Surnia','ulula',177898,NULL),
 	(8,'NOBO','Northern Bobwhite',NULL,'Colinus','virginianus',175863, NULL),
 	(8,'NOCA','Northern Cardinal',NULL,'Cardinalis','cardinalis',179124,NULL),
-	(8,'NOFL','Northern Flicker',NULL,'Colaptes','auratus',178154, NULL),
+	(8,'NOFL','Northern Flicker','Yellow-shafted and red-shafted','Colaptes','auratus',178154, NULL),
 	(8,'NOGO','Northern Goshawk',NULL,'Accipiter','gentilis',175300,NULL),
 	(8,'NOHA','Northern Harrier',NULL,'Circus','cyaneus',175430,NULL),
 	(8,'NOMO','Northern Mockingbird',NULL,'Mimus','polyglottos',178620,NULL),
@@ -927,8 +928,8 @@ INSERT INTO lu_species(
 /*
 update lu_species
 set
-species_type_id = 6
-where spp_cd in ('ORSU','CLSU')
+[group] = 'Yellow-shafted and red-shafted'
+where spp_cd = 'NOFL'
 
 select * from lu_species order by species_type_id, spp_cd
 
@@ -949,12 +950,14 @@ CREATE TABLE lu_survey_type(
 GO 
 
 INSERT INTO lu_survey_type(survey_type_cd,survey_type_ds)
-	VALUES
+	VALUES 
 	('a','airplane'),
 	('b','boat'),
 	('c','camera'),
 	('f','fixed ground survey'),
-	('g','area-wide ground survey');/*,
+	('g','area-wide ground survey'),
+	('v','video');
+	/*,
 	('p','passive acoustics detectors'),
 	('d','active acoustic detectors');*/
 --
@@ -1193,7 +1196,11 @@ INSERT INTO lu_parent_project(
 		'http://www.nefsc.noaa.gov/psb/AMAPPS/'),
 	(2,'AMAPPS NOAA',NULL,'http://www.nefsc.noaa.gov/psb/AMAPPS/'),
 	(3,'Audubon CBC (Christmas Bird Count)',NULL,NULL),
-	(4,'Bar Harbor Whale Watching Cruises',NULL,NULL),
+	(4,'Bar Harbor Whale Watching Cruises',
+		'Observers are on whale watching cruises out of Maine, mainly in summer and fall months. 
+		Transect numbers are not reoccurring points based on a design; they are assigned as the 
+		trip progresses. Effort is recorded for when the observations start and stop.',
+		NULL),
 	(5,'BOEM HighDef NC 2011',NULL,NULL),
 	(6,'CDAS Mid-Atlantic',NULL,NULL),
 	(7,'CASP (Cetacean and Seabird Assessment Program)',NULL,NULL),
@@ -1213,8 +1220,10 @@ INSERT INTO lu_parent_project(
 	(13,'Massachusetts CEC',NULL,NULL),
 	(14,'PIROP',NULL,NULL),
 	(15,'ECSAS',NULL,NULL),
-	(16,'BOEM NanoTag','Aerial survey conduced by FWS, funded by BOEM, from 2013 to 2015. This is a targeted species survey that 
-		was conducted while tracking tagged terns. The effort expanded to between Cape Cod and Long Island for the 2014
+	(16,'BOEM NanoTag',
+		'Aerial survey conduced by FWS, funded by BOEM, from 2013 to 2015. This survey was conducted while  
+		tracking tagged terns, so it should be noted that the observations were not the primary focus. 
+		The effort expanded to between Cape Cod and Long Island for the 2014
 		and 2015 surveys, but was only in Massachusettes for the 2013 surveys',NULL),
 	(17,'BOEM Terns 2013',NULL,'https://www.boem.gov/2014-665/'),
 	(18,'EcoMon/HerringAcoutic combo',NULL,NULL),
@@ -1272,9 +1281,9 @@ INSERT INTO lu_parent_project(
 /*  update lu_parent_project table */
 /*  update lu_parent_project
 	set
-	project_name = 'BOEM NanoTag',
-	project_ds = 'Aerial survey conduced by FWS, funded by BOEM, from 2013 to 2015. This is a targeted species survey that 
-		was conducted while tracking tagged terns. The effort expanded to between Cape Cod and Long Island for the 2014
+	project_ds = 'Aerial survey conduced by FWS, funded by BOEM, from 2013 to 2015. This survey was conducted while  
+		tracking tagged terns, so it should be noted that the observations were not the primary focus. 
+		The effort expanded to between Cape Cod and Long Island for the 2014
 		and 2015 surveys, but was only in Massachusettes for the 2013 surveys'
 	where project_id = 16
 */
@@ -1378,8 +1387,6 @@ INSERT INTO dataset(
 	(107,NULL,'AvalonSeawatch1993',NULL,NULL,NULL,NULL,NULL,0,'no',NULL,21,NULL,NULL,1,NULL), 					
 	(5,4,'BarHarborWW05','b','cts','ot',NULL,NULL,5,'yes','yes',33,'USFWS',NULL,1,NULL),         		
 	(6,4,'BarHarborWW06','b','cts','ot',NULL,NULL,5,'yes','yes',33,'USFWS',NULL,1,NULL),         		
-	(166,4,'BarHarborWW09','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL), 		
-	(167,4,'BarHarborWW10','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL), 		
 	(103,NULL,'BluewaterWindDE',NULL,NULL,NULL,NULL,NULL,0,'no',NULL,40,'BOEM',NULL,1,NULL), 					
 	(102,NULL,'BluewaterWindNJ',NULL,NULL,NULL,NULL,NULL,0,'no',NULL,40,'BOEM',NULL,1,NULL), 					
 	(144,5,'BOEMHighDef_NC2011Aerial','a','cts','ot',500,250,5,'yes','no',61,'BOEM,Normandeau',NULL,1,NULL), 
@@ -1706,14 +1713,14 @@ INSERT INTO dataset(
 	(393,10,'EcoMonMay2017_GU1701','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,23),
 	(394,10,'EcoMonJune2017_GU1702','b','cts','ot',300,300,0,'no',NULL,16,'NOAA',NULL,1,23),
 	(395,1,'AMAPPS_FWS_Aerial_Summer2017','a','cts','ot',400,200,5,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(173,24,'NYSERDA_OPA_Survey1_Summer2016','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(398,24,'NYSERDA_OPA_Survey2_Fall2016','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(399,24,'NYSERDA_OPA_Survey3_Winter2017','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(400,24,'NYSERDA_OPA_Survey4_Spring2017','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(401,24,'NYSERDA_WEA_Survey1_Summer2016','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(402,24,'NYSERDA_WEA_Survey2_Fall2016','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(403,24,'NYSERDA_WEA_Survey3_Winter2017','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(404,24,'NYSERDA_WEA_Survey4_Spring2017','c','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(173,24,'NYSERDA_OPA_Survey1_Summer2016','v','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(398,24,'NYSERDA_OPA_Survey2_Fall2016','v','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(399,24,'NYSERDA_OPA_Survey3_Winter2017','v','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(400,24,'NYSERDA_OPA_Survey4_Spring2017','v','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(401,24,'NYSERDA_WEA_Survey1_Summer2016','v','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(402,24,'NYSERDA_WEA_Survey2_Fall2016','v','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(403,24,'NYSERDA_WEA_Survey3_Winter2017','v','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(404,24,'NYSERDA_WEA_Survey4_Spring2017','v','cts','ot',NULL,NULL,5,'yes','no',61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(409,2,'AMAPPS_NOAA/NMFS_NEFSCAerial2010','a','cts','ot',NULL,NULL,0,'no',NULL,NULL,'BOEM,USFWS,NOAA,NAVY',NULL,NULL,NULL),
 	(410,2,'AMAPPS_NOAA/NMFS_NEFSCAerial2012','a','cts','ot',NULL,NULL,0,'no',NULL,NULL,'BOEM,USFWS,NOAA,NAVY',NULL,NULL,NULL),
 	(411,2,'AMAPPS_NOAA/NMFS_NEFSC_2017','b','cts','ot',300,300,5,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
@@ -1723,33 +1730,125 @@ INSERT INTO dataset(
     (415,25,'GOMCES 2016','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
 	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','dth','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL),
 	(396,1,'AMAPPS_FWS_Aerial_summer2018','a','cts','ot',400,200,99,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(397,1,'AMAPPS_FWS_Aerial_2019','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
+	(397,1,'AMAPPS_FWS_Aerial_2020-2023','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
 	(417,1,'AMAPPS_FWS_Aerial_fall2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(405,24,'NYSERDA_WEA_Survey5','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(406,24,'NYSERDA_OPA_Survey5','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(407,24,'NYSERDA_WEA_Survey6','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(408,24,'NYSERDA_OPA_Survey6','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(418,24,'NYSERDA_WEA_Survey7','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(419,24,'NYSERDA_OPA_Survey7','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(420,24,'NYSERDA_WEA_Survey8','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(421,24,'NYSERDA_OPA_Survey8','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(422,24,'NYSERDA_WEA_Survey9','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(423,24,'NYSERDA_OPA_Survey9','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(424,24,'NYSERDA_WEA_Survey10','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(425,24,'NYSERDA_OPA_Survey10','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(426,24,'NYSERDA_WEA_Survey11','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(427,24,'NYSERDA_OPA_Survey11','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(428,24,'NYSERDA_WEA_Survey12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
-	(429,24,'NYSERDA_OPA_Survey12','c','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(405,24,'NYSERDA_WEA_Survey5','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(406,24,'NYSERDA_OPA_Survey5','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(407,24,'NYSERDA_WEA_Survey6','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(408,24,'NYSERDA_OPA_Survey6','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(418,24,'NYSERDA_WEA_Survey7','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(419,24,'NYSERDA_OPA_Survey7','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(420,24,'NYSERDA_WEA_Survey8','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(421,24,'NYSERDA_OPA_Survey8','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(422,24,'NYSERDA_WEA_Survey9','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(423,24,'NYSERDA_OPA_Survey9','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(424,24,'NYSERDA_WEA_Survey10','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(425,24,'NYSERDA_OPA_Survey10','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(426,24,'NYSERDA_WEA_Survey11','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(427,24,'NYSERDA_OPA_Survey11','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(428,24,'NYSERDA_WEA_Survey12','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
+	(429,24,'NYSERDA_OPA_Survey12','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(430,26,'NJDEP_aerial2008','a','cts','de',2000,1000,99,'no',NULL,56,'NJDEP,BOEM',110,1,NULL),
 	(431,16,'BOEMNanoTag_2014','a','tss','ot',400,200,0,'no','yes',60,'BOEM,USFWS',110,1,NULL),
 	(432,16,'BOEMNanoTag_2015','a','tss','ot',400,200,0,'no','yes',60,'BOEM,USFWS',110,1,NULL),
-	(433,10,'EcoMon_Nov2018_HS1801','b','cts','ot',300,300,9,'no',NULL,16,'NOAA',NULL,1,23);
+	(433,10,'EcoMon_Nov2018_HS1801','b','cts','ot',300,300,9,'no',NULL,16,'NOAA',NULL,1,23),
+	(166,4,'BarHarborWW_06132009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL), 		
+	(167,4,'BarHarborWW_06152009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL), 		
+	(434,4,'BarHarborWW_06162009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(435,4,'BarHarborWW_06172009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(436,4,'BarHarborWW_06302009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(437,4,'BarHarborWW_07012009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(438,4,'BarHarborWW_07022009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(439,4,'BarHarborWW_07052009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(440,4,'BarHarborWW_07062009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(441,4,'BarHarborWW_07092009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(442,4,'BarHarborWW_07102009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(443,4,'BarHarborWW_07132009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(444,4,'BarHarborWW_07142009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(445,4,'BarHarborWW_07152009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(446,4,'BarHarborWW_07192009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(447,4,'BarHarborWW_07202009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(448,4,'BarHarborWW_07252009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(449,4,'BarHarborWW_07312009','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(450,4,'BarHarborWW_08012009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(451,4,'BarHarborWW_08022009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(452,4,'BarHarborWW_08062009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(453,4,'BarHarborWW_08072009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(454,4,'BarHarborWW_08082009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(455,4,'BarHarborWW_08092009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(456,4,'BarHarborWW_08132009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(457,4,'BarHarborWW_08142009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(458,4,'BarHarborWW_08152009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(459,4,'BarHarborWW_08172009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(460,4,'BarHarborWW_08252009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(461,4,'BarHarborWW_08272009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(462,4,'BarHarborWW_08282009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(463,4,'BarHarborWW_09052009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(464,4,'BarHarborWW_09062009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(465,4,'BarHarborWW_09072009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(466,4,'BarHarborWW_09112009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(467,4,'BarHarborWW_09132009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(468,4,'BarHarborWW_09182009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(469,4,'BarHarborWW_09202009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(470,4,'BarHarborWW_09262009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(471,4,'BarHarborWW_10022009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(472,4,'BarHarborWW_10032009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(473,4,'BarHarborWW_10092009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(474,4,'BarHarborWW_10102009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(475,4,'BarHarborWW_10112009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(476,4,'BarHarborWW_0611210','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(477,4,'BarHarborWW_06122010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(478,4,'BarHarborWW_06182010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(479,4,'BarHarborWW_06192010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(480,4,'BarHarborWW_06252010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(481,4,'BarHarborWW_06262010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(482,4,'BarHarborWW_06272010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(483,4,'BarHarborWW_06302010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(484,4,'BarHarborWW_07012010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(485,4,'BarHarborWW_07032010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(486,4,'BarHarborWW_07062010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(487,4,'BarHarborWW_07152010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(488,4,'BarHarborWW_07172010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(489,4,'BarHarborWW_07202010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(490,4,'BarHarborWW_07222010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(491,4,'BarHarborWW_07232010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(492,4,'BarHarborWW_07242010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(493,4,'BarHarborWW_07272010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(494,4,'BarHarborWW_07302010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(495,4,'BarHarborWW_07312010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),	
+	(496,4,'BarHarborWW_08032010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(497,4,'BarHarborWW_08062010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(498,4,'BarHarborWW_08072010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(499,4,'BarHarborWW_08102010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(500,4,'BarHarborWW_08112010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(501,4,'BarHarborWW_08122010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(502,4,'BarHarborWW_08132010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(503,4,'BarHarborWW_08142010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(504,4,'BarHarborWW_08182010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(505,4,'BarHarborWW_08192010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(506,4,'BarHarborWW_08212010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(507,4,'BarHarborWW_08242010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(508,4,'BarHarborWW_08262010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(509,4,'BarHarborWW_08282010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(510,4,'BarHarborWW_09062010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(511,4,'BarHarborWW_09092010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(512,4,'BarHarborWW_09102010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(513,4,'BarHarborWW_09112010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),							
+	(514,4,'BarHarborWW_09122010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(515,4,'BarHarborWW_09182010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(516,4,'BarHarborWW_09192010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(517,4,'BarHarborWW_09242010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(518,4,'BarHarborWW_09252010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(519,4,'BarHarborWW_10032010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(520,4,'BarHarborWW_10082010','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(521,4,'BarHarborWW_10102010','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),	
+	(522,4,'BarHarborWW_10112010','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL),
+	(523,4,'BarHarborWW_10122010','b','cts','ot',NULL,NULL,9,'no',NULL,33,'USFWS',NULL,1,NULL);
 
---  (4XX,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
---  (4XX,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
+
+--  (5XX,21,'BIWF_offshore_passive_bat_acoustic_surveys','p','cbc','og',30,30,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
+--  (5XX,21,'BIWF_offshore_active_bat_acoustic_surveys','d','cbc','og',NULL,NULL,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL);
 --	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2018','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
---	(,2,'AMAPPS_NOAA/NMFS_NEFSCBoat2019','b','cts','ot',300,300,9,'yes','yes',52,'BOEM,USFWS,NOAA,NAVY',NULL,1,NULL),
 
 -- (dataset_id, parent_project, dataset_name, survey_type_cd, survey_method_cd, dataset_type_cd, whole_survey_width_m, individual_observer_survey_width_m,
 --	share_level_id, in_database, pooled_observations, responsible_party,sponsors,planned_speed_knots,version_nb,platform_name_id)
@@ -1764,8 +1863,9 @@ where dataset_id in (115,148,168,157,114,124,152,125,155,126,156,127,151,128,150
 --
 update dataset
 set
-parent_project = 26
-where dataset_id = 91
+share_level_id = 5,
+in_database = 'yes'
+where dataset_id in (166,167)
 */
 
 -- select * from dataset order by share_level_id
@@ -2130,14 +2230,27 @@ INSERT INTO progress_table(
 	(414,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),	
 	(415,0,'GOMCES','requested',CAST('2018-05-01' as date),'KC',0,0,1,NULL),
 	--( ,9,'BIWF_onshore_sea_watch_avian_surveys','needs QA/QC',NULL,'KC',1,0,0,'this will need reformating'),
-	(166,9,'BarHarborWW09','needs QA/QC',NULL,'KC',1,0,0,NULL),
-	(167,9,'BarHarborWW010','needs QA/QC',NULL,'KC',1,0,0,NULL),
 	(431,0,'BOEMNanoTag_2014','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL),
 	(432,0,'BOEMNanoTag_2015','requested',cast('2018-10-24' as date),'KC',0,0,0,NULL),
 	(433,9,'EcoMon_Nov2018_HS1801','received',cast('2018-12-18' as date),'KC',1,1,1,'need effort table'),
-	(396,9,'AMAPPS_FWS_Aerial_summer2018','QA/QC started',cast('2018-12-18' as date),'KC',1,1,0,NULL),
-	(417,9,'AMAPPS_FWS_Aerial_fall2018','QA/QC started',cast('2018-12-18' as date),'KC',1,1,0,NULL);
-	
+	(437,9,'BarHarborWW_07012009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(438,9,'BarHarborWW_07022009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(439,9,'BarHarborWW_07052009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(440,9,'BarHarborWW_07062009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(441,9,'BarHarborWW_07092009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(442,9,'BarHarborWW_07102009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(443,9,'BarHarborWW_07132009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(444,9,'BarHarborWW_07142009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(445,9,'BarHarborWW_07152009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(446,9,'BarHarborWW_07192009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(447,9,'BarHarborWW_07202009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(448,9,'BarHarborWW_07252009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(449,9,'BarHarborWW_07312009','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(520,9,'BarHarborWW_10082010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(521,9,'BarHarborWW_10102010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),	
+	(522,9,'BarHarborWW_10112010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(523,9,'BarHarborWW_10122010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL);
+
 --  dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
 --  data_acquired, metadata_acquired, report_acquired, additional_info)
 
@@ -2151,7 +2264,7 @@ INSERT INTO progress_table(
 /*
 -- remove dataset that was uploaded
 delete from progress_table
-where dataset_id in (416)
+where dataset_id in (166,167,396,417)
 */
 
 /* select progress table script template */ 
