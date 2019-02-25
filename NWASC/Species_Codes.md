@@ -415,7 +415,7 @@ NAWA|--|Nashville Warbler|Vermivora|ruficapilla|178861
 NHOW|--|Northern Hawk Owl|Surnia|ulula|177898
 NOBO|--|Northern Bobwhite|Colinus|virginianus|175863
 NOCA|--|Northern Cardinal|Cardinalis|cardinalis|179124
-NOFL|--|Northern Flicker|Colaptes|auratus|178154
+NOFL|Yellow-shafted and red-shafted|Northern Flicker|Colaptes|auratus|178154
 NOGO|--|Northern Goshawk|Accipiter|gentilis|175300
 NOHA|--|Northern Harrier|Circus|cyaneus|175430
 NOMO|--|Northern Mockingbird|Mimus|polyglottos|178620
