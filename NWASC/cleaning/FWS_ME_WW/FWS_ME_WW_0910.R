@@ -89,6 +89,7 @@ data = data %>%
   rename(date2 = date,
          unknown_time = time) %>% 
   mutate(year = ifelse(year %in% 0009, 2009, year),
+         year = ifelse(year %in% 2008, 2009, year),
          date = NA,
          date = ifelse(is.na(date2),
                        as.character(as.POSIXct(paste(year, month, day, sep ="-"), format = '%Y-%m-%d')), 
@@ -114,6 +115,9 @@ data = data %>%
 
 
 rm(Aug09A, Aug09B, Aug10, Jun09, Jun10, Jul10, Oct09, Oct10, Sep09, Sep10)
+
+# there are issues with duplicated data
+data = data[!duplicated(data),]
 #---------------------#
 
 
@@ -170,7 +174,7 @@ data$species[data$species %in% "SPSP"] = "SPSA" # spotted sandpiper
 data$species[data$species %in% "SPPL"] = "SEPL" # semipalmated plover 
 
 # need to add code
-# "WCPE" white chinned petrel 
+# "WCPE" white chinned petrel added
 
 # filter odd rows out (NAs and extra headers)
 data = data %>% filter(!species %in% c(NA, "species"))
@@ -178,48 +182,68 @@ data = data %>% filter(!species %in% c(NA, "species"))
 
 
 #---------------------#
+# address long/long errors
+#---------------------#
+data = mutate(data, 
+              lat = ifelse(lat %in% "0", NA, lat), 
+              long = ifelse(long %in% "0", NA, long))
+#---------------------#
+
+
+#---------------------#
+# add seat
+#---------------------#
+data = mutate(data, seat = NA,
+              seat = sapply(strsplit(boat, "-"), tail, 1),
+              seat = ifelse(seat %in% c("STAR", "STARB"), "starboard", seat),
+              seat = ifelse(seat %in% c("na","0","FV"), NA, seat),
+              seat = tolower(seat))
+
+# add observer id if sorting by observer instead of seat
+data = mutate(data, obs = seat)
+
+# change boats to boat names
+# BO = ?
+# FV = Friendship V
+# AC or ACAT = Atlanticat
+data = mutate(data, 
+              boat = sapply(strsplit(boat, "-"), head, 1),
+              boat = ifelse(boat %in% "FV", "Friendship V", boat),
+              boat = ifelse(boat %in% c("AC","ACAT"), "AtlantiCat", boat))
+#---------------------#
+
+
+#---------------------#
 # group by cruise for different survey numbers
-#---------------------#
-#data %>% group_by(group, boat, date, trip) %>% summarise(n=n())
-data = data %>% group_by(group, boat, date, trip) %>% 
-  mutate(key = paste(group, date, boat, trip, sep="_"))
-#---------------------#
-
-
-#---------------------#
 # fix transects
 #---------------------#
-data = data %>% arrange(key, seconds_from_midnight, time) %>% mutate(index = seq(1:length(species)))
+#data %>% group_by(group, boat, date, trip) %>% summarise(n=n())
+data = data %>% 
+  mutate(trip = ifelse(trip %in% 0, NA, trip),
+         key = paste(group, date, boat, seat, trip, transect, sep="_")) %>% 
+  arrange(date, key, seconds_from_midnight, time) %>% 
+  group_by(key) %>% 
+  mutate(index = seq(1:length(species)))
 
 key.list = sort(unique(data$key))
 
 for (a in 1:length(key.list)) {
   y = data[data$key %in% key.list[a],]
-  # ggplot(y, aes(long, lat, col = as.character(transect)))+ geom_point() + 
-  #   geom_point(data = y[y$species %in% "BEGCNT",],aes(long, lat), size = 3, col="darkgreen",pch=6)+
-  #   geom_point(data = y[y$species %in% "ENDCNT",],aes(long, lat), size = 3, col="red",pch=7)+
-  #   theme_bw()
-  
-  # investigate transects that have an off # of BEG/END
-  yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% 
-    group_by(transect) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+  yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
   
   if(dim(yy)[1]>0) {
-    for(b in 1:length(yy$transect)){
-      x = y[y$transect %in% yy$transect[b],] %>% arrange(seconds_from_midnight, time)
+      x = y %>% arrange(seconds_from_midnight, time, index)
       xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
-      
-      # ggplot(x, aes(long, lat, col = as.character(transect)))+ geom_point() + 
-      #   geom_point(data = xx[xx$species %in% "BEGCNT",],aes(long, lat), size = 3, col="darkgreen",pch=6)+
-      #   geom_point(data = xx[xx$species %in% "ENDCNT",],aes(long, lat), size = 3, col="red",pch=7)+
-      #   theme_bw()
-      
+
       # edits based on observations above
       if(all(!xx$species %in% "BEGCNT" & dim(xx)[1] %in% 1)){
         to.add = x[1,]
         to.add = mutate(to.add, 
                         species = "BEGCNT", 
                         comments = "ADDED BEGCNT since one was missing",
+                        age = NA, 
+                        original.spp.codes = NA, 
+                        count = NA, 
                         index = index-0.1)
         data = rbind(data, to.add)
         cat("Added BEGCNT to transect\n")
@@ -231,16 +255,23 @@ for (a in 1:length(key.list)) {
         to.add = mutate(to.add, 
                         species = "ENDCNT", 
                         comments = "ADDED ENDCNT since one was missing",
+                        age = NA, 
+                        original.spp.codes = NA, 
+                        count = NA, 
                         index = index+0.1)
         data = rbind(data, to.add)
         cat("Added ENDCNT to transect\n")
         rm(to.add)
       }
+      
       if(all(length(xx$species[xx$species %in% "BEGCNT"])>length(xx$species[xx$species %in% "ENDCNT"]) & dim(xx)[1] > 1 & dim(xx)[1] < 4)){
         to.add = x[which(x$species %in% "BEGCNT")[2]-1,]
         to.add = mutate(to.add, 
                         species = "ENDCNT", 
                         comments = "ADDED ENDCNT since one was missing",
+                        age = NA, 
+                        original.spp.codes = NA, 
+                        count = NA, 
                         index = index-0,1)
         data = rbind(data, to.add)
         cat("Added ENDCNT to transect\n")
@@ -252,16 +283,23 @@ for (a in 1:length(key.list)) {
         to.add = mutate(to.add, 
                         species = "BEGCNT", 
                         comments = "ADDED BEGCNT since one was missing",
+                        age = NA, 
+                        original.spp.codes = NA, 
+                        count = NA, 
                         index = index-0.1)
         data = rbind(data, to.add)
         cat("Added BEGCNT to transect\n")
         rm(to.add)
       }
+      
       if(all(length(xx$species[xx$species %in% "ENDCNT"])>length(xx$species[xx$species %in% "BEGCNT"]) & dim(xx)[1] > 1 & !xx$species[1] %in% "BEGCNT")){  
         to.add = x[1,]
         to.add = mutate(to.add, 
                         species = "BEGCNT", 
                         comments = "ADDED BEGCNT since one was missing",
+                        age = NA, 
+                        original.spp.codes = NA, 
+                        count = NA, 
                         index = index-0.1)
         data = rbind(data, to.add)
         cat("Added BEGCNT to transect\n")
@@ -283,32 +321,52 @@ data %>% filter(species %in% c("BEGCNT","ENDCNT")) %>%
 # ungroup
 data = as.data.frame(data)
 
+# check for transects that don't have either a BEG or END
+
+#effort.list = data %>% filter(species %in% "ENDCNT") %>% group_by(key) %>% summarise(first(key))
+#key.list[!key.list %in% effort.list$key]; rm(effort.list)
+
+x = data[data$key %in% "Aug09A_2009-08-06_Friendship V_starboard_3",] %>% arrange(seconds_from_midnight, time, index)
+to.add = x[1,]
+to.add = mutate(to.add, 
+                species = "BEGCNT", 
+                comments = "ADDED BEGCNT since one was missing",
+                age = NA, 
+                original.spp.codes = NA, 
+                count = NA, 
+                index = index-0.1)
+to.add2 = x[dim(x)[1],]
+to.add2 = mutate(to.add2, 
+                species = "ENDCNT", 
+                comments = "ADDED ENDCNT since one was missing",
+                age = NA, 
+                original.spp.codes = NA, 
+                count = NA, 
+                index = index+0.1)
+data = rbind(data, to.add, to.add2)
+cat("Added BEGCNT and ENDCNT to transect\n")
+rm(to.add, to.add2, x)
+
+# check that every BEG has an END after it 
+# and every END has a BEG before it
+test.set = data %>% 
+  filter(species %in% c("BEGCNT","ENDCNT")) %>% 
+  arrange(seconds_from_midnight, time, index) 
+test = cbind(test.set$key[1:dim(test.set)[1]-1], 
+             test.set$key[2:dim(test.set)[1]],
+             test.set$species[1:dim(test.set)[1]-1], 
+             test.set$species[2:dim(test.set)[1]]) %>% 
+  as.data.frame()
+names(test) = c("key1","key2","starts","stops")
+test %>% rowwise() %>% filter(key1 %in% key2, starts %in% stops)
+
+"Jun09_2009-06-17_Friendship V_NA_NA"        
+"Sep09_2009-09-20_AtlantiCat_port_2"    
+
 # add original transect column with trip + transect
 data = mutate(data, source_transect = paste("trip_", trip, "_transect_", transect, sep=""))
 #---------------------#
 
-
-#---------------------#
-# add seat
-#---------------------#
-data = mutate(data, seat = NA,
-              seat = sapply(strsplit(boat, "-"), tail, 1),
-              seat = ifelse(seat %in% c("STAR", "STARB"), "starboard", seat),
-              seat = ifelse(seat %in% c("na","0","FV"), NA, seat),
-              seat = tolower(seat))
-
-# add observer id if sorting by observer instead of seat
-data = mutate(data, obs = seat)
-#---------------------#
-
-
-#---------------------#
-# address long/long errors
-#---------------------#
-data = mutate(data, 
-              lat = ifelse(lat %in% "0", NA, lat), 
-              long = ifelse(long %in% "0", NA, long))
-#---------------------#
 
 
 #---------------------#
@@ -360,14 +418,6 @@ data = mutate(data,
 #---------------------#
 # summarise effort
 #---------------------#
-# since no offline data, can just grab first and last in group for BEG/END
-effort = (date, seat, trip, transect)
-#---------------------#
-
-
-#---------------------#
-# export
-#---------------------#
 # assign dataset id + name
 data = mutate(data, dataset_name = paste("BarHarborWW", 
                                          format(as.Date(date, format = "%Y-%m-%d"), "%m%d%Y"),
@@ -379,7 +429,31 @@ dbDisconnect(db)
 
 data = left_join(data, select(datalist, dataset_name, dataset_id), by = "dataset_name")
 
+
+# since no offline data, can just grab first and last in group for BEG/END
+effort = data %>% 
+  filter(species %in% c("BEGCNT","ENDCNT")) %>% 
+  group_by(dataset_id, dataset_name) %>%
+  summarise(start_dt = first(date),
+            end_dt = last(date),
+            start_time = first(time),
+            end_time = last(time),
+            start_species = first(species),
+            end_species = last(species))
+
+"BarHarborWW_06302009" 
+"BarHarborWW_06132009" 
+"BarHarborWW_10112009" 
+"BarHarborWW_07222010" 
+"BarHarborWW_08092009"
+
+
+#---------------------#
+
+
+#---------------------#
 # export
+#---------------------#
 data = select(data, -'1', -unknown_time, -trip, -transect, -type, -boat, -key)
   
 write.csv(data, file = paste(dir.out, "data.csv", sep="/"), row.names=FALSE)
