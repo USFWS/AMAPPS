@@ -26,7 +26,7 @@ dir.out = "//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/FWS_M
 #---------------------#
 # load data
 #---------------------#
-filenames = list.files(dir.in, full.names=TRUE)
+filenames = list.files(dir.in, full.names=TRUE, pattern = "xls$")
 #lapply(filenames, function(i) {read_excel(i)}) # formats are not the same
 Jun09 = read_excel(filenames[1]) %>% mutate(group = "Jun09")
 Oct09 = read_excel(filenames[2]) %>% mutate(group = "Oct09")
@@ -42,7 +42,8 @@ effort = read_excel(filenames[11])
 
 # add column names
 tmp_name = Jun09[0,] %>% 
-  rename(date = year) %>% select(-month,-day,-group) %>% 
+  rename(date = year) %>% 
+  select(-month,-day,-group) %>% 
   mutate(timeB = NA, timeC = NA, group=NA)
 names(Jul10) = names(tmp_name)
 names(Jun10) = names(tmp_name)
@@ -104,10 +105,16 @@ data = data %>%
          age = ifelse(age %in% "I", "immature", age),
          age = ifelse(age %in% c("MIX","MIXED"), "mixed", age),
          age = ifelse(age %in% c("1822", "L","M","H","HH","VAR"), NA, age)) %>% 
-  rename(condition = cond, seastate = sea, wind_dir = w_dir, 
-         wind_knots = w_KT, transect = trans, visibility = view, 
-         seconds_from_midnight = sec_af_mid, count = num, comments = notes) %>% 
-  select(-date2, -year, -month, -day, -timeB, -timeC, -ht, -loc, -act, -WX, -'..17', -'..19') 
+  rename(condition = cond, 
+         seastate = sea, 
+         wind_dir = w_dir, 
+         wind_knots = w_KT, 
+         transect = trans, 
+         visibility = view, 
+         seconds_from_midnight = sec_af_mid, 
+         count = num, 
+         comments = notes) #%>% 
+ # select(-date2, -year, -month, -day, -timeB, -timeC, -ht, -loc, -act, -WX, -'..17', -'..19') 
 
          # not sure what ht, loc, and act are so removing for now
          # loc could be offline?
@@ -118,6 +125,61 @@ rm(Aug09A, Aug09B, Aug10, Jun09, Jun10, Jul10, Oct09, Oct10, Sep09, Sep10)
 
 # there are issues with duplicated data
 data = data[!duplicated(data),]
+
+# Code 3. Observation Conditions (75)
+# 1 = Bad (general observations only)
+# 2 = Poor (no quantitative analysis)
+# 3 = Fair
+# 4 = Average
+# 5 = Good
+# 6 = Excellent
+# 7 = Maximum
+data = data %>% 
+  mutate(condition = replace(condition, condition %in% 7, "Best conditions"),
+         condition = replace(condition, condition %in% 6, "Excellent"),
+         condition = replace(condition, condition %in% 5, "Good"),
+         condition = replace(condition, condition %in% 4, "Average"),
+         condition = replace(condition, condition %in% 3, "Fair"),
+         condition = replace(condition, condition %in% 2, "Poor"))
+
+# Code 5. Sea State (49)
+# 0 = Calm
+# 1 = Rippled (0.0 1-0.25 ft)
+# 2 = Wavelet (0.26-2.0 ft)
+# 3 = Slight (2-4 ft)
+# 4 = Moderate (4-8 ft)
+# 5 = Rough (8-13 ft)
+# 6 = Very rough (13-20 ft)
+# 7 = High (20-30 ft)
+# 8 = Over 30 ft			
+data = data %>% 
+  mutate(seastate = replace(seastate, seastate %in% 0, "Calm"),
+         seastate = replace(seastate, seastate %in% 1, "Rippled (0.0 1-0.25 ft)"),
+         seastate = replace(seastate, seastate %in% 2, "Wavelet (0.26-2.0 ft)"),
+         seastate = replace(seastate, seastate %in% 3, "Slight (2-4 ft)"),
+         seastate = replace(seastate, seastate %in% 4, "Moderate (4-8 ft)"))
+         
+# Code 6. Weather (55-56)		
+# 00 = Clear to partly cloudy (0-50% cloud cover)
+# 03 = Cloudy to overcast (51-100% cloud cover)	
+# 41 = Fog (patchy)			
+# 43 = Fog (solid)			
+# 68 = Rain			
+# 71 = Snow			
+# 87 = Hail
+data = data %>% 
+  mutate(weather = WX, 
+         weather = replace(weather, weather %in% 0, "Clear to partly cloudy (0-50% cloud cover)"),
+         weather = replace(weather, weather %in% 3, "Cloudy to overcast (51-100% cloud cover)"),
+         weather = replace(weather, weather %in% 41, "Fog (patchy)"),
+         weather = replace(weather, weather %in% 43, "Fog (solid)"),
+         weather = replace(weather, weather %in% 68, "Rain"),
+         weather = replace(weather, weather %in% c(1,2), NA))
+# not sure what 1 or 2 are probably typos? Or conversions are not listed
+
+
+
+         
 #---------------------#
 
 
@@ -178,6 +240,51 @@ data$species[data$species %in% "SPPL"] = "SEPL" # semipalmated plover
 
 # filter odd rows out (NAs and extra headers)
 data = data %>% filter(!species %in% c(NA, "species"))
+
+# behavior = action (act)
+# Code 17. Bird Behavior (56-57)
+# 00 = Undetermined
+# 01 = Sitting on water
+# 10 = Sitting on floating object
+# 15 = Sitting on land
+# 20 = Flying in direct & consistent heading
+# 29 = Flying, height variable
+# 31 = Flying, circling ship
+# 32 = Flying, following ship
+# 34 = Flying, being pirated
+# 35 = Flying, milling or circling (foraging)
+# 48 = Flying, meandering
+# 61 = Feeding at or near surface while flying (dipping or pattering)
+# 65 = Feeding at surface (scavenging)
+# 66 = Feeding at or near surface, not diving or flying (surface seizing)
+# 70 = Feeding below surface (pursuit diving)
+# 71 = Feeding below surface (plunge diving)
+# 82 = Feeding above surface (pirating)
+# 90 = Courtship display
+# 98 = Dead
+# 
+# Code 18. Mammal Behavior (56-57)
+# 00 = Undetermined
+# 01 = Leaping
+# 02 = Feeding
+# 03 = Mother with young
+# 04 = Synchronous diving
+# 05 = Bow riding
+# 06 = Porpoising
+# 07 = Hauled out
+# 08 = Sleeping
+# 09 = Avoidance
+# 14 = Curious/following
+# 15 = Cetacea/pinniped association
+# 16 = Pinniped/bird association
+# 17 = Cetacea/bird association
+# 18 = Breeding/copulation
+# 19 = Moribund/dead
+
+#data = mutate(data, 
+#              species_type = ifelse(species %in% spplist$spp[spplist$species_type_id %in% 2,"marinemammal",ifelse(species %in% spplist$spp[spplist$species_type_id %in% c(1,8),"bird",NA)))#s,
+#              act = ifelse(act %in%, ,)))
+
 #---------------------#
 
 
@@ -217,6 +324,10 @@ data = mutate(data,
 # group by cruise for different survey numbers
 # fix transects
 #---------------------#
+# remove general observations and station counts from transects
+data = mutate(data, transect = ifelse(type %in% c(1,7), NA, transect),
+              species = ifelse(type %in% c(1,7) & species %in% c("BEGCNT", "ENDCNT"), "COMMENT", species))
+
 #data %>% group_by(group, boat, date, trip) %>% summarise(n=n())
 data = data %>% 
   mutate(trip = ifelse(trip %in% 0, NA, trip),
@@ -227,6 +338,11 @@ data = data %>%
 
 key.list = sort(unique(data$key))
 
+# one transect with >4 beg/ends
+data$species[data$key %in% "Jun09_2009-06-30_Friendship V_NA_NA_2" & data$species %in% "BEGCNT"][3]="delete"
+data = filter(data, !species %in% "delete")
+
+# fix others
 for (a in 1:length(key.list)) {
   y = data[data$key %in% key.list[a],]
   yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
@@ -236,6 +352,8 @@ for (a in 1:length(key.list)) {
       xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
 
       # edits based on observations above
+      
+      # transect only has one ENDCNT and is missing BEGCNT
       if(all(!xx$species %in% "BEGCNT" & dim(xx)[1] %in% 1)){
         to.add = x[1,]
         to.add = mutate(to.add, 
@@ -248,8 +366,13 @@ for (a in 1:length(key.list)) {
         data = rbind(data, to.add)
         cat("Added BEGCNT to transect\n")
         rm(to.add)
+        y = data[data$key %in% key.list[a],]
+        yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+        x = y %>% arrange(seconds_from_midnight, time, index)
+        xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
         }
                        
+      # transect only has one BEGCNT and is missing ENDCNT
       if(all(!xx$species %in% "ENDCNT" & dim(xx)[1] %in% 1)){  
         to.add = x[dim(x)[1],]
         to.add = mutate(to.add, 
@@ -262,36 +385,13 @@ for (a in 1:length(key.list)) {
         data = rbind(data, to.add)
         cat("Added ENDCNT to transect\n")
         rm(to.add)
+        y = data[data$key %in% key.list[a],]
+        yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+        x = y %>% arrange(seconds_from_midnight, time, index)
+        xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
       }
       
-      if(all(length(xx$species[xx$species %in% "BEGCNT"])>length(xx$species[xx$species %in% "ENDCNT"]) & dim(xx)[1] > 1 & dim(xx)[1] < 4)){
-        to.add = x[which(x$species %in% "BEGCNT")[2]-1,]
-        to.add = mutate(to.add, 
-                        species = "ENDCNT", 
-                        comments = "ADDED ENDCNT since one was missing",
-                        age = NA, 
-                        original.spp.codes = NA, 
-                        count = NA, 
-                        index = index-0,1)
-        data = rbind(data, to.add)
-        cat("Added ENDCNT to transect\n")
-        rm(to.add)
-      }
-      
-      if(all(length(xx$species[xx$species %in% "ENDCNT"])>length(xx$species[xx$species %in% "BEGCNT"]) & dim(xx)[1] > 1 & dim(xx)[1] < 4 & xx$species[1] %in% "BEGCNT")){  
-        to.add = x[which(x$species %in% "ENDCNT")[1]+1,]
-        to.add = mutate(to.add, 
-                        species = "BEGCNT", 
-                        comments = "ADDED BEGCNT since one was missing",
-                        age = NA, 
-                        original.spp.codes = NA, 
-                        count = NA, 
-                        index = index-0.1)
-        data = rbind(data, to.add)
-        cat("Added BEGCNT to transect\n")
-        rm(to.add)
-      }
-      
+      # transect has more ENDCNTs than BEGCNTs and is missing first BEGCNT
       if(all(length(xx$species[xx$species %in% "ENDCNT"])>length(xx$species[xx$species %in% "BEGCNT"]) & dim(xx)[1] > 1 & !xx$species[1] %in% "BEGCNT")){  
         to.add = x[1,]
         to.add = mutate(to.add, 
@@ -304,19 +404,79 @@ for (a in 1:length(key.list)) {
         data = rbind(data, to.add)
         cat("Added BEGCNT to transect\n")
         rm(to.add)
+        y = data[data$key %in% key.list[a],]
+        yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+        x = y %>% arrange(seconds_from_midnight, time, index)
+        xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
+      }
+      
+      
+      # transect has more BEGCNTs than ENDCNTs and is missing last ENDCNT
+      if(all(length(xx$species[xx$species %in% "BEGCNT"])>length(xx$species[xx$species %in% "ENDCNT"]) & dim(xx)[1] > 1 & !xx$species[length(xx$species)] %in% "ENDCNT")){  
+        to.add = x[length(x$species),]
+        to.add = mutate(to.add, 
+                        species = "ENDCNT", 
+                        comments = "ADDED ENDCNT since one was missing",
+                        age = NA, 
+                        original.spp.codes = NA, 
+                        count = NA, 
+                        index = index+0.1)
+        data = rbind(data, to.add)
+        cat("Added BEGCNT to transect\n")
+        rm(to.add)
+        y = data[data$key %in% key.list[a],]
+        yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+        x = y %>% arrange(seconds_from_midnight, time, index)
+        xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
+      }
+      
+      # transect has more BEGCNTs than ENDCNTs
+      if(all(length(xx$species[xx$species %in% "BEGCNT"])>length(xx$species[xx$species %in% "ENDCNT"]) & dim(xx)[1] > 1 & dim(xx)[1] < 4)){
+        to.add = x[which(x$species %in% "BEGCNT")[2]-1,]
+        to.add = mutate(to.add, 
+                        species = "ENDCNT", 
+                        comments = "ADDED ENDCNT since one was missing",
+                        age = NA, 
+                        original.spp.codes = NA, 
+                        count = NA, 
+                        index = index-0,1)
+        data = rbind(data, to.add)
+        cat("Added ENDCNT to transect\n")
+        rm(to.add)
+        y = data[data$key %in% key.list[a],]
+        yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+        x = y %>% arrange(seconds_from_midnight, time, index)
+        xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
+      }
+      
+      # transect has more ENDCNTs than BEGCNTs
+      if(all(length(xx$species[xx$species %in% "ENDCNT"])>length(xx$species[xx$species %in% "BEGCNT"]) & dim(xx)[1] > 1 & dim(xx)[1] < 4 & xx$species[1] %in% "BEGCNT")){  
+        to.add = x[which(x$species %in% "ENDCNT")[1]+1,]
+        to.add = mutate(to.add, 
+                        species = "BEGCNT", 
+                        comments = "ADDED BEGCNT since one was missing",
+                        age = NA, 
+                        original.spp.codes = NA, 
+                        count = NA, 
+                        index = index-0.1)
+        data = rbind(data, to.add)
+        cat("Added BEGCNT to transect\n")
+        rm(to.add)
+        y = data[data$key %in% key.list[a],]
+        yy = y %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+        x = y %>% arrange(seconds_from_midnight, time, index)
+        xx = x[x$species %in% c("BEGCNT","ENDCNT"),]
       }
       
     }
   }
-}
 
-# one transect with >4 beg/ends
-data$species[data$key %in% "Jun09_2009-06-30_FV_NA" & data$transect %in% 2 & data$species %in% "BEGCNT"][3]="delete"
-data = filter(data, !species %in% "delete")
+
+
 
 # double check 
 data %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% 
-  group_by(transect) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
+  group_by(key, transect) %>% summarise(n=n()) %>% filter(n %% 2 != 0)
 
 # ungroup
 data = as.data.frame(data)
@@ -326,7 +486,8 @@ data = as.data.frame(data)
 #effort.list = data %>% filter(species %in% "ENDCNT") %>% group_by(key) %>% summarise(first(key))
 #key.list[!key.list %in% effort.list$key]; rm(effort.list)
 
-x = data[data$key %in% "Aug09A_2009-08-06_Friendship V_starboard_3",] %>% arrange(seconds_from_midnight, time, index)
+x = data[data$key %in% "Aug09A_2009-08-06_Friendship V_starboard_3",] %>% 
+  arrange(seconds_from_midnight, time, index)
 to.add = x[1,]
 to.add = mutate(to.add, 
                 species = "BEGCNT", 
@@ -347,6 +508,32 @@ data = rbind(data, to.add, to.add2)
 cat("Added BEGCNT and ENDCNT to transect\n")
 rm(to.add, to.add2, x)
 
+
+x = data[data$key %in% "Jun09_2009-06-13_Friendship V_NA_NA_5",] %>% 
+  arrange(seconds_from_midnight, time, index)
+to.add = x[1,]
+to.add = mutate(to.add, 
+                species = "BEGCNT", 
+                comments = "ADDED BEGCNT since one was missing",
+                age = NA, 
+                original.spp.codes = NA, 
+                count = NA, 
+                index = index-0.1)
+to.add2 = x[dim(x)[1],]
+to.add2 = mutate(to.add2, 
+                 species = "ENDCNT", 
+                 comments = "ADDED ENDCNT since one was missing",
+                 age = NA, 
+                 original.spp.codes = NA, 
+                 count = NA, 
+                 index = index+0.1)
+data = rbind(data, to.add, to.add2)
+cat("Added BEGCNT and ENDCNT to transect\n")
+rm(to.add, to.add2, x)
+
+# error BEGCNTs added
+data = filter(data, !is.na(key))
+
 # check that every BEG has an END after it 
 # and every END has a BEG before it
 test.set = data %>% 
@@ -359,9 +546,6 @@ test = cbind(test.set$key[1:dim(test.set)[1]-1],
   as.data.frame()
 names(test) = c("key1","key2","starts","stops")
 test %>% rowwise() %>% filter(key1 %in% key2, starts %in% stops)
-
-"Jun09_2009-06-17_Friendship V_NA_NA"        
-"Sep09_2009-09-20_AtlantiCat_port_2"    
 
 # add original transect column with trip + transect
 data = mutate(data, source_transect = paste("trip_", trip, "_transect_", transect, sep=""))
@@ -441,11 +625,16 @@ effort = data %>%
             start_species = first(species),
             end_species = last(species))
 
-"BarHarborWW_06302009" 
-"BarHarborWW_06132009" 
-"BarHarborWW_10112009" 
-"BarHarborWW_07222010" 
-"BarHarborWW_08092009"
+
+
+#"BarHarborWW_06302009" -> a mess
+#"BarHarborWW_08092009" -> Aug09A_2009-08-09_Friendship V_starboard_2_3
+#"BarHarborWW_08252009" 
+"BarHarborWW_08272009" #-> trip 1 transect 3+6 missing BEG
+"BarHarborWW_10102009" 
+"BarHarborWW_10112009"
+"BarHarborWW_09102010" 
+"BarHarborWW_NA" 
 
 
 #---------------------#
