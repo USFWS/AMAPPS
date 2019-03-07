@@ -113,10 +113,10 @@ data = data %>%
          visibility = view, 
          seconds_from_midnight = sec_af_mid, 
          count = num, 
-         comments = notes) #%>% 
- # select(-date2, -year, -month, -day, -timeB, -timeC, -ht, -loc, -act, -WX, -'..17', -'..19') 
+         comments = notes) %>% 
+  select(-date2, -year, -month, -day, -timeB, -timeC, -ht, -loc, -'..17', -'..19') 
 
-         # not sure what ht, loc, and act are so removing for now
+         # not sure what ht, loc, ..17, ..19, are so removing for now
          # loc could be offline?
          # ht = ifelse(act %in% "20 H", "H", ht),
 
@@ -233,7 +233,9 @@ data$species[data$species %in% "BASW"] = "BARS"
 data$species[data$species %in% "UNHA"] = "HAWK" # unidentified hawk           
 data$species[data$species %in% "RIDU"] = "RNDU" # ringneck duck?          
 data$species[data$species %in% "SPSP"] = "SPSA" # spotted sandpiper                   
-data$species[data$species %in% "SPPL"] = "SEPL" # semipalmated plover 
+data$species[data$species %in% "SPPL"] = "SEPL" # semipalmated plover
+data$species[data$species %in% "UNSW"] = "UNBI" # not unidentified small whale code - unidentified bird
+
 
 # need to add code
 # "WCPE" white chinned petrel added
@@ -281,10 +283,57 @@ data = data %>% filter(!species %in% c(NA, "species"))
 # 18 = Breeding/copulation
 # 19 = Moribund/dead
 
-#data = mutate(data, 
-#              species_type = ifelse(species %in% spplist$spp[spplist$species_type_id %in% 2,"marinemammal",ifelse(species %in% spplist$spp[spplist$species_type_id %in% c(1,8),"bird",NA)))#s,
-#              act = ifelse(act %in%, ,)))
-
+# change behavior codes
+data = mutate(data, 
+              species_type = ifelse(species %in% spplist$spp[spplist$species_type_id %in% 2],"marinemammal",
+                                                             ifelse(species %in% spplist$spp[spplist$species_type_id %in% c(1,8)],"bird",NA)),
+              behavior_id = act, 
+              behavior_id = replace(behavior_id, behavior_id %in% "1" & species_type %in% "marinemammal", 18),
+              behavior_id = replace(behavior_id, behavior_id %in% "2" & species_type %in% "marinemammal", 9),
+              behavior_id = replace(behavior_id, behavior_id %in% "6" & species_type %in% "marinemammal", 25),
+              behavior_id = replace(behavior_id, behavior_id %in% "8" & species_type %in% "marinemammal", 32),
+              behavior_id = replace(behavior_id, behavior_id %in% c("3","17") & species_type %in% "marinemammal", 23),
+              behavior_id = replace(behavior_id, behavior_id %in% c("1","o1") & species_type %in% "bird", 37),
+              behavior_id = replace(behavior_id, behavior_id %in% c("10","1o","1O") & species_type %in% "bird", 36),
+              behavior_id = replace(behavior_id, behavior_id %in% "15" & species_type %in% "bird", 35),
+              behavior_id = replace(behavior_id, behavior_id %in% c("20","2o","20 H","29","34","48") & species_type %in% "bird", 13),
+              behavior_id = replace(behavior_id, behavior_id %in% c("31","32") & species_type %in% "bird", 15),
+              behavior_id = replace(behavior_id, behavior_id %in% "35" & species_type %in% "bird", 21),
+              behavior_id = replace(behavior_id, behavior_id %in% c("61","66") & species_type %in% "bird", 9),
+              behavior_id = replace(behavior_id, behavior_id %in% "65" & species_type %in% "bird", 30),
+              behavior_id = replace(behavior_id, behavior_id %in% "71" & species_type %in% "bird", 8),
+              behavior_id = replace(behavior_id, behavior_id %in% "70" & species_type %in% "bird", 7),
+              behavior_id = replace(behavior_id, behavior_id %in% "82" & species_type %in% "bird", 24),
+              behavior_id = replace(behavior_id, behavior_id %in% "90" & species_type %in% "bird", 23),
+              behavior_id = replace(behavior_id, behavior_id %in% "98" & species_type %in% "bird", 6),
+              behavior_id = replace(behavior_id, behavior_id %in% c("L","33","62","72"),44),
+              behavior_id = replace(behavior_id, is.na(behavior_id), 44)) %>%
+  rename(original_behavior_tx = act) %>%
+  mutate(original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "1" & species_type %in% "marinemammal", "Leaping"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "2" & species_type %in% "marinemammal", "Feeding"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "6" & species_type %in% "marinemammal", "Porpoising"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "8" & species_type %in% "marinemammal", "Sleeping"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "3" & species_type %in% "marinemammal", "Mother with young"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "17"& species_type %in% "marinemammal", "Cetacea/bird association"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% c("1","o1") & species_type %in% "bird", "Sitting on water"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% c("10","1o","1O") & species_type %in% "bird", "Sitting on floating object"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "15" & species_type %in% "bird", "Sitting on land"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% c("20","2o","20 H"),"Flying in direct & consistent heading"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "29" & species_type %in% "bird","Flying, height variable"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "34" & species_type %in% "bird","Flying, being pirated"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "48" & species_type %in% "bird", "Flying, meandering"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "31" & species_type %in% "bird"," Flying, circling ship"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "32" & species_type %in% "bird","Flying, following ship"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "35" & species_type %in% "bird","Flying, milling or circling (foraging)"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "61" & species_type %in% "bird","Feeding at or near surface while flying (dipping or pattering)"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "66" & species_type %in% "bird","Feeding at or near surface, not diving or flying (surface seizing)"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "65" & species_type %in% "bird","Feeding at surface (scavenging)"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "71" & species_type %in% "bird","Feeding below surface (plunge diving)"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "70" & species_type %in% "bird","Feeding below surface (pursuit diving)"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "82" & species_type %in% "bird","Feeding above surface (pirating)"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "90" & species_type %in% "bird","Courtship display"),
+         original_behavior_tx = replace(original_behavior_tx, original_behavior_tx %in% "98" & species_type %in% "bird","Dead")) %>% 
+  select(-species_type)
 #---------------------#
 
 
@@ -308,7 +357,12 @@ data = mutate(data, seat = NA,
 
 # add observer id if sorting by observer instead of seat
 data = mutate(data, obs = seat)
+#---------------------#
 
+
+#---------------------#
+# fix boats
+#---------------------#
 # change boats to boat names
 # BO = ?
 # FV = Friendship V
@@ -316,7 +370,66 @@ data = mutate(data, obs = seat)
 data = mutate(data, 
               boat = sapply(strsplit(boat, "-"), head, 1),
               boat = ifelse(boat %in% "FV", "Friendship V", boat),
-              boat = ifelse(boat %in% c("AC","ACAT"), "AtlantiCat", boat))
+              boat = ifelse(boat %in% c("AC","ACAT"), "AtlantiCat", boat),
+              boat = ifelse(boat %in% "BO", "R/V Borealis", boat))
+
+# pull out boat details from comments and re-code
+data = mutate(data, 
+              species = ifelse(species %in% "BOAT" & comments %in% c("LOBSTER NO BIRD","LOBSTER BOAT",
+                                                                     "LOBSTERS NO BIRDS","LOBSTER BEYOND 300",
+                                                                     "LOBSTER NO BIRDS","LOBSTER"), 
+                               "BOLO", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("ACADIAN","ACADIAN NO BIRDS","ACAT"), 
+                               "BOWW", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("BH FERRY","BH FERRY NO BIRDS"), 
+                               "BOFE", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("CLAM DRAGGERS",
+                                                                     "CLAM DRAGGERS NO BIRDS","CLAM TRAWLERS",
+                                                                     "CRAB TRAWLER NO BIRDS","TRAWL NO BIRDS" ,
+                                                                     "TRAWLER NO BIRDS"), 
+                               "BOTD", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("COAST GUARD","COASTGUARD NO BIRDS"), 
+                               "BOCG", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("CRUISE SHIP","SM CRUISE SHIP NO BIRDS",
+                                                                     "NATURE CRUISE NO BIRDS"), 
+                               "BOCR", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("FISHING","FISHING BOAT NO BIRDS",
+                                                                     "FISHING NO BIRDS","TUNA",                                            
+                                                                     "TUNA BOAT NO BIRDS",                              
+                                                                     "TUNA FISHING",                                    
+                                                                     "TUNA FISHING NO BIRDS",                           
+                                                                     "TUNABOAT NO BIRDS"), 
+                               "BOFI", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("GREAT EASTERN TANKER"), 
+                               "BOTA", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("LG PURSE SEINER FAR AWAY 150FT 'WESTERN VENTURE'",
+                                                                     "PURSE NO BIRDS","PURSE SEINER"), 
+                               "BOPS", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("SAIL","SAILBOAT","SAILBOAT NO BIRD",                                
+                                                                     "SAILBOAT NO BIRDS","SAILBOATS"), 
+                               "BOSA", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("YACHT"), 
+                               "BOYA", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("PLEASURE NO BIRDS"), 
+                               "BOPL", species),
+              species = ifelse(species %in% "BOAT" & comments %in% c("KAYAKERS","KAYAKS","KAYAKS NO BIRDS"), 
+                               "BOKA", species))
+#---------------------#
+
+
+#---------------------#
+# assign dataset id + name
+#---------------------#
+data = mutate(data, dataset_name = paste("BarHarborWW", 
+                                         format(as.Date(date, format = "%Y-%m-%d"), "%m%d%Y"),
+                                         sep="_"))
+
+db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
+datalist = dbGetQuery(db,"select * from dataset")
+dbDisconnect(db)
+
+data = left_join(data, select(datalist, dataset_name, dataset_id), by = "dataset_name")
+rm(db, datalist)
 #---------------------#
 
 
@@ -324,9 +437,15 @@ data = mutate(data,
 # group by cruise for different survey numbers
 # fix transects
 #---------------------#
+# define NA type
+data$type[data$date %in% "2009-06-13" & is.na(data$type)] = 9
+
 # remove general observations and station counts from transects
 data = mutate(data, transect = ifelse(type %in% c(1,7), NA, transect),
               species = ifelse(type %in% c(1,7) & species %in% c("BEGCNT", "ENDCNT"), "COMMENT", species))
+
+data_general = filter(data, !type %in% 9)
+data = filter(data, type %in% 9)
 
 #data %>% group_by(group, boat, date, trip) %>% summarise(n=n())
 data = data %>% 
@@ -471,8 +590,7 @@ for (a in 1:length(key.list)) {
     }
   }
 
-
-
+rm(y,yy,x,xx)
 
 # double check 
 data %>% filter(species %in% c("BEGCNT","ENDCNT")) %>% 
@@ -546,6 +664,7 @@ test = cbind(test.set$key[1:dim(test.set)[1]-1],
   as.data.frame()
 names(test) = c("key1","key2","starts","stops")
 test %>% rowwise() %>% filter(key1 %in% key2, starts %in% stops)
+rm(test, test.set)
 
 # add original transect column with trip + transect
 data = mutate(data, source_transect = paste("trip_", trip, "_transect_", transect, sep=""))
@@ -554,96 +673,75 @@ data = mutate(data, source_transect = paste("trip_", trip, "_transect_", transec
 
 
 #---------------------#
-# fix boats
-#---------------------#
-data = mutate(data, 
-              species = ifelse(species %in% "BOAT" & comments %in% c("LOBSTER NO BIRD","LOBSTER BOAT",
-                                                                     "LOBSTERS NO BIRDS","LOBSTER BEYOND 300",
-                                                                     "LOBSTER NO BIRDS","LOBSTER"), 
-                               "BOLO", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("ACADIAN","ACADIAN NO BIRDS","ACAT"), 
-                               "BOWW", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("BH FERRY","BH FERRY NO BIRDS"), 
-                               "BOFE", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("CLAM DRAGGERS",
-                                                                     "CLAM DRAGGERS NO BIRDS","CLAM TRAWLERS",
-                                                                     "CRAB TRAWLER NO BIRDS","TRAWL NO BIRDS" ,
-                                                                     "TRAWLER NO BIRDS"), 
-                               "BOTD", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("COAST GUARD","COASTGUARD NO BIRDS"), 
-                               "BOCG", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("CRUISE SHIP","SM CRUISE SHIP NO BIRDS",
-                                                                     "NATURE CRUISE NO BIRDS"), 
-                               "BOCR", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("FISHING","FISHING BOAT NO BIRDS",
-                                                                     "FISHING NO BIRDS","TUNA",                                            
-                                                                     "TUNA BOAT NO BIRDS",                              
-                                                                     "TUNA FISHING",                                    
-                                                                     "TUNA FISHING NO BIRDS",                           
-                                                                     "TUNABOAT NO BIRDS"), 
-                               "BOFI", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("GREAT EASTERN TANKER"), 
-                               "BOTA", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("LG PURSE SEINER FAR AWAY 150FT 'WESTERN VENTURE'",
-                                                                     "PURSE NO BIRDS","PURSE SEINER"), 
-                               "BOPS", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("SAIL","SAILBOAT","SAILBOAT NO BIRD",                                
-                                                                     "SAILBOAT NO BIRDS","SAILBOATS"), 
-                               "BOSA", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("YACHT"), 
-                               "BOYA", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("PLEASURE NO BIRDS"), 
-                               "BOPL", species),
-              species = ifelse(species %in% "BOAT" & comments %in% c("KAYAKERS","KAYAKS","KAYAKS NO BIRDS"), 
-                               "BOKA", species))
-#---------------------#
-
-
-#---------------------#
 # summarise effort
 #---------------------#
-# assign dataset id + name
-data = mutate(data, dataset_name = paste("BarHarborWW", 
-                                         format(as.Date(date, format = "%Y-%m-%d"), "%m%d%Y"),
-                                         sep="_"))
-
-db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
-datalist = dbGetQuery(db,"select * from dataset")
-dbDisconnect(db)
-
-data = left_join(data, select(datalist, dataset_name, dataset_id), by = "dataset_name")
-
-
-# since no offline data, can just grab first and last in group for BEG/END
+# grab first and last in group for BEG/END
 effort = data %>% 
+  arrange(key, transect, seconds_from_midnight, time) %>%
   filter(species %in% c("BEGCNT","ENDCNT")) %>% 
-  group_by(dataset_id, dataset_name) %>%
+  group_by(dataset_id, dataset_name, source_transect) %>%
   summarise(start_dt = first(date),
             end_dt = last(date),
-            start_time = first(time),
-            end_time = last(time),
+            start_tm = first(time),
+            end_tm = last(time),
             start_species = first(species),
-            end_species = last(species))
+            end_species = last(species),
+            temp_start_lon = first(long),
+            temp_start_lat = first(lat),
+            temp_stop_lon = last(long), 
+            temp_stop_lat = last(lat),
+            time_from_midnight_start = first(seconds_from_midnight),
+            time_from_midnight_stop = last(seconds_from_midnight),
+            source_transect_id = first(source_transect))
 
+# sort(unique(data_general$dataset_name[!data_general$dataset_name %in% effort$dataset_name]))
+# "BarHarborWW_06302009" only has general observations -> changed in dataset table to 'go'
+# add "BarHarborWW_06302009" to effort table using first and last records
+to.add = data_general[data_general$dataset_name %in% "BarHarborWW_06302009",] %>%
+  summarise(start_dt = first(date),
+            end_dt = last(date),
+            start_tm = first(time),
+            end_tm = last(time),
+            start_species = first(species),
+            end_species = last(species),
+            temp_start_lon = first(long),
+            temp_start_lat = first(lat),
+            temp_stop_lon = last(long), 
+            temp_stop_lat = last(lat),
+            time_from_midnight_start = first(seconds_from_midnight),
+            time_from_midnight_stop = last(seconds_from_midnight),
+            source_transect_id = paste("trip", first(trip), "transect", first(transect), sep="_"),
+            dataset_name = "BarHarborWW_06302009",
+            dataset_id = 436)
 
-
-#"BarHarborWW_06302009" -> a mess
-#"BarHarborWW_08092009" -> Aug09A_2009-08-09_Friendship V_starboard_2_3
-#"BarHarborWW_08252009" 
-"BarHarborWW_08272009" #-> trip 1 transect 3+6 missing BEG
-"BarHarborWW_10102009" 
-"BarHarborWW_10112009"
-"BarHarborWW_09102010" 
-"BarHarborWW_NA" 
-
-
+effort = bind_rows(effort, to.add) %>% select(-start_species, -end_species, -source_transect)
+rm(to.add)
 #---------------------#
 
 
 #---------------------#
 # export
 #---------------------#
-data = select(data, -'1', -unknown_time, -trip, -transect, -type, -boat, -key)
+data = bind_rows(data, data_general) %>%
+  select(-'1', -unknown_time, -trip, -transect, -type, -boat, -key, -WX)
+rm(data_general)
+
+data = data %>% rename(spp_cd = species, wave_height_tx = seastate)
   
 write.csv(data, file = paste(dir.out, "data.csv", sep="/"), row.names=FALSE)
+#---------------------#
+
+
+#---------------------#
+# for importing into NWASC one dataset_id at a time
+#---------------------#
+
+source_data = data
+
+#---------------------#
+id = 465
+data = filter(source_data, dataset_id %in% id)
+data_track = filter(data, spp_cd %in% c("BEGCNT","ENDCNT"))
+data_transect = filter(effort, dataset_id %in% id)
+rm(dat, dat_track, dat_transect)
 #---------------------#
