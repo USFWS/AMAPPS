@@ -28,10 +28,10 @@
   # load dataset descriptions
   # ------------------------ #
   db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
-  transects.in.db = sqlQuery(db, paste("select * from transect"))
-  tracks.in.db = sqlQuery(db, paste("select * from track"))
-  obs.in.db = sqlQuery(db, paste("select * from observation"))
-  camera.in.db = sqlQuery(db, paste("select * from camera_effort"))
+  transects.in.db = sqlQuery(db, paste("select top 1 * from transect order by transect_id desc"))
+  tracks.in.db = sqlQuery(db, paste("select top 1 * from track order by track_id desc"))
+  obs.in.db = sqlQuery(db, paste("select top 1 * from observation order by observation_id desc"))
+  camera.in.db = sqlQuery(db, paste("select top 1 * from camera order by camera_id desc"))
   odbcCloseAll()
   
   db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
@@ -87,8 +87,9 @@
   if(any(colnames(data) %in% c("spp","type","speciesid"))) {dat$spp_cd = data[,which(colnames(data) %in% c("spp","type","speciesid"))]}
   if(any(colnames(data) %in% c("original.spp.codes"))) {dat$original_species_tx = data[,which(colnames(data) %in% c("original.spp.codes"))]}
   if(any(colnames(data) %in% c("beaufort"))) {dat$seastate_beaufort_nb = data[,which(colnames(data) %in% c("beaufort"))]}  
-  if(any(colnames(data) %in% c("windspeed","wind.speed"))) {dat$wind_speed_tx = data[,which(colnames(data) %in% c("windspeed","wind.speed"))]}  
-  if(any(colnames(data) %in% c("wind.direction"))) {dat$wind_dir_tx = data[,which(colnames(data) %in% c("wind.direction"))]}  
+  if(any(colnames(data) %in% c("weather"))) {dat$weather_tx = data[,which(colnames(data) %in% c("weather"))]}  
+  if(any(colnames(data) %in% c("windspeed","wind.speed","wind_knots"))) {dat$wind_speed_tx = data[,which(colnames(data) %in% c("windspeed","wind.speed","wind_knots"))]}  
+  if(any(colnames(data) %in% c("wind.direction","wind_dir"))) {dat$wind_dir_tx = data[,which(colnames(data) %in% c("wind.direction","wind_dir"))]}  
   
   if(any(colnames(data) %in% c("index","id"))) {
     if(length(which(colnames(data) %in% c("index","id")))==1){
@@ -97,7 +98,7 @@
     }
   if(all(is.na(dat$source_obs_id))) {dat$source_obs_id = 1:dim(data)[1]}
   
-  if(any(colnames(data) %in% c("transect"))) {dat$source_transect_id = data$transect}
+  if(any(colnames(data) %in% c("transect","source_transect"))) {dat$source_transect_id = data[,which(colnames(data) %in% c("transect","source_transect"))]}
   if(length(dat$source_transect_id)==0 & any(colnames(data) %in% c("offline")) & any(!colnames(data) %in% c("transect"))) {dat$source_transect_id[data$offline==0] = 1}
   if(any(colnames(data) %in% c("date","start_date","gps_date","obs_date","start_dt","gps_dt","obs_dt"))) {
     dat$obs_dt = format(as.Date(data[,which(colnames(data) %in% c("date","start_date","gps_date","obs_date","start_dt","gps_dt","obs_dt"))]),'%m/%d/%Y')}
@@ -112,14 +113,16 @@
     #dat$obs_start_tm[!is.na(data$time)] = format(data$time[!is.na(data$time)], "%I:%M:%S %p") # hours (1-12): min: sec space am/pm
   }
   if(any(colnames(data) %in% c("association"))) {dat$association_tx = data[,which(colnames(data) %in% c("association"))]}
-  if(any(colnames(data) %in% c("behavior","corrected_behavior","behaviordesc"))) {dat$behavior_tx = data[,which(colnames(data) %in% c("behavior","corrected_behavior","behaviordesc"))]}
+  if(any(colnames(data) %in% c("behavior","corrected_behavior","behaviordesc","original_behavior_tx"))) {
+    dat$behavior_tx = data[,which(colnames(data) %in% c("behavior","corrected_behavior","behaviordesc","original_behavior_tx"))]}
   if(any(colnames(data) %in% c("age","approximate_age"))) {dat$animal_age_tx= data[,which(colnames(data) %in% c("age","approximate_age"))]}
   if(any(colnames(data) %in% c("flight_hei","flight_height","heightrange"))) {dat$flight_height_tx = data[,which(colnames(data) %in% c("flight_hei","flight_height","heightrange"))]}
   if(any(colnames(data) %in% c("plumage"))) {dat$plumage_tx = data[,which(colnames(data) %in% c("plumage"))]}
   if(any(colnames(data) %in% c("angle"))) {dat$angle_from_observer_nb = data[,which(colnames(data) %in% c("angle"))]}
   if(any(colnames(data) %in% c("distance","distdesc"))) {dat$distance_to_animal_tx = data[,which(colnames(data) %in% c("distance","distdesc"))]}
   if(any(colnames(data) %in% c("heading"))) {dat$heading_tx = data[,which(colnames(data) %in% c("heading"))]}
-  if(any(colnames(data) %in% c("sec","secs","seconds","time_secs"))) {dat$seconds_from_midnight_nb = data[,which(colnames(data) %in% c("sec","secs","seconds","time_secs"))]}
+  if(any(colnames(data) %in% c("sec","secs","seconds","time_secs","seconds_from_midnight"))) {
+    dat$seconds_from_midnight_nb = data[,which(colnames(data) %in% c("sec","secs","seconds","time_secs","seconds_from_midnight"))]}
   if(any(colnames(data) %in% c("distance_to_animal"))) {dat$distance_to_animal_tx = data[,which(colnames(data) %in% c("distance_to_animal"))]}
   if(any(colnames(data) %in% c("travel_direction"))) {dat$travel_direction_tx = data[,which(colnames(data) %in% c("travel_direction"))]}
   if(any(colnames(data) %in% c("visibility"))) {dat$visibility_tx = data[,which(colnames(data) %in% c("visibility"))]}
@@ -138,6 +141,12 @@
     dat$obs_count_intrans_nb[data$offline == 1] = NA
     dat$obs_count_general_nb = data[,which(colnames(data) %in% c("count","obs_count_general_nb","number","groupsize"))]
     dat$obs_count_general_nb[data$offline %in% 0] = NA  
+  }
+  if(any(is.na(dat$transect))) {
+    dat = as.data.frame(dat)
+    dat$obs_count_intrans_nb[is.na(dat$source_transect_id)] = NA
+    dat$obs_count_general_nb = data[,which(colnames(data) %in% c("count","obs_count_general_nb","number","groupsize"))]
+    dat$obs_count_general_nb[!is.na(dat$source_transect_id)] = NA  
   }
   
   # if behavior ids/ age ids/ sex ids are not done
@@ -260,13 +269,15 @@
     data_track=as.data.frame(data_track)
     if(any(colnames(data_track) %in% c("lon", "longitude", "long"))) {dat_track$track_lon = data_track[,which(colnames(data_track) %in% c("lon", "longitude", "long"))]}
     if(any(colnames(data_track) %in% c("lat", "latitude"))) {dat_track$track_lat = data_track[,which(colnames(data_track) %in% c("lat", "latitude"))]}
-    if(any(colnames(data_track) %in% c("type","spp"))) {dat_track$point_type = data_track[,which(colnames(data_track) %in% c("type","spp"))]}
+    if(any(colnames(data_track) %in% c("type","spp","spp_cd"))) {dat_track$point_type = data_track[,which(colnames(data_track) %in% c("type","spp","spp_cd"))]}
     if(any(colnames(data_track) %in% c("beaufort"))) {dat_track$seastate = data_track[,which(colnames(data_track) %in% c("beaufort"))]}
     if(any(colnames(data_track) %in% c("date","start_dt","start_date","gps_date","track_dt"))) {dat_track$track_dt = format(as.Date(data_track[,which(colnames(data_track) %in% c("date","start_dt","start_date","gps_date","track_dt"))]),format='%m/%d/%Y')}
     if(any(colnames(data_track) %in% c("time"))) {dat_track$track_tm = data_track[,which(colnames(data_track) %in% c("time"))]}
-    if(any(colnames(data_track) %in% c("transect","transect_id"))) {dat_track$source_transect_id = data_track[,which(colnames(data_track) %in% c("transect","transect_id"))]}
+    if(any(colnames(data_track) %in% c("transect","transect_id","source_transect"))) {
+      dat_track$source_transect_id = data_track[,which(colnames(data_track) %in% c("transect","transect_id","source_transect"))]}
     if(any(colnames(data_track) %in% c("index"))) {dat_track$source_track_id = data_track[,which(colnames(data_track) %in% c("index"))]} 
-    if(any(colnames(data_track) %in% c("sec","secs","seconds")) & !any(colnames(data_track) %in% c("time"))) {dat_track$seconds_from_midnight_nb = data_track[,which(colnames(data_track) %in% c("sec","secs","seconds"))]}
+    if(any(colnames(data_track) %in% c("sec","secs","seconds","seconds_from_midnight"))) {# & !any(colnames(data_track) %in% c("time"))
+      dat_track$seconds_from_midnight_nb = data_track[,which(colnames(data_track) %in% c("sec","secs","seconds","seconds_from_midnight"))]}
     if(any(colnames(data_track) %in% c("eventdesc"))) {dat_track$comment = data_track[,which(colnames(data_track) %in% c("eventdesc"))]}
     if(any(colnames(data_track) %in% c("seat"))) {dat_track$observer_position = data_track[,which(colnames(data_track) %in% c("seat"))]}
     if(any(colnames(data_track) %in% c("obs"))) {dat_track$observer = data_track[,which(colnames(data_track) %in% c("obs"))]}
@@ -365,6 +376,10 @@
     }
     if(any(colnames(data_transect) %in% c("altitude","mean_alt_m"))){
       dat_transect$altitude_nb_m = data_transect[,which(colnames(data_transect) %in% c("altitude","mean_alt_m"))]
+    }
+    if(any(colnames(data_transect) %in% c("seconds_from_midnight"))){
+      dat_transect$time_from_midnight_start = data_transect[,which(colnames(data_transect) %in% c("seconds_from_midnight"))]
+      dat_transect$time_from_midnight_stop = data_transect[,which(colnames(data_transect) %in% c("seconds_from_midnight"))]
     }
     
     # calculations
@@ -602,10 +617,10 @@
   # check that all was uploaded
   # ------------------------ #
   db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
-  transects.in.db = sqlQuery(db, paste("select * from transect"))
-  tracks.in.db = sqlQuery(db, paste("select * from track"))
-  obs.in.db = sqlQuery(db, paste("select * from observation"))
-  camera.in.db = sqlQuery(db, paste("select * from camera_effort"))
+  transects.in.db = sqlQuery(db, paste("select * from transect where dataset_id = ", id, sep=""))
+  tracks.in.db = sqlQuery(db, paste("select * from track where dataset_id = ", id, sep=""))
+  obs.in.db = sqlQuery(db, paste("select * from observation where dataset_id = ", id, sep=""))
+  camera.in.db = sqlQuery(db, paste("select * from camera_effort where dataset_id = ", id, sep=""))
   
   import_reports <- function(obs.in.db,transects.in.db,tracks.in.db,camera.in.db) {
     if(length(obs.in.db$source_dataset_id[obs.in.db$dataset_id %in% id])!=length(dat$source_transect_id)){
@@ -631,12 +646,12 @@
     
     #----#
     if(exists("dat_track")){
-      if(length(tracks.in.db$source_dataset_id[tracks.in.db$dataset_id %in% id])!=length(dat_track$source_transect_id)){
+      if(length(tracks.in.db$dataset_id[tracks.in.db$dataset_id %in% id])!=length(dat_track$source_transect_id)){
         print("There was an error in the upload of the track table")
       }else print("Successfully uploaded tracks: same # of records")
     }
     if(exists("dat_track")){
-      if(any(!tracks.in.db$transect_id[tracks.in.db$dataset_id %in% id] %in% dat_tracks$transect_id)){
+      if(any(!tracks.in.db$transect_id[tracks.in.db$dataset_id %in% id] %in% dat_track$transect_id)){
         print("There was an error in the upload of the track table")
         }else print("Successfully uploaded tracks: same track ids")
     }
@@ -651,8 +666,8 @@
   }
   
   #import_reports(obs.in.db) 
-  import_reports(obs.in.db,transects.in.db) 
-  #import_reports(obs.in.db,transects.in.db,tracks.in.db) 
+  #import_reports(obs.in.db,transects.in.db) 
+  import_reports(obs.in.db,transects.in.db,tracks.in.db) 
   #import_reports(obs.in.db,transects.in.db,tracks.in.db,camera.in.db) 
   # ------------------------ #
         
