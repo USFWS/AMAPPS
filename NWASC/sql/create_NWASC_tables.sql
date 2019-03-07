@@ -703,6 +703,7 @@ INSERT INTO lu_species(
 	(7,'BOCS','Boat-Container ship',NULL,NULL,NULL,NULL,NULL),
 	(7,'BOFE','Boat-Ferry',NULL,NULL,NULL,NULL,NULL),
 	(7,'BOFI','Boat-Fishing',NULL,NULL,NULL,NULL,NULL),
+	(7,'BOKA','Boat-Kayak',NULL,NULL,NULL,NULL,NULL),
 	(7,'BOLO','Boat-Lobster',NULL,NULL,NULL,NULL,NULL),
 	(7,'BOME','Boat-Merchant',NULL,NULL,NULL,NULL,NULL),
 	(7,'BONA','Boat-Navy',NULL,NULL,NULL,NULL,NULL),
@@ -971,8 +972,8 @@ GO
 
 INSERT INTO lu_platform_name(platform_name_id, platform_name)
 	VALUES
-	(1,'Atlantic Cat'),
-	(2,'Friendship'),
+	(1,'AtlantiCat'),
+	(2,'Friendship V'),
 	(3,'R/V Bluefin'),
 	(4,'R/V Bulldog'),
 	(5,'R/V Cape Hatteras'),
@@ -997,6 +998,14 @@ INSERT INTO lu_platform_name(platform_name_id, platform_name)
 	(24,'R/V Pisces'),
 	(25,'R/V Gulf Challenger'),--15m 
 	(26,'R/V Auk');
+
+/* 
+update lu_platform_name
+set
+platform_name = 'AtlantiCat'
+where platform_name_id = 1
+*/
+
 --
 
 -- create and populate survey method table
@@ -1199,7 +1208,12 @@ INSERT INTO lu_parent_project(
 	(4,'Bar Harbor Whale Watching Cruises',
 		'Observers are on whale watching cruises out of Maine, mainly in summer and fall months. 
 		Transect numbers are not reoccurring points based on a design; they are assigned as the 
-		trip progresses. Effort is recorded for when the observations start and stop.',
+		trip progresses. Effort is recorded for when the observations start and stop. There are 
+		three types of survey effort: transect, general observation, and a timed 360 count. Only 
+		the transect effort has transect numbers, the other two efforts are uncorrelated to 
+		transects and are treated as offline observations in the database. Some of these general obervations 
+		do have begin or end counts recorded but they have been changed to comments for simplicity and 
+		can be changed back if the user desires.',
 		NULL),
 	(5,'BOEM HighDef NC 2011',NULL,NULL),
 	(6,'CDAS Mid-Atlantic',NULL,NULL),
@@ -1756,7 +1770,7 @@ INSERT INTO dataset(
 	(167,4,'BarHarborWW_06152009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL), 		
 	(434,4,'BarHarborWW_06162009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(435,4,'BarHarborWW_06172009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
-	(436,4,'BarHarborWW_06302009','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(436,4,'BarHarborWW_06302009','b','go','og',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(437,4,'BarHarborWW_07012009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
 	(438,4,'BarHarborWW_07022009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
 	(439,4,'BarHarborWW_07052009','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
@@ -1857,8 +1871,9 @@ INSERT INTO dataset(
 /*    
 update dataset
 set
-dataset_name = 'BarHarborWW_06112010'
-where dataset_id = 476
+survey_method_cd = 'go', 
+dataset_type_cd = 'og'
+where dataset_id = 436
 	
 --
 update dataset
