@@ -739,7 +739,7 @@ write.csv(data, file = paste(dir.out, "data.csv", sep="/"), row.names=FALSE)
 source_data = data
 
 #---------------------#
-id = 465
+id = 519 #516
 data = filter(source_data, dataset_id %in% id)
 data_track = filter(data, spp_cd %in% c("BEGCNT","ENDCNT"))
 data_transect = filter(effort, dataset_id %in% id)
