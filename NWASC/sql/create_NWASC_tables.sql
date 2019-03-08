@@ -1850,7 +1850,7 @@ INSERT INTO dataset(
 	(513,4,'BarHarborWW_09112010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),							
 	(514,4,'BarHarborWW_09122010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(515,4,'BarHarborWW_09182010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
-	(516,4,'BarHarborWW_09192010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
+	(516,4,'BarHarborWW_09192010','b','cts','ot',NULL,NULL,0,'no',NULL,33,'USFWS',NULL,1,NULL),
 	(517,4,'BarHarborWW_09242010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(518,4,'BarHarborWW_09252010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
 	(519,4,'BarHarborWW_10032010','b','cts','ot',NULL,NULL,5,'yes',NULL,33,'USFWS',NULL,1,NULL),
@@ -1878,9 +1878,9 @@ where dataset_id = 436
 --
 update dataset
 set
-share_level_id = 5,
-in_database = 'yes'
-where dataset_id in (166,167)
+share_level_id = 0,
+in_database = 'no'
+where dataset_id = 516
 */
 
 -- select * from dataset order by share_level_id
