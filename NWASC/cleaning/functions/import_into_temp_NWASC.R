@@ -30,20 +30,20 @@
   # ------------------------ #
   # load dataset descriptions
   # ------------------------ #
-  #db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
-  #transects.in.db = sqlQuery(db, paste("select top 1 * from transect order by transect_id desc"))
-  #tracks.in.db = sqlQuery(db, paste("select top 1 * from track order by track_id desc"))
-  #obs.in.db = sqlQuery(db, paste("select top 1 * from observation order by observation_id desc"))
-  #camera.in.db = sqlQuery(db, paste("select top 1 * from camera order by camera_id desc"))
-  #odbcCloseAll()
-  
-  # when adding multiple datasets in a row that are in numeric order
   db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
-  transects.in.db = sqlQuery(db, paste("select * from transect where dataset_id in (", id-1, ",", id, ")",sep=""))
-  tracks.in.db = sqlQuery(db, paste("select * from track where dataset_id in (", id-1, ",", id, ")",sep=""))
-  obs.in.db = sqlQuery(db, paste("select * from observation where dataset_id in (", id-1, ",", id, ")",sep=""))
-  camera.in.db = sqlQuery(db, paste("select * from camera_effort where dataset_id in (", id-1, ",", id, ")",sep=""))
+  transects.in.db = sqlQuery(db, paste("select top 1 * from transect order by transect_id desc"))
+  tracks.in.db = sqlQuery(db, paste("select top 1 * from track order by track_id desc"))
+  obs.in.db = sqlQuery(db, paste("select top 1 * from observation order by observation_id desc"))
+  camera.in.db = sqlQuery(db, paste("select top 1 * from camera order by camera_id desc"))
+  odbcCloseAll()
   
+  # # when adding multiple datasets in a row that are in numeric order (slightly quicker than above)
+  # db <- odbcConnectAccess2007("//ifw-hqfs1/MB SeaDuck/seabird_database/data_import/in_progress/NWASC_temp.accdb")
+  # transects.in.db = sqlQuery(db, paste("select * from transect where dataset_id in (", id-1, ",", id, ")",sep=""))
+  # tracks.in.db = sqlQuery(db, paste("select * from track where dataset_id in (", id-1, ",", id, ")",sep=""))
+  # obs.in.db = sqlQuery(db, paste("select * from observation where dataset_id in (", id-1, ",", id, ")",sep=""))
+  # camera.in.db = sqlQuery(db, paste("select * from camera_effort where dataset_id in (", id-1, ",", id, ")",sep=""))
+  # odbcCloseAll()
   
   db <- dbConnect(odbc::odbc(), driver='SQL Server',server='ifw-dbcsqlcl1', database='NWASC')
   data.in.db = dbGetQuery(db,"select * from dataset")
