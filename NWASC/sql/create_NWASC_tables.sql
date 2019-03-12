@@ -1744,8 +1744,8 @@ INSERT INTO dataset(
     (415,25,'GOMCES 2016','b','cts','ot',NULL,NULL,0,'no',NULL,80,'USFWS, BRI, MDIFW',8,1,25),
 	(416,21,'BIWF_onshore_sea_watch_avian_surveys','f','dth','og',3000,3000,9,'no',NULL,65,'BOEM,TetraTech,Deepwater Wind RI',NULL,1,NULL),
 	(396,1,'AMAPPS_FWS_Aerial_summer2018','a','cts','ot',400,200,99,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(397,1,'AMAPPS_FWS_Aerial_2020-2023','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
-	(417,1,'AMAPPS_FWS_Aerial_fall2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
+	(397,1,'AMAPPS_FWS_Aerial_fall2018','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
+	(417,1,'AMAPPS_FWS_Aerial_2020-2023','a','cts','ot',400,200,0,'no','no',50,'BOEM,USFWS,NOAA,NAVY',110,1,NULL),
 	(405,24,'NYSERDA_WEA_Survey5','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(406,24,'NYSERDA_OPA_Survey5','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
 	(407,24,'NYSERDA_WEA_Survey6','v','cts','ot',NULL,NULL,0,'no',NULL,61,'BOEM,APEM,Normandeau',NULL,1,NULL),
@@ -1874,13 +1874,13 @@ set
 survey_method_cd = 'go', 
 dataset_type_cd = 'og'
 where dataset_id = 436
-	
+
 --
 update dataset
 set
-share_level_id = 0,
-in_database = 'no'
-where dataset_id = 516
+share_level_id = 5,
+in_database = 'yes'
+where dataset_id in (166,167)
 */
 
 -- select * from dataset order by share_level_id
