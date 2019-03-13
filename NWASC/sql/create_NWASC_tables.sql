@@ -140,7 +140,7 @@ set name = 'Jo Anna Lutmerding'
 where [user_id] = 78
 */
 -- select * from lu_people where active_status = 'active'
-select * from lu_species2
+
 --create and populate share level table
 CREATE TABLE lu_share_level (
 	share_level_id tinyint not null,
@@ -190,6 +190,10 @@ where species_type_id = 8
 select * from lu_species_type
 */
 --
+
+-- NOTE:
+-- species table should be checked every once in a while against http://www.birds.cornell.edu/clementschecklist/download/
+-- to see if species have changed/ been update/ grouped/ split
 
 -- create species table
 CREATE TABLE lu_species (
@@ -1925,7 +1929,7 @@ acoustic setups (Appendix A). Sensitivity of the microphone was tested prior to 
 chirper (Tony Massena, Nevada) which produces a constant 40 kHz tone. The detectors were calibrated
 prior to deployment to ensure that bat calls would be detected within a maximum range of 30 m (98 ft)
 at 40 kHz"'
-where dataset_id = 417*/
+where dataset_id = */
 
 --create revisions table
 CREATE TABLE lu_revision_details (
@@ -2264,7 +2268,8 @@ INSERT INTO progress_table(
 	(520,0,'BarHarborWW_10082010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
 	(521,0,'BarHarborWW_10102010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),	
 	(522,0,'BarHarborWW_10112010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
-	(523,0,'BarHarborWW_10122010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL);
+	(523,0,'BarHarborWW_10122010','requested',cast('2019-02-25' as date),'KC',0,0,0,NULL),
+	(516,0,'BarHarborWW_09192010','requested',cast('2019-03-13' as date),'KC',0,0,0,NULL);
 
 --  dataset_id, share_level_id, dataset_name, action_required_or_taken, date_of_action, who_will_act, 
 --  data_acquired, metadata_acquired, report_acquired, additional_info)
