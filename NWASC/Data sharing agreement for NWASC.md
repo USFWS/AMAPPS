@@ -40,7 +40,7 @@ Please also be aware of the [Data Use Agreement](https://github.com/USFWS/AMAPPS
 and 
 [Submission Guidelines](https://github.com/USFWS/AMAPPS/blob/master/NWASC/Submission%20Guidelines%20for%20NWASC.md) for data contributors.  Please also be aware of the [FWS Scientific Integrity Policy](https://www.fws.gov/science/pdf/ScientificIntegrityFWSCode212fw7.pdf). 
 
-If you agree to these terms please sign and return to the data manager (kaycee_coleman@fws.gov) or 
+If you agree to these terms please sign and return to the data manager (Arliss.Winship@noaa.gov) or 
 [fill out the form online](https://docs.google.com/forms/d/e/1FAIpQLSeG_kyZ3gkd60R5dwxUuyE2Cx8XySfS-XuJbAlo6eLRNgOURg/viewform?usp=sf_link):  
   
       
